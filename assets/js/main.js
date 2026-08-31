@@ -7,25 +7,58 @@
 
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduced = mqReduced.matches;
+  mqReduced.addEventListener('change', function (e) { reduced = e.matches; });
 
-  /* ---------------------------------------------------------------- шапка */
+  var clamp = function (v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); };
+
+  function debounce(fn, ms) {
+    var t;
+    return function () {
+      var a = arguments, self = this;
+      clearTimeout(t);
+      t = setTimeout(function () { fn.apply(self, a); }, ms);
+    };
+  }
+
+  /* ================================================== шапка и прогресс */
   var hdr = $('#hdr');
-  var onScroll = function () {
-    hdr.classList.toggle('is-stuck', window.scrollY > 40);
-  };
+  var progressBar = $('#progress i');
+  var ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var y = window.scrollY;
+      hdr.classList.toggle('is-stuck', y > 40);
+
+      if (progressBar) {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.transform = 'scaleX(' + (max > 0 ? clamp(y / max, 0, 1) : 0) + ')';
+      }
+      // лёгкая параллакс-подвижка блика
+      var hf = $('.hero-flare');
+      if (hf && !reduced && y < window.innerHeight * 1.3) {
+        hf.style.transform = 'translate3d(0,' + (y * 0.16) + 'px,0)';
+      }
+      ticking = false;
+    });
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ------------------------------------------------------- мобильное меню */
+  /* ================================================== мобильное меню */
   var navToggle = $('#navToggle');
   var nav = $('#nav');
-  var closeNav = function () {
+
+  function closeNav() {
     nav.classList.remove('is-open');
     navToggle.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('is-locked');
-  };
+  }
   navToggle.addEventListener('click', function () {
     var open = !nav.classList.contains('is-open');
     nav.classList.toggle('is-open', open);
@@ -35,7 +68,7 @@
   });
   $$('#nav a').forEach(function (a) { a.addEventListener('click', closeNav); });
 
-  /* ------------------------------------------- появление блоков при скролле */
+  /* ================================================== появление блоков */
   var io = null;
   if ('IntersectionObserver' in window && !reduced) {
     io = new IntersectionObserver(function (entries) {
@@ -48,49 +81,209 @@
     $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
   }
 
+  /* ================================================== выключка имени */
+  var heroName = $('#heroName');
+
+  function fitName() {
+    if (!heroName) return;
+    var box = heroName.clientWidth;
+    var lines = $$('.ln', heroName);
+    if (!box || !lines.length) return;
+
+    // сброс к базовому состоянию
+    heroName.style.fontSize = '';
+    lines.forEach(function (l) {
+      l.style.letterSpacing = '';
+      if (l.firstElementChild) l.firstElementChild.style.marginRight = '';
+    });
+
+    var base = parseFloat(getComputedStyle(heroName).fontSize);
+    var nat = lines.map(function (l) {
+      return l.firstElementChild ? l.firstElementChild.getBoundingClientRect().width : 0;
+    });
+    var widest = Math.max.apply(null, nat);
+    if (!widest) return;
+
+    // Потолок считаем от реального остатка места на первом экране,
+    // а не от доли высоты окна: имя занимает всё, что не заняли
+    // надзаголовок, подпись и нижняя строка.
+    var heroEl = heroName.closest('.hero');
+    var wrap = heroName.parentElement;
+    var capSize = Infinity;
+    if (heroEl && wrap) {
+      var cs = getComputedStyle(heroEl);
+      var vh = Math.min(heroEl.clientHeight, window.innerHeight);
+      var inner = vh - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var others = wrap.getBoundingClientRect().height - heroName.getBoundingClientRect().height;
+      var avail = (inner - others) * 0.97;
+      var lh = parseFloat(getComputedStyle(lines[0]).lineHeight) / parseFloat(getComputedStyle(lines[0]).fontSize) || 0.82;
+      if (avail > 0) capSize = avail / (lines.length * lh);
+    }
+
+    // Самая длинная строка заполняет блок целиком, если хватает высоты.
+    var size = Math.min(base * (box / widest), capSize);
+    heroName.style.fontSize = size + 'px';
+
+    // Куда тянемся: полная ширина блока либо столько, сколько даёт потолок.
+    var targetW = Math.min(box, widest * (size / base));
+
+    // Короткие строки догоняем трекингом — кегль у всех остаётся общим.
+    lines.forEach(function (l) {
+      var inner = l.firstElementChild;
+      if (!inner) return;
+      var chars = inner.textContent.trim().length;
+      if (chars < 2) return;
+      // стартуем с унаследованного трекинга, иначе первая итерация врёт
+      var ls = parseFloat(getComputedStyle(l).letterSpacing) || 0;
+      inner.style.marginRight = (-ls) + 'px';
+      for (var i = 0; i < 6; i++) {
+        // letter-spacing добавляется и после последней буквы,
+        // поэтому из ширины бокса вычитаем хвост — считаем по чернилам
+        var ink = inner.getBoundingClientRect().width - ls;
+        var diff = targetW - ink;
+        if (Math.abs(diff) < 0.3) break;
+        ls += diff / (chars - 1);
+        l.style.letterSpacing = ls + 'px';
+        inner.style.marginRight = (-ls) + 'px';
+      }
+    });
+  }
+
+  fitName();
+  window.addEventListener('resize', debounce(fitName, 120));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitName);
+  window.addEventListener('load', fitName);
+
+  /* ================================================== свет за курсором */
+  var hero = $('.hero');
+  var pLight = $('#pointerLight');
+  if (hero && pLight && window.matchMedia('(hover: hover)').matches) {
+    var lx = 0, ly = 0, tx = 0, ty = 0, raf = null;
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      tx = e.clientX - r.left;
+      ty = e.clientY - r.top;
+      if (!raf) raf = requestAnimationFrame(follow);
+    });
+    function follow() {
+      lx += (tx - lx) * 0.12;
+      ly += (ty - ly) * 0.12;
+      pLight.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)';
+      raf = (Math.abs(tx - lx) > 0.5 || Math.abs(ty - ly) > 0.5) ? requestAnimationFrame(follow) : null;
+    }
+  }
+
+  /* ================================================== бегущая строка */
+  var track = $('#tickerTrack');
+  if (track) {
+    var names = $$('.exp-name').map(function (el) { return el.textContent.trim(); });
+    if (names.length) {
+      var seq = names.map(function (n) {
+        return '<span>' + n + '</span><em></em>';
+      }).join('');
+      track.innerHTML = '<div class="ticker-seq">' + seq + '</div>' +
+                        '<div class="ticker-seq">' + seq + '</div>';
+    } else {
+      track.closest('.ticker').hidden = true;
+    }
+  }
+
+  /* ================================================== счётчики */
+  var stats = $('#stats');
+  if (stats && 'IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        sio.unobserve(e.target);
+        $$('b', e.target).forEach(function (b, i) {
+          var to = parseInt(b.dataset.to, 10) || 0;
+          b.style.setProperty('--bp', (i * 26) + '%');
+          if (reduced) { b.textContent = to; return; }
+          var dur = 1100 + i * 90, t0 = null;
+          (function step(t) {
+            if (t0 === null) t0 = t;
+            var k = clamp((t - t0) / dur, 0, 1);
+            b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+            if (k < 1) requestAnimationFrame(step);
+          })(performance.now());
+        });
+      });
+    }, { threshold: 0.4 });
+    sio.observe(stats);
+  }
+
+  /* ================================================== активный пункт меню */
+  var navLinks = $$('#nav a');
+  var sections = navLinks.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
+  if (sections.length && 'IntersectionObserver' in window) {
+    var seen = {};
+    var nio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.id] = e.intersectionRatio; });
+      var best = null, bestR = 0;
+      Object.keys(seen).forEach(function (id) {
+        if (seen[id] > bestR) { bestR = seen[id]; best = id; }
+      });
+      navLinks.forEach(function (a) {
+        a.classList.toggle('is-active', best !== null && a.getAttribute('href') === '#' + best);
+      });
+    }, { threshold: [0, 0.15, 0.4, 0.75], rootMargin: '-84px 0px -40% 0px' });
+    sections.forEach(function (s) { nio.observe(s); });
+  }
+
   /* ================================================================ ГАЛЕРЕЯ */
   var grid = $('#grid');
   if (!grid) return;
 
-  var tiles     = $$('.tile', grid);
-  var filters   = $$('#filters button');
-  var moreWrap  = $('#gridMore');
-  var moreBtn   = $('#moreBtn');
-  var PAGE      = 18;
+  var tiles    = $$('.tile', grid);
+  var filters  = $$('#filters button');
+  var moreWrap = $('#gridMore');
+  var moreBtn  = $('#moreBtn');
+  var moreNum  = $('#moreCount');
+  var status   = $('#gridStatus');
+  var PAGE     = 18;
 
-  var current = 'all';   // активный жанр
-  var shown   = PAGE;    // сколько плиток показано
-  var visible = [];      // плитки текущего фильтра — порядок для просмотра
+  var current = 'all';
+  var shown   = PAGE;
+  var visible = [];
 
-  function matches(tile) {
-    return current === 'all' || tile.dataset.genre === current;
-  }
+  function matches(t) { return current === 'all' || t.dataset.genre === current; }
 
-  function render() {
+  function render(announce) {
     visible = tiles.filter(matches);
-    tiles.forEach(function (t) { t.classList.add('is-hidden'); });
 
-    visible.slice(0, shown).forEach(function (t, i) {
-      t.classList.remove('is-hidden');
+    tiles.forEach(function (t) { t.classList.add('is-hidden'); });
+    visible.forEach(function (t, i) {
       t.dataset.idx = String(i);
-      if (reduced || !io) { t.classList.add('is-in'); }
-      else if (!t.classList.contains('is-in')) { io.observe(t); }
+      if (i < shown) {
+        t.classList.remove('is-hidden');
+        if (reduced || !io) t.classList.add('is-in');
+        else if (!t.classList.contains('is-in')) io.observe(t);
+      }
     });
-    // плитки за пределами страницы всё равно должны быть готовы к показу
-    visible.slice(shown).forEach(function (t, i) { t.dataset.idx = String(shown + i); });
 
     var rest = visible.length - shown;
-    moreWrap.hidden = rest <= 0;
-    if (rest > 0) moreBtn.firstChild.nodeValue = 'Показать ещё ' + Math.min(rest, PAGE) + ' ';
+    if (rest > 0) {
+      moreWrap.hidden = false;
+      moreNum.textContent = Math.min(rest, PAGE);
+    } else {
+      moreWrap.hidden = true;
+      moreNum.textContent = '';
+    }
+
+    if (announce && status) {
+      status.textContent = 'Показано ' + Math.min(shown, visible.length) +
+                           ' из ' + visible.length + ' кадров';
+    }
   }
 
   filters.forEach(function (btn) {
     btn.addEventListener('click', function () {
+      if (btn.getAttribute('aria-selected') === 'true') return;
       filters.forEach(function (b) { b.setAttribute('aria-selected', 'false'); });
       btn.setAttribute('aria-selected', 'true');
       current = btn.dataset.genre;
       shown = PAGE;
-      render();
+      render(true);
       var anchor = $('#filters');
       var top = anchor.getBoundingClientRect().top + window.scrollY - 96;
       if (window.scrollY > top) window.scrollTo({ top: top, behavior: reduced ? 'auto' : 'smooth' });
@@ -99,10 +292,22 @@
 
   moreBtn.addEventListener('click', function () {
     shown += PAGE;
-    render();
+    render(true);
+    if (moreWrap.hidden) moreBtn.blur();
   });
 
-  render();
+  render(false);
+
+  /* --- свет под курсором: плитки, чипсы, кнопки --- */
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.addEventListener('pointermove', function (e) {
+      var el = e.target.closest('.tile-media, .filters button, .btn');
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    }, { passive: true });
+  }
 
   /* ====================================================== ПОЛНОЭКРАННЫЙ ВИД */
   var lb      = $('#lb');
@@ -111,36 +316,113 @@
   var lbGenre = $('#lbGenre');
   var lbCount = $('#lbCount');
   var lbStrip = $('#lbStrip');
+  var lbStage = $('#lbStage');
+  var lbSpin  = $('#lbSpin');
+  var lbHint  = $('#lbHint');
+  var zoomVal = $('#lbZoomVal');
+  var btnIn   = $('#lbIn');
+  var btnOut  = $('#lbOut');
+
   var idx = 0;
   var lastFocus = null;
+  var MIN = 1, MAX = 6;
+  var scale = 1, ox = 0, oy = 0;   // масштаб и смещение
+  var instantT = null;
 
+  /* --- трансформация --- */
+  function limits() {
+    // сколько пикселей можно увести кадр, чтобы он не отрывался от сцены
+    var sw = lbStage.clientWidth, sh = lbStage.clientHeight;
+    var w = lbImg.clientWidth * scale, h = lbImg.clientHeight * scale;
+    return { x: Math.max(0, (w - sw) / 2), y: Math.max(0, (h - sh) / 2) };
+  }
+
+  function apply() {
+    var l = limits();
+    ox = clamp(ox, -l.x, l.x);
+    oy = clamp(oy, -l.y, l.y);
+    lbImg.style.transform = 'translate3d(' + ox + 'px,' + oy + 'px,0) scale(' + scale + ')';
+    var zoomed = scale > 1.001;
+    lbImg.classList.toggle('is-zoomed', zoomed);
+    lb.classList.toggle('is-zoomed', zoomed);
+    zoomVal.textContent = Math.round(scale * 100) + '%';
+    btnIn.disabled  = scale >= MAX - 0.001;
+    btnOut.disabled = scale <= MIN + 0.001;
+    if (lbHint) lbHint.classList.toggle('is-off', zoomed);
+  }
+
+  function instant(on) {
+    lbImg.classList.toggle('is-panning', on);
+    if (on) {
+      clearTimeout(instantT);
+      instantT = setTimeout(function () { lbImg.classList.remove('is-panning'); }, 140);
+    }
+  }
+
+  function resetZoom() { scale = 1; ox = 0; oy = 0; apply(); }
+
+  /* приближение к точке: точка под курсором остаётся на месте */
+  function zoomAt(next, cx, cy) {
+    next = clamp(next, MIN, MAX);
+    if (Math.abs(next - scale) < 0.0005) return;
+    if (cx === undefined) { cx = null; }
+    if (cx !== null) {
+      var r = lbImg.getBoundingClientRect();
+      var dx = cx - (r.left + r.width / 2);
+      var dy = cy - (r.top + r.height / 2);
+      var k = next / scale;
+      ox -= dx * (k - 1);
+      oy -= dy * (k - 1);
+    }
+    scale = next;
+    if (scale <= MIN + 0.001) { ox = 0; oy = 0; }
+    apply();
+  }
+
+  /* --- показ кадра --- */
   function preload(i) {
     if (i < 0 || i >= visible.length) return;
     var im = new Image();
     im.src = visible[i].dataset.full;
   }
 
-  function paint(i, animate) {
+  function paint(i, scroll) {
+    if (!visible.length) return;
     idx = (i + visible.length) % visible.length;
     var t = visible[idx];
 
+    resetZoom();
     lbImg.classList.remove('is-ready');
+    lbSpin.classList.add('is-on');
+
     var next = new Image();
-    next.onload = function () {
+    next.decoding = 'async';
+    var done = function () {
       lbImg.src = next.src;
-      lbImg.alt = t.dataset.title || '';
+      lbImg.alt = (t.dataset.title || '') + ' — ' + (t.dataset.cap || '');
+      lbImg.classList.add('is-ready');
+      lbSpin.classList.remove('is-on');
+      resetZoom();
+    };
+    next.onload = done;
+    next.onerror = function () {
+      lbSpin.classList.remove('is-on');
+      lbImg.src = t.querySelector('img').getAttribute('src');
       lbImg.classList.add('is-ready');
     };
     next.src = t.dataset.full;
-    if (next.complete) next.onload();
+    if (next.complete) done();
 
     lbTitle.textContent = t.dataset.title || '';
     lbGenre.textContent = t.dataset.cap || '';
     lbCount.textContent = (idx + 1) + ' / ' + visible.length;
 
     $$('img', lbStrip).forEach(function (th, n) {
-      th.classList.toggle('is-active', n === idx);
-      if (n === idx && animate !== false) {
+      var on = n === idx;
+      th.classList.toggle('is-active', on);
+      th.setAttribute('aria-selected', String(on));
+      th.tabIndex = on ? 0 : -1;
+      if (on && scroll !== false) {
         th.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
       }
     });
@@ -151,21 +433,31 @@
 
   function buildStrip() {
     lbStrip.innerHTML = '';
+    var frag = document.createDocumentFragment();
     visible.forEach(function (t, n) {
       var th = document.createElement('img');
       th.src = t.querySelector('img').getAttribute('src');
-      th.alt = '';
+      th.alt = t.dataset.title || '';
       th.loading = 'lazy';
+      th.setAttribute('role', 'tab');
+      th.tabIndex = n === idx ? 0 : -1;
       th.addEventListener('click', function () { paint(n); });
-      lbStrip.appendChild(th);
+      th.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); paint(n); }
+      });
+      frag.appendChild(th);
     });
+    lbStrip.appendChild(frag);
   }
 
+  /* --- открытие и закрытие --- */
+  var FOCUSABLE = 'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
+
   function open(i) {
+    if (i < 0) return;
     lastFocus = document.activeElement;
     buildStrip();
     lb.hidden = false;
-    // reflow, чтобы сработал transition
     void lb.offsetWidth;
     lb.classList.add('is-open');
     document.body.classList.add('is-locked');
@@ -176,11 +468,12 @@
   function close() {
     lb.classList.remove('is-open');
     document.body.classList.remove('is-locked');
-    window.setTimeout(function () {
+    setTimeout(function () {
       lb.hidden = true;
       lbImg.removeAttribute('src');
-    }, 450);
-    if (lastFocus) lastFocus.focus();
+      resetZoom();
+    }, 420);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   grid.addEventListener('click', function (e) {
@@ -199,32 +492,121 @@
   $('#lbClose').addEventListener('click', close);
   $('#lbPrev').addEventListener('click', function () { paint(idx - 1); });
   $('#lbNext').addEventListener('click', function () { paint(idx + 1); });
-  $('#lbStage').addEventListener('click', function (e) {
-    if (e.target === e.currentTarget) close();
+  btnIn.addEventListener('click', function () { zoomAt(scale * 1.6, null); });
+  btnOut.addEventListener('click', function () { zoomAt(scale / 1.6, null); });
+  zoomVal.addEventListener('click', resetZoom);
+
+  /* клик мимо кадра закрывает, но только если не приближено */
+  lbStage.addEventListener('click', function (e) {
+    if (e.target === lbStage && scale <= 1.001) close();
   });
 
+  /* двойной клик — приблизить/вернуть */
+  lbImg.addEventListener('dblclick', function (e) {
+    e.preventDefault();
+    zoomAt(scale > 1.001 ? MIN : 2.6, e.clientX, e.clientY);
+  });
+
+  /* колесо — плавный зум к курсору */
+  lbStage.addEventListener('wheel', function (e) {
+    if (lb.hidden) return;
+    e.preventDefault();
+    instant(true);
+    zoomAt(scale * (e.deltaY < 0 ? 1.14 : 1 / 1.14), e.clientX, e.clientY);
+  }, { passive: false });
+
+  /* --- указатели: панорама, свайп, щипок --- */
+  var pts = new Map();
+  var startDist = 0, startScale = 1, startMid = null;
+  var panFrom = null, swipeFrom = null;
+
+  lbStage.addEventListener('pointerdown', function (e) {
+    if (lb.hidden) return;
+    if (e.target.closest('.lb-nav')) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    try { lbStage.setPointerCapture(e.pointerId); } catch (err) {}
+
+    if (pts.size === 2) {
+      var a = Array.from(pts.values());
+      startDist = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
+      startScale = scale;
+      startMid = { x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2 };
+      panFrom = swipeFrom = null;
+    } else if (pts.size === 1) {
+      if (scale > 1.001) {
+        panFrom = { x: e.clientX, y: e.clientY, ox: ox, oy: oy };
+        lbImg.classList.add('is-panning');
+      } else {
+        swipeFrom = { x: e.clientX, y: e.clientY, t: Date.now() };
+      }
+    }
+  });
+
+  lbStage.addEventListener('pointermove', function (e) {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pts.size === 2 && startDist) {
+      var a = Array.from(pts.values());
+      var d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
+      instant(true);
+      zoomAt(startScale * (d / startDist), startMid.x, startMid.y);
+    } else if (panFrom) {
+      ox = panFrom.ox + (e.clientX - panFrom.x);
+      oy = panFrom.oy + (e.clientY - panFrom.y);
+      apply();
+    }
+  });
+
+  function endPointer(e) {
+    if (!pts.has(e.pointerId)) return;
+    var p = pts.get(e.pointerId);
+    pts.delete(e.pointerId);
+    try { lbStage.releasePointerCapture(e.pointerId); } catch (err) {}
+
+    if (panFrom && pts.size === 0) {
+      panFrom = null;
+      lbImg.classList.remove('is-panning');
+    }
+    if (pts.size < 2) { startDist = 0; startMid = null; }
+
+    if (swipeFrom && pts.size === 0) {
+      var dx = p.x - swipeFrom.x;
+      var dy = p.y - swipeFrom.y;
+      var dt = Date.now() - swipeFrom.t;
+      swipeFrom = null;
+      if (scale <= 1.001 && dt < 800) {
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) paint(idx + (dx < 0 ? 1 : -1));
+        else if (dy > 110 && Math.abs(dy) > Math.abs(dx)) close();
+      }
+    }
+  }
+  lbStage.addEventListener('pointerup', endPointer);
+  lbStage.addEventListener('pointercancel', endPointer);
+
+  /* --- клавиатура и ловушка фокуса --- */
   document.addEventListener('keydown', function (e) {
     if (lb.hidden) return;
-    if (e.key === 'Escape')     { close(); }
-    if (e.key === 'ArrowLeft')  { paint(idx - 1); }
-    if (e.key === 'ArrowRight') { paint(idx + 1); }
+
+    if (e.key === 'Escape')     { e.preventDefault(); close(); return; }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); paint(idx - 1); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); paint(idx + 1); return; }
+    if (e.key === '+' || e.key === '=') { e.preventDefault(); zoomAt(scale * 1.5, null); return; }
+    if (e.key === '-' || e.key === '_') { e.preventDefault(); zoomAt(scale / 1.5, null); return; }
+    if (e.key === '0')          { e.preventDefault(); resetZoom(); return; }
+
+    if (e.key === 'Tab') {
+      var f = $$(FOCUSABLE, lb).filter(function (el) { return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      // фокус мог уйти наружу (например, кнопка стала недоступной) — возвращаем
+      if (!lb.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 
-  /* --- свайп --- */
-  var sx = 0, sy = 0, tracking = false;
-  var stage = $('#lbStage');
-  stage.addEventListener('touchstart', function (e) {
-    if (e.touches.length !== 1) return;
-    sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
-  }, { passive: true });
-  stage.addEventListener('touchend', function (e) {
-    if (!tracking) return;
-    tracking = false;
-    var dx = e.changedTouches[0].clientX - sx;
-    var dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) paint(idx + (dx < 0 ? 1 : -1));
-    else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) close();
-  }, { passive: true });
+  window.addEventListener('resize', debounce(function () { if (!lb.hidden) apply(); }, 120));
 
   /* --- год в подвале --- */
   var yr = $('#yr');

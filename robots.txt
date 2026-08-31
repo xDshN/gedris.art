@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xdshn.github.io/gedris.art/sitemap.xml
