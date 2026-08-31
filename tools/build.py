@@ -21,11 +21,13 @@ from PIL import Image, ImageOps, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRID = os.path.join(ROOT, "assets/img/grid")
+SMALL = os.path.join(ROOT, "assets/img/grid-sm")
 FULL = os.path.join(ROOT, "assets/img/full")
 PAGE = os.path.join(ROOT, "index.html")
 
-GRID_H, GRID_W_MAX, GRID_Q = 820, 1700, 76
-FULL_MAX, FULL_Q = 2400, 82
+GRID_H, GRID_W_MAX, GRID_Q = 820, 1700, 76      # сетка на десктопе
+SMALL_H, SMALL_W_MAX, SMALL_Q = 460, 950, 74    # сетка на телефоне
+FULL_MAX, FULL_Q = 2400, 82                     # полноэкранный просмотр
 
 # порядок определяет порядок кнопок фильтра
 GENRES = [
@@ -88,8 +90,8 @@ def main(sel_path, base=""):
     sel = json.load(open(sel_path, encoding="utf-8"))
     for it in sel:
         it["src"] = os.path.join(base, it["src"]) if base else it["src"]
-    os.makedirs(GRID, exist_ok=True)
-    os.makedirs(FULL, exist_ok=True)
+    for d in (GRID, SMALL, FULL):
+        os.makedirs(d, exist_ok=True)
 
     tiles, counts, cropped = [], {}, 0
 
@@ -109,25 +111,35 @@ def main(sel_path, base=""):
         g.thumbnail((GRID_W_MAX, GRID_H), Image.LANCZOS)
         g.save(os.path.join(GRID, slug + ".webp"), "WEBP", quality=GRID_Q, method=6)
 
+        sm = im.copy()
+        sm.thumbnail((SMALL_W_MAX, SMALL_H), Image.LANCZOS)
+        sm.save(os.path.join(SMALL, slug + ".webp"), "WEBP", quality=SMALL_Q, method=6)
+
         f = im.copy()
         f.thumbnail((FULL_MAX, FULL_MAX), Image.LANCZOS)
         f.save(os.path.join(FULL, slug + ".webp"), "WEBP", quality=FULL_Q, method=6)
 
         alt = "%s — %s. Фотограф Мария Курочкина" % (it["title"], it["cap"])
+        eager = n <= 4          # первый экран сетки грузим сразу
         tiles.append(
             '<figure class="tile reveal" tabindex="0" role="button" data-genre="{genre}"\n'
             '        data-full="assets/img/full/{slug}.webp" data-title="{title}" data-cap="{cap}"\n'
             '        aria-label="{alt}" style="--ar:{ar}">\n'
             '  <div class="tile-media" style="background-image:url({lq});background-size:cover">\n'
-            '    <img src="assets/img/grid/{slug}.webp" alt="{alt}" loading="lazy" decoding="async"\n'
-            '         width="{gw}" height="{gh}">\n'
+            '    <img src="assets/img/grid/{slug}.webp"\n'
+            '         srcset="assets/img/grid-sm/{slug}.webp {sw}w, assets/img/grid/{slug}.webp {gw}w"\n'
+            '         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"\n'
+            '         alt="{alt}" width="{gw}" height="{gh}"\n'
+            '         loading="{loading}" decoding="async" fetchpriority="{prio}">\n'
             '  </div>\n'
             '  <figcaption class="tile-cap">\n'
-            '    <div><h3>{title}</h3><p>{cap}</p></div><span class="zoom">↗</span>\n'
+            '    <div><h3>{title}</h3><p>{cap}</p></div><span class="zoom" aria-hidden="true">↗</span>\n'
             '  </figcaption>\n'
             '</figure>'.format(genre=it["genre"], slug=slug, title=esc(it["title"]),
                                cap=esc(it["cap"]), alt=esc(alt), ar=ar, lq=lqip(im),
-                               gw=g.size[0], gh=g.size[1])
+                               gw=g.size[0], gh=g.size[1], sw=sm.size[0],
+                               loading="eager" if eager else "lazy",
+                               prio="high" if n == 1 else "auto")
         )
         print("  %3d/%d  %-14s %s" % (n, len(sel), slug, os.path.basename(src)))
 

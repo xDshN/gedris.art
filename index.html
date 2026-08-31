@@ -12,17 +12,49 @@
 <meta property="og:title" content="Мария Курочкина — фотограф">
 <meta property="og:description" content="Репортажная, креативная и постановочная съёмка событий — от внутренних мероприятий до федеральных.">
 <meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:url" content="https://xdshn.github.io/gedris.art/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Мария Курочкина">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://xdshn.github.io/gedris.art/">
 
 <link rel="icon" href="assets/img/misc/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/misc/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/oswald-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/jetbrains-mono-cyrillic.woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="preload" as="image" href="assets/img/grid/concert-01.webp"
+      imagesrcset="assets/img/grid-sm/concert-01.webp 950w, assets/img/grid/concert-01.webp 1700w"
+      imagesizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Мария Курочкина",
+  "alternateName": "Maria Kurochkina",
+  "jobTitle": "Фотограф",
+  "description": "Репортажная, креативная и постановочная съёмка событий — от внутренних мероприятий до федеральных.",
+  "url": "https://xdshn.github.io/gedris.art/",
+  "image": "https://xdshn.github.io/gedris.art/assets/img/og.jpg",
+  "email": "gedris.art@gmail.com",
+  "telephone": "+7-968-028-88-53",
+  "address": { "@type": "PostalAddress", "addressLocality": "Москва", "addressCountry": "RU" },
+  "sameAs": ["https://t.me/fansyuth", "https://vk.ru/urh0pe"],
+  "knowsAbout": ["Репортажная съёмка", "Событийная фотография", "Fashion-съёмка",
+                 "Концертная съёмка", "Постановочная съёмка", "Цветокоррекция"],
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Российский государственный университет имени А. Н. Косыгина"
+  }
+}
+</script>
 </head>
 <body>
 
 <!-- ================= ШАПКА ================= -->
+<div class="progress" id="progress" aria-hidden="true"><i></i></div>
 <header class="hdr" id="hdr">
   <a class="brand" href="#top" aria-label="Мария Курочкина — на главную">
     <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -67,14 +99,15 @@
   <section class="hero">
     <div class="flare-field hero-flare" aria-hidden="true">
       <b></b><b></b><b></b><b></b><b></b><b></b>
+      <u class="pointer-light" id="pointerLight"></u>
     </div>
 
     <div class="wrap">
       <p class="hero-kicker label">Фотограф&nbsp;· Москва</p>
 
-      <h1>
-        <span class="ln1">Мария</span>
-        <span class="ln2">Курочкина</span>
+      <h1 class="hero-name" id="heroName">
+        <span class="ln"><i>Мария</i></span>
+        <span class="ln"><i>Курочкина</i></span>
       </h1>
 
       <p class="hero-sub">
@@ -91,6 +124,11 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= БЕГУЩАЯ СТРОКА ================= -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
 
   <!-- ================= РАБОТЫ ================= -->
   <section class="section" id="works">
@@ -117,767 +155,975 @@
         data-full="assets/img/full/concert-01.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
         aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDigMmtO0ghEJWfhj0NQSRxC0jdVIcnk1dvbZI9OjkH3mp2Gi3p1hBPEyiLeVP3h3orKs9RmtFKxscGiqvboO6P/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-01.webp" alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-01.webp"
+         srcset="assets/img/grid-sm/concert-01.webp 741w, assets/img/grid/concert-01.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="eager" decoding="async" fetchpriority="high">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-01.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
         aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDfl1OCNiucmoxqAJJKnHY1ziRyBMs+5venNLclQofArRxZOh1Qlj2glwM+9Fce8dyekp/OinZAf//Z);background-size:cover">
-    <img src="assets/img/grid/event-01.webp" alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-01.webp"
+         srcset="assets/img/grid-sm/event-01.webp 690w, assets/img/grid/event-01.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="eager" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-01.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDachELHoKjEilQw6Gs7UL3dZsFOCak0ifzLVQ45WtOfXQj2fu3HPpauy5bpT7XTvs7sVk4PaiipSRTbtY//9k=);background-size:cover">
-    <img src="assets/img/grid/fashion-01.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-01.webp"
+         srcset="assets/img/grid-sm/fashion-01.webp 322w, assets/img/grid/fashion-01.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="eager" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-02.webp" data-title="Дима Билан" data-cap="Концерт · чёрно-белое"
         aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjreIzSBcge5q7PawJErB8464rPVipyDirlsytA6SAkdRQBTfG47elFP2Ak0UAf//Z);background-size:cover">
-    <img src="assets/img/grid/concert-02.webp" alt="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1322" height="820">
+    <img src="assets/img/grid/concert-02.webp"
+         srcset="assets/img/grid-sm/concert-02.webp 742w, assets/img/grid/concert-02.webp 1322w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" width="1322" height="820"
+         loading="eager" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-01.webp" data-title="Цветение" data-cap="Креативная съёмка"
         aria-label="Цветение — Креативная съёмка. Фотограф Мария Курочкина" style="--ar:0.856">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWABMDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCCOZclQfu81JHL57ELzUA8qNdzcZ60W0oE5MXTFd1p31ephONJw5o6ErQfMflorRjUtGD5iDNFXzrsctp9zFuoyLUnNU7CcrMFPOeKKKVV2kmXSV4tHSJYBkBDkZFFFFcH1ip3OtUYdj//2Q==);background-size:cover">
-    <img src="assets/img/grid/art-01.webp" alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="702" height="820">
+    <img src="assets/img/grid/art-01.webp"
+         srcset="assets/img/grid-sm/art-01.webp 394w, assets/img/grid/art-01.webp 702w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" width="702" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-02.webp" data-title="Московский выпускной на ВДНХ" data-cap="Главная сцена · 2026"
         aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDHuysJA25FRxZmiOVxzRfujTDaQQKuWUyC3OCoOelc3Q9/mvN6nPGRm6mlErr0Y0UVvY8bme9z/9k=);background-size:cover">
-    <img src="assets/img/grid/event-02.webp" alt="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/event-02.webp"
+         srcset="assets/img/grid-sm/event-02.webp 307w, assets/img/grid/event-02.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Главная сцена · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Главная сцена · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-03.webp" data-title="Сергей Лазарев" data-cap="Московский выпускной · 2026"
         aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDLWzIPJqOeVbY7CMk1eTYGzkmqeqBN6+p71jDc9vEpqndHQaQQ9opHeio9KmWKyQN6UV1rY8qpdyP/2Q==);background-size:cover">
-    <img src="assets/img/grid/concert-03.webp" alt="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-03.webp"
+         srcset="assets/img/grid-sm/concert-03.webp 690w, assets/img/grid/concert-03.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Сергей Лазарев</h3><p>Московский выпускной · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Сергей Лазарев</h3><p>Московский выпускной · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-02.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDSvLhpBNEMFdvGK5uOzkW45BxinSSy7i0bGpILmRQQxyT61k9y7aXIFiKcBqUxsT96iimK5//Z);background-size:cover">
-    <img src="assets/img/grid/fashion-02.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-02.webp"
+         srcset="assets/img/grid-sm/fashion-02.webp 322w, assets/img/grid/fashion-02.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-03.webp" data-title="Выставка в Совете Федерации" data-cap="Официальная съёмка"
         aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCydWt2RsuKqRvApEgOAT1NctG5WI9Sc1b+0t5AQ561MldlRk0dW19C6AKwOKK5vSpADISCaKTiWmf/2Q==);background-size:cover">
-    <img src="assets/img/grid/event-03.webp" alt="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1322" height="820">
+    <img src="assets/img/grid/event-03.webp"
+         srcset="assets/img/grid-sm/event-03.webp 741w, assets/img/grid/event-03.webp 1322w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" width="1322" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Выставка в Совете Федерации</h3><p>Официальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Выставка в Совете Федерации</h3><p>Официальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-04.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
         aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDbtVKo27qKwry9le6kj35UVJDrzfZGaVfn9qxPMcB7ktneelap+8mK1i55sbfeODRWRJdc9KK9D6zFdSdT/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-04.webp" alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-04.webp"
+         srcset="assets/img/grid-sm/concert-04.webp 690w, assets/img/grid/concert-04.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-02.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
         aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCbUNbazuxCqZHc1pwXK3MQZetc/rEM0+pAKoAA6mq8F09ldFXk2rjpSIL3idilssiEq2cZFcm8ry/M7E0UUAz/2Q==);background-size:cover">
-    <img src="assets/img/grid/art-02.webp" alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-02.webp"
+         srcset="assets/img/grid-sm/art-02.webp 307w, assets/img/grid/art-02.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-04.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
         aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDrqa7ccHmoXuMSAdqbLMoIzmqWpOxbU5UZoqOJgYwaKQz/2Q==);background-size:cover">
-    <img src="assets/img/grid/event-04.webp" alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-04.webp"
+         srcset="assets/img/grid-sm/event-04.webp 690w, assets/img/grid/event-04.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-05.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
         aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjlQuSR0Fa0dvbyWRaNgJAOhqrpsCzK4btUdy3lzEJwBWqVxCxQXETHCEZore05hfwAOMFB1oraFWCVmJwbeh//9k=);background-size:cover">
-    <img src="assets/img/grid/concert-05.webp" alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-05.webp"
+         srcset="assets/img/grid-sm/concert-05.webp 741w, assets/img/grid/concert-05.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-06.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
         aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjIozI4Ud61TZQiwYg5kXrUWkRqxkdhnaOKLORpL4xsflc4IoKRmnrRVrUoFt7x406Cigk/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-06.webp" alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-06.webp"
+         srcset="assets/img/grid-sm/concert-06.webp 741w, assets/img/grid/concert-06.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · сцена. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · сцена</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-07.webp" data-title="Дима Билан" data-cap="Концерт · чёрно-белое"
         aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDmrVPtDKkmdnrTL2z8gl0+aPpmpvtXkWPlBRuJ+9VaS7k8jySflPNAFYEUUlFAH//Z);background-size:cover">
-    <img src="assets/img/grid/concert-07.webp" alt="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-07.webp"
+         srcset="assets/img/grid-sm/concert-07.webp 741w, assets/img/grid/concert-07.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-08.webp" data-title="Дима Билан" data-cap="Концерт · общий план"
         aria-label="Дима Билан — Концерт · общий план. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjwEA5HNOVtvO2mom5d2amMahUb1rdPsBC/wA/NFSS7S3AxRT5bhZn/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-08.webp" alt="Дима Билан — Концерт · общий план. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-08.webp"
+         srcset="assets/img/grid-sm/concert-08.webp 741w, assets/img/grid/concert-08.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Дима Билан — Концерт · общий план. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Дима Билан</h3><p>Концерт · общий план</p></div><span class="zoom">↗</span>
+    <div><h3>Дима Билан</h3><p>Концерт · общий план</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-09.webp" data-title="Сергей Лазарев" data-cap="Московский выпускной · 2026"
         aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDEykLZlOcdqRGEmWRsLnin6pBiIPtOaowHaMVnFXVz06knGrZmtfMfs7ZOcVgvcM3YCiiiGwsc7TVj/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-09.webp" alt="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/concert-09.webp"
+         srcset="assets/img/grid-sm/concert-09.webp 307w, assets/img/grid/concert-09.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Сергей Лазарев</h3><p>Московский выпускной · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Сергей Лазарев</h3><p>Московский выпускной · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-10.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
         aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCxfWUEcTSsvFPj8u0tUcDCt2rLuvEKtG0Tx5BqG51lJUiGw7R2rZzbHyo6lEBQH15ormbrxBMhUQ8LjvRS5hOJ/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-10.webp" alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-10.webp"
+         srcset="assets/img/grid-sm/concert-10.webp 690w, assets/img/grid/concert-10.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-11.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
         aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDb1SdrW0Z0IyK5y3v3vZCX6D1p3ifUf3vkJnn3qrYFEjHY1rHcxrXUNDLiu/NuDNMu/wBqSa4Z5CUJUegooqTU/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-11.webp" alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/concert-11.webp"
+         srcset="assets/img/grid-sm/concert-11.webp 307w, assets/img/grid/concert-11.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="The Hatters — Московский выпускной · 2026. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>The Hatters</h3><p>Московский выпускной · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-12.webp" data-title="Improv Минск" data-cap="Шоу · чёрно-белое"
         aria-label="Improv Минск — Шоу · чёрно-белое. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkYLYzAYzknFXI9JczmEg7uxxSaC5/tCNM8E11GpTPazjCqeOuOaAOWk04wuVmYKaKva95bmF0zlhzRQB//9k=);background-size:cover">
-    <img src="assets/img/grid/concert-12.webp" alt="Improv Минск — Шоу · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-12.webp"
+         srcset="assets/img/grid-sm/concert-12.webp 690w, assets/img/grid/concert-12.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Минск — Шоу · чёрно-белое. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Минск</h3><p>Шоу · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Минск</h3><p>Шоу · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-13.webp" data-title="Improv Минск" data-cap="Шоу · сцена"
         aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjUTjJHWpVt3dGZUJC9TTFGAOasJcSqjIGwrDBp3FYri2kMYcL8pOKKlMkixKgfgHpRSGf/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-13.webp" alt="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-13.webp"
+         srcset="assets/img/grid-sm/concert-13.webp 690w, assets/img/grid/concert-13.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Минск</h3><p>Шоу · сцена</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Минск</h3><p>Шоу · сцена</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-14.webp" data-title="Improv Минск" data-cap="Шоу · сцена"
         aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjok3A8Zp32SU/dUkGmwuUOa3bTU4Lez2vGWfOQcUhnPyI0blWGCKKs6lcLdXTSou0HtRTEf/Z);background-size:cover">
-    <img src="assets/img/grid/concert-14.webp" alt="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-14.webp"
+         srcset="assets/img/grid-sm/concert-14.webp 690w, assets/img/grid/concert-14.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Минск — Шоу · сцена. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Минск</h3><p>Шоу · сцена</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Минск</h3><p>Шоу · сцена</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-15.webp" data-title="Improv Russia" data-cap="StandUp Store Moscow"
         aria-label="Improv Russia — StandUp Store Moscow. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCg0EYgSNwPNPU1Ue1KzMucKBWWLyYHO80G8mJOWJzUcprzovCyadN2M84oqpFcz7cK5AooE3c//9k=);background-size:cover">
-    <img src="assets/img/grid/concert-15.webp" alt="Improv Russia — StandUp Store Moscow. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-15.webp"
+         srcset="assets/img/grid-sm/concert-15.webp 690w, assets/img/grid/concert-15.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Russia — StandUp Store Moscow. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Russia</h3><p>StandUp Store Moscow</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Russia</h3><p>StandUp Store Moscow</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-16.webp" data-title="Improv Russia" data-cap="Шоу · Москва"
         aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDKhlCTYBxnvUU9hJJdGSMgg89aLxArJjrUtjzdgEnkVitrna3rbsQ3WISolj3HHWil1SN/tGwNwKKNB3k9bH//2Q==);background-size:cover">
-    <img src="assets/img/grid/concert-16.webp" alt="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-16.webp"
+         srcset="assets/img/grid-sm/concert-16.webp 690w, assets/img/grid/concert-16.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Russia</h3><p>Шоу · Москва</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Russia</h3><p>Шоу · Москва</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-17.webp" data-title="Improv Russia" data-cap="Шоу · чёрно-белое"
         aria-label="Improv Russia — Шоу · чёрно-белое. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDEWFlGWB5HFKLYyxltuajF8REqkZK1Pb3pit3wPvUAVLixMZGRtzRUlxM84Uk9KKVx2P/Z);background-size:cover">
-    <img src="assets/img/grid/concert-17.webp" alt="Improv Russia — Шоу · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-17.webp"
+         srcset="assets/img/grid-sm/concert-17.webp 690w, assets/img/grid/concert-17.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Russia — Шоу · чёрно-белое. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Russia</h3><p>Шоу · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Russia</h3><p>Шоу · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-18.webp" data-title="Антон Шастун" data-cap="Improv Russia"
         aria-label="Антон Шастун — Improv Russia. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnBJhs1LKiNbrIjZfuKpsflq7aLHJaOOjAVpNkQSIorjau1u1FVrpTDJjPUUVSmS4an//Z);background-size:cover">
-    <img src="assets/img/grid/concert-18.webp" alt="Антон Шастун — Improv Russia. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-18.webp"
+         srcset="assets/img/grid-sm/concert-18.webp 690w, assets/img/grid/concert-18.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Антон Шастун — Improv Russia. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Антон Шастун</h3><p>Improv Russia</p></div><span class="zoom">↗</span>
+    <div><h3>Антон Шастун</h3><p>Improv Russia</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-19.webp" data-title="Improv Russia" data-cap="Шоу · Москва"
         aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDK0+0a5y3GBT4NOlZJJcdDxUFhdNBkg8elINTmQygMQhPSqlJ3JUVYqanKWkVW6rxRVa6k82Td60Um7jSsf//Z);background-size:cover">
-    <img src="assets/img/grid/concert-19.webp" alt="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/concert-19.webp"
+         srcset="assets/img/grid-sm/concert-19.webp 690w, assets/img/grid/concert-19.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Improv Russia — Шоу · Москва. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Improv Russia</h3><p>Шоу · Москва</p></div><span class="zoom">↗</span>
+    <div><h3>Improv Russia</h3><p>Шоу · Москва</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-20.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
         aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlI428wKO9WJbbYeW59KjteJsntU1w5aRX7kU+XQ1STZRkBVsGinzHLktRT5TNuzP/2Q==);background-size:cover">
-    <img src="assets/img/grid/concert-20.webp" alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-20.webp"
+         srcset="assets/img/grid-sm/concert-20.webp 741w, assets/img/grid/concert-20.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom">↗</span>
+    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-21.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
         aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkxEzn5RTpLWUJuPSn2bF3AJrRv8JCmB0GKVkbuV0YZRgOaKV5DnFFOxnof//Z);background-size:cover">
-    <img src="assets/img/grid/concert-21.webp" alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/concert-21.webp"
+         srcset="assets/img/grid-sm/concert-21.webp 741w, assets/img/grid/concert-21.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom">↗</span>
+    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-22.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
         aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDiRzVxbdJLUshG9eoqqozT4mKsSD2pFJEVFKeTRTJP/9k=);background-size:cover">
-    <img src="assets/img/grid/concert-22.webp" alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1322" height="820">
+    <img src="assets/img/grid/concert-22.webp"
+         srcset="assets/img/grid-sm/concert-22.webp 742w, assets/img/grid/concert-22.webp 1322w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Творческое шоу — Сцена · Москва. Фотограф Мария Курочкина" width="1322" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom">↗</span>
+    <div><h3>Творческое шоу</h3><p>Сцена · Москва</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-05.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
         aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDoI4ngtlAcE+tQNcIZPmHIHaqjzlolAYgCo5LjA+Uc0Rdtimr7mjFqVryobGPWiuXu58NjaAc9qKLvqTY//9k=);background-size:cover">
-    <img src="assets/img/grid/event-05.webp" alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-05.webp"
+         srcset="assets/img/grid-sm/event-05.webp 690w, assets/img/grid/event-05.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-06.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
         aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC0urPc3DGNeBU0mt+SmFQs46isPw9dA5jKncO5roYLaKadmZRnFFrag2noc1o06JdSKUySOorpLGUPKwAIxRRVN9CUluf/2Q==);background-size:cover">
-    <img src="assets/img/grid/event-06.webp" alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/event-06.webp"
+         srcset="assets/img/grid-sm/event-06.webp 307w, assets/img/grid/event-06.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-07.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
         aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDsBPGwyrA1FHdq0rLnpXD22puEjIdsseauSXk8MRlzzn1ptajtode0qDuKK5VZnuIlfzXBNFUoN6om5//Z);background-size:cover">
-    <img src="assets/img/grid/event-07.webp" alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-07.webp"
+         srcset="assets/img/grid-sm/event-07.webp 690w, assets/img/grid/event-07.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Событие · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-08.webp" data-title="Московский выпускной на ВДНХ" data-cap="Сцена · 2026"
         aria-label="Московский выпускной на ВДНХ — Сцена · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC6cxvsBycZqm+oSCXywhzUepyPbxtOjEk1Qhv2eF58cjvVpRW6NFNM0p7t4kVnGM0Vkf2oJFxICxB70U0h8x//2Q==);background-size:cover">
-    <img src="assets/img/grid/event-08.webp" alt="Московский выпускной на ВДНХ — Сцена · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-08.webp"
+         srcset="assets/img/grid-sm/event-08.webp 690w, assets/img/grid/event-08.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Сцена · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Сцена · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Сцена · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-09.webp" data-title="Московский выпускной на ВДНХ" data-cap="Главная сцена · 2026"
         aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl7WyR5SsjYA9Ks2ektdztHGRx61QjuHjOQeakh1CaGXfGxDUtTa8LbFy70Sa3k2sKKjl1q6kxufOKKAvDsf/Z);background-size:cover">
-    <img src="assets/img/grid/event-09.webp" alt="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-09.webp"
+         srcset="assets/img/grid-sm/event-09.webp 690w, assets/img/grid/event-09.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Главная сцена · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Главная сцена · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-10.webp" data-title="Московский выпускной на ВДНХ" data-cap="Зрители · 2026"
         aria-label="Московский выпускной на ВДНХ — Зрители · 2026. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDflurNIy+8CuO1O8R7pmQ5BNZIvZXTDOSKjknJBrphU5NUNxW5uC+8tQFI6UVhJLnqTRWn1jyDlP/Z);background-size:cover">
-    <img src="assets/img/grid/event-10.webp" alt="Московский выпускной на ВДНХ — Зрители · 2026. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-10.webp"
+         srcset="assets/img/grid-sm/event-10.webp 690w, assets/img/grid/event-10.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московский выпускной на ВДНХ — Зрители · 2026. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московский выпускной на ВДНХ</h3><p>Зрители · 2026</p></div><span class="zoom">↗</span>
+    <div><h3>Московский выпускной на ВДНХ</h3><p>Зрители · 2026</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-11.webp" data-title="Выставка в Совете Федерации" data-cap="Официальная съёмка"
         aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDVk121BIBziqY1mAqy78ZOa47ziYjycmouf7xz0ptJqzBXWp1T6rCXIV+KKxLGy8xmBboKKwlRjfc1U5H/2Q==);background-size:cover">
-    <img src="assets/img/grid/event-11.webp" alt="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/event-11.webp"
+         srcset="assets/img/grid-sm/event-11.webp 741w, assets/img/grid/event-11.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Выставка в Совете Федерации</h3><p>Официальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Выставка в Совете Федерации</h3><p>Официальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-12.webp" data-title="Выставка в Совете Федерации" data-cap="Костюмы народов России"
         aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCVdRZm29aaL4yOw3Y21kpIy3IQ9qhkkYTfKcbmxXNd3Ozlidfpm54yS2aKi0ncikZyMCitIy5lcxnGzsf/2Q==);background-size:cover">
-    <img src="assets/img/grid/event-12.webp" alt="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/event-12.webp"
+         srcset="assets/img/grid-sm/event-12.webp 741w, assets/img/grid/event-12.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Выставка в Совете Федерации</h3><p>Костюмы народов России</p></div><span class="zoom">↗</span>
+    <div><h3>Выставка в Совете Федерации</h3><p>Костюмы народов России</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-13.webp" data-title="Выставка в Совете Федерации" data-cap="Костюмы народов России"
         aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBlzL+8OegFVFuWSTcrEVMcFpiwzzigaaJY9wcisI2V7nZy3V0PTUJezUVkXbm1nKDmipszN6M//9k=);background-size:cover">
-    <img src="assets/img/grid/event-13.webp" alt="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1322" height="820">
+    <img src="assets/img/grid/event-13.webp"
+         srcset="assets/img/grid-sm/event-13.webp 741w, assets/img/grid/event-13.webp 1322w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Курочкина" width="1322" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Выставка в Совете Федерации</h3><p>Костюмы народов России</p></div><span class="zoom">↗</span>
+    <div><h3>Выставка в Совете Федерации</h3><p>Костюмы народов России</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-14.webp" data-title="Селигер" data-cap="Форум · 2025"
         aria-label="Селигер — Форум · 2025. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDES/nCkBqli1e6QYVqux6dbt0zUq6Zboc4Ncv1iI+Uii127xyAaKtfZkx8gAH0oo9vELM//9k=);background-size:cover">
-    <img src="assets/img/grid/event-14.webp" alt="Селигер — Форум · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-14.webp"
+         srcset="assets/img/grid-sm/event-14.webp 690w, assets/img/grid/event-14.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Селигер — Форум · 2025. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Селигер</h3><p>Форум · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Селигер</h3><p>Форум · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-15.webp" data-title="Селигер" data-cap="Форум · 2025"
         aria-label="Селигер — Форум · 2025. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDAitmdwCMA96sCzjVX3N8w6CmSCRVABqFmdm5NZptmnucnmPlt9pHNFSK2FAfk0VN2jM//2Q==);background-size:cover">
-    <img src="assets/img/grid/event-15.webp" alt="Селигер — Форум · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/event-15.webp"
+         srcset="assets/img/grid-sm/event-15.webp 690w, assets/img/grid/event-15.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Селигер — Форум · 2025. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Селигер</h3><p>Форум · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Селигер</h3><p>Форум · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-03.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCczx7SQc4qWPEiBgetZzSrNbNsARj2qKG6miIQLnAodaV0JUY2LZ0sb8+YaU6aC2fMNFFVZCuf/9k=);background-size:cover">
-    <img src="assets/img/grid/fashion-03.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-03.webp"
+         srcset="assets/img/grid-sm/fashion-03.webp 322w, assets/img/grid/fashion-03.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-04.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDIt7P93CwHJPNdtbr+4QZ7VxdxeSQ7YsDir1hqktw6hn2hBjAqblqOlyWfSoGfcRzT7LSId5IJFFFaNGSeh//Z);background-size:cover">
-    <img src="assets/img/grid/fashion-04.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-04.webp"
+         srcset="assets/img/grid-sm/fashion-04.webp 322w, assets/img/grid/fashion-04.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-05.webp" data-title="Московская неделя моды" data-cap="Показ · 2025"
         aria-label="Московская неделя моды — Показ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCvcw3DN5cbEJ3NLpKS2hlixls55q/FO7AgICCMr7mnWwuJ5/NnhEfGBRPUdN8plrq39nxIix727E9qsWV/Nc32ZGOCvSiilIqPws//2Q==);background-size:cover">
-    <img src="assets/img/grid/fashion-05.webp" alt="Московская неделя моды — Показ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-05.webp"
+         srcset="assets/img/grid-sm/fashion-05.webp 322w, assets/img/grid/fashion-05.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-06.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDpm1BDFvFQXrJPECcGsWO5EtsF7g05ZJpUIjOdhxWKk72Zrypq6NJNKgiTipI7GKPlRjPWiitrLczu0f/Z);background-size:cover">
-    <img src="assets/img/grid/fashion-06.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-06.webp"
+         srcset="assets/img/grid-sm/fashion-06.webp 322w, assets/img/grid/fashion-06.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-07.webp" data-title="Московская неделя моды" data-cap="Бэкстейдж · 2025"
         aria-label="Московская неделя моды — Бэкстейдж · 2025. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDTsdSe4jZm6L3qC8vX3LKrhgp5ArKmuTa2jRKOGHUVhz3ckcmEY4A9amxWh2ja9AiKwyCeoorjBO8nJxRTsK6P/9k=);background-size:cover">
-    <img src="assets/img/grid/fashion-07.webp" alt="Московская неделя моды — Бэкстейдж · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/fashion-07.webp"
+         srcset="assets/img/grid-sm/fashion-07.webp 741w, assets/img/grid/fashion-07.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Бэкстейдж · 2025. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Бэкстейдж · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Бэкстейдж · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-08.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
         aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq43yoLGnbh2Nc5JrbLbELGd47VNaao8vONpI70k2DRQE4f7yDJpHYq25eDRRXA6kr7lWP/9k=);background-size:cover">
-    <img src="assets/img/grid/fashion-08.webp" alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/fashion-08.webp"
+         srcset="assets/img/grid-sm/fashion-08.webp 322w, assets/img/grid/fashion-08.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom">↗</span>
+    <div><h3>Московская неделя моды</h3><p>Показ · ВДНХ · 2025</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-09.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
         aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl4YVaJnboK09O01bmFnxwBxmljsEGnmUH73GK2tJ0kCBWMhyPStHdxZSaTTMFrKFTgxOW74orsDo8D/MWbJooTRL3P//Z);background-size:cover">
-    <img src="assets/img/grid/fashion-09.webp" alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/fashion-09.webp"
+         srcset="assets/img/grid-sm/fashion-09.webp 741w, assets/img/grid/fashion-09.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom">↗</span>
+    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-10.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
         aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl3t2hkx6VYF6ViMaqAcYJpju7q2W6VEoyR710OTi49hJXuhPs4Ybi4GaKjlkKORiircoX2FZn/9k=);background-size:cover">
-    <img src="assets/img/grid/fashion-10.webp" alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/fashion-10.webp"
+         srcset="assets/img/grid-sm/fashion-10.webp 741w, assets/img/grid/fashion-10.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom">↗</span>
+    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-11.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
         aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlI4ZAwCjOa3rDTJ5F2/dz3rLmjaO7RA3AaumR3ieHaetavYBq6HNjDOOKK25w2FwccUUuYpRuf//Z);background-size:cover">
-    <img src="assets/img/grid/fashion-11.webp" alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/fashion-11.webp"
+         srcset="assets/img/grid-sm/fashion-11.webp 741w, assets/img/grid/fashion-11.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom">↗</span>
+    <div><h3>Shoes Style</h3><p>Международный конкурс дизайнеров</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-12.webp" data-title="Shoes Style" data-cap="Аксессуары · деталь"
         aria-label="Shoes Style — Аксессуары · деталь. Фотограф Мария Курочкина" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkhFz8xq3DBB5ZBOXPSq7Ie5pclCrLwa3nT50+XQFJReok0BV8FcGir2x7gBmIzRVRpu2q1FJq+h//2Q==);background-size:cover">
-    <img src="assets/img/grid/fashion-12.webp" alt="Shoes Style — Аксессуары · деталь. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1321" height="820">
+    <img src="assets/img/grid/fashion-12.webp"
+         srcset="assets/img/grid-sm/fashion-12.webp 741w, assets/img/grid/fashion-12.webp 1321w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Shoes Style — Аксессуары · деталь. Фотограф Мария Курочкина" width="1321" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Shoes Style</h3><p>Аксессуары · деталь</p></div><span class="zoom">↗</span>
+    <div><h3>Shoes Style</h3><p>Аксессуары · деталь</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-03.webp" data-title="Цветение" data-cap="Креативная съёмка"
         aria-label="Цветение — Креативная съёмка. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCtFgyKu7GTUjqckEZwetUII3MnJyc5rRaVugA9664upKe2hnUoRhTvFiW1sPKEhPJqW1gWWVg9FFTOclCTTOjlTpxR/9k=);background-size:cover">
-    <img src="assets/img/grid/art-03.webp" alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/art-03.webp"
+         srcset="assets/img/grid-sm/art-03.webp 322w, assets/img/grid/art-03.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-04.webp" data-title="Цветение" data-cap="Креативная съёмка"
         aria-label="Цветение — Креативная съёмка. Фотограф Мария Курочкина" style="--ar:0.79">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWABEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCkhVVB61YVQ+McVQ3iNAB0FXEnSUqIuveu5N9TaVr6E32X/bFFGyX0op38xFO8iRDtUVVs9ysxB70UVjQblCLY5pKRb8yT+9RRRXRYZ//Z);background-size:cover">
-    <img src="assets/img/grid/art-04.webp" alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="648" height="820">
+    <img src="assets/img/grid/art-04.webp"
+         srcset="assets/img/grid-sm/art-04.webp 364w, assets/img/grid/art-04.webp 648w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Цветение — Креативная съёмка. Фотограф Мария Курочкина" width="648" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Цветение</h3><p>Креативная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-05.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
         aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDUvJXj2iPG4+tOsLhp1YSLhlqut5DcSswIOBxT7WdYnIYgM3NSmTdHLaZIwlBzx1xUOo30z3bEMVxxxRRTRmj/2Q==);background-size:cover">
-    <img src="assets/img/grid/art-05.webp" alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-05.webp"
+         srcset="assets/img/grid-sm/art-05.webp 307w, assets/img/grid/art-05.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-06.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
         aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDRn1SGG7Fuc7jV8EMuQQa53VPKXVC7sEYDj3q1oV2J2lUtuwaRJk+LSPtMeBg461a8LwCOJ5M5JoooEf/Z);background-size:cover">
-    <img src="assets/img/grid/art-06.webp" alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-06.webp"
+         srcset="assets/img/grid-sm/art-06.webp 307w, assets/img/grid/art-06.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-07.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
         aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDcuZltk3kE/SpIZFnhV1HBrm7/AFeT+1Ps7cRg4NblldI37pegHFAkcl4hKpq2cV0WjYntklxjAxiiigSP/9k=);background-size:cover">
-    <img src="assets/img/grid/art-07.webp" alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-07.webp"
+         srcset="assets/img/grid-sm/art-07.webp 307w, assets/img/grid/art-07.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Каллы — Концептуальная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Каллы</h3><p>Концептуальная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-08.webp" data-title="Camera 0.2" data-cap="Концепт · коллаж"
         aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" style="--ar:0.666">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCk5DLw3Io8tuO4qN2WPzNqnI60sMjyAMp+X0osInaLzGHOPWk8tI+AKKKBn//Z);background-size:cover">
-    <img src="assets/img/grid/art-08.webp" alt="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="546" height="820">
+    <img src="assets/img/grid/art-08.webp"
+         srcset="assets/img/grid-sm/art-08.webp 306w, assets/img/grid/art-08.webp 546w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" width="546" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Camera 0.2</h3><p>Концепт · коллаж</p></div><span class="zoom">↗</span>
+    <div><h3>Camera 0.2</h3><p>Концепт · коллаж</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-09.webp" data-title="Camera 0.2" data-cap="Концепт · коллаж"
         aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" style="--ar:0.666">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCgFG7DcildFVM9KTHcdaWUu2N2KSAgaUxHIpVuSxGVoooGf//Z);background-size:cover">
-    <img src="assets/img/grid/art-09.webp" alt="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="546" height="820">
+    <img src="assets/img/grid/art-09.webp"
+         srcset="assets/img/grid-sm/art-09.webp 306w, assets/img/grid/art-09.webp 546w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Camera 0.2 — Концепт · коллаж. Фотограф Мария Курочкина" width="546" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Camera 0.2</h3><p>Концепт · коллаж</p></div><span class="zoom">↗</span>
+    <div><h3>Camera 0.2</h3><p>Концепт · коллаж</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-10.webp" data-title="Портрет" data-cap="Студия · высокий ключ"
         aria-label="Портрет — Студия · высокий ключ. Фотограф Мария Курочкина" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDqNSu/s8Dbc7scVnaBrZvWeKbAda1L+28+BwvUiuCkS60m/d9pGe4qbu5VlY9GY4Wuf1xULjcoNFFRV2Lpbn//2Q==);background-size:cover">
-    <img src="assets/img/grid/art-10.webp" alt="Портрет — Студия · высокий ключ. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/art-10.webp"
+         srcset="assets/img/grid-sm/art-10.webp 322w, assets/img/grid/art-10.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Портрет — Студия · высокий ключ. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Портрет</h3><p>Студия · высокий ключ</p></div><span class="zoom">↗</span>
+    <div><h3>Портрет</h3><p>Студия · высокий ключ</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-11.webp" data-title="Портрет" data-cap="Студия · контровой свет"
         aria-label="Портрет — Студия · контровой свет. Фотограф Мария Курочкина" style="--ar:0.701">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDd8R6jLp9puhHJ71ydp4nvIZS0jbwe1dX4mhWaxIbtXnTjDEelAzrPFmrSLKbVBhe5rkjyaKKQH//Z);background-size:cover">
-    <img src="assets/img/grid/art-11.webp" alt="Портрет — Студия · контровой свет. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="574" height="820">
+    <img src="assets/img/grid/art-11.webp"
+         srcset="assets/img/grid-sm/art-11.webp 322w, assets/img/grid/art-11.webp 574w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Портрет — Студия · контровой свет. Фотограф Мария Курочкина" width="574" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Портрет</h3><p>Студия · контровой свет</p></div><span class="zoom">↗</span>
+    <div><h3>Портрет</h3><p>Студия · контровой свет</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-12.webp" data-title="On the street" data-cap="Уличная съёмка"
         aria-label="On the street — Уличная съёмка. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDfjvjcWoODzWbdgeaA6fJ/eqp/asiw8ACntePdWMm7g4604xvDmZn7S0rE8Udu33GH50VyLSy2zlTI34GisuY1uf/Z);background-size:cover">
-    <img src="assets/img/grid/art-12.webp" alt="On the street — Уличная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/art-12.webp"
+         srcset="assets/img/grid-sm/art-12.webp 690w, assets/img/grid/art-12.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="On the street — Уличная съёмка. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>On the street</h3><p>Уличная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>On the street</h3><p>Уличная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-13.webp" data-title="On the street" data-cap="Уличная съёмка"
         aria-label="On the street — Уличная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC2tqX3FiAR2ohs/OBKkYqtqOoiGdVxyeuK0bGZPs/HGea3UpJaHO4Qb1OSklNxOHbqTXRWq/Ko9qKKmpsh092f/9k=);background-size:cover">
-    <img src="assets/img/grid/art-13.webp" alt="On the street — Уличная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-13.webp"
+         srcset="assets/img/grid-sm/art-13.webp 307w, assets/img/grid/art-13.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="On the street — Уличная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>On the street</h3><p>Уличная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>On the street</h3><p>Уличная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-14.webp" data-title="Портрет" data-cap="Съёмка на набережной"
         aria-label="Портрет — Съёмка на набережной. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBmkafLd2xkLhVFUpo0gumErHb2NT2eriyiMW3INZt5eC6lJxis7alrYgkkJYClt4fNkPOKKKtkn//Z);background-size:cover">
-    <img src="assets/img/grid/art-14.webp" alt="Портрет — Съёмка на набережной. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-14.webp"
+         srcset="assets/img/grid-sm/art-14.webp 307w, assets/img/grid/art-14.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Портрет — Съёмка на набережной. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Портрет</h3><p>Съёмка на набережной</p></div><span class="zoom">↗</span>
+    <div><h3>Портрет</h3><p>Съёмка на набережной</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-15.webp" data-title="Портрет" data-cap="Студия · чёрно-белое"
         aria-label="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDXvZmtosom5j2otXM8IZl2nuKz5tWhu32Q9V5yafY6zbHMTHaw65oA4yOVlwwJBraOnpc2qToSjHrRRQB//9k=);background-size:cover">
-    <img src="assets/img/grid/art-15.webp" alt="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-15.webp"
+         srcset="assets/img/grid-sm/art-15.webp 307w, assets/img/grid/art-15.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Портрет</h3><p>Студия · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Портрет</h3><p>Студия · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-16.webp" data-title="Портрет" data-cap="Студия · чёрно-белое"
         aria-label="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDZuZTCgKruNLGwljDYxmsbUdbj+5FyR3p+na5C6iOQbCBS1uPocirk5yaazkPwaKKoD//Z);background-size:cover">
-    <img src="assets/img/grid/art-16.webp" alt="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-16.webp"
+         srcset="assets/img/grid-sm/art-16.webp 307w, assets/img/grid/art-16.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Портрет — Студия · чёрно-белое. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Портрет</h3><p>Студия · чёрно-белое</p></div><span class="zoom">↗</span>
+    <div><h3>Портрет</h3><p>Студия · чёрно-белое</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-17.webp" data-title="Мир и Ксюша" data-cap="Постановочная съёмка"
         aria-label="Мир и Ксюша — Постановочная съёмка. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDd1SX7TbvFayYfuaz9E066tLgsz7lYc1oW9h9mkbncGOcmrNtIGdgvQVOrZdlYbKSYMg4NRWLfM1FFC3H9k//Z);background-size:cover">
-    <img src="assets/img/grid/art-17.webp" alt="Мир и Ксюша — Постановочная съёмка. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/art-17.webp"
+         srcset="assets/img/grid-sm/art-17.webp 307w, assets/img/grid/art-17.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Мир и Ксюша — Постановочная съёмка. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Мир и Ксюша</h3><p>Постановочная съёмка</p></div><span class="zoom">↗</span>
+    <div><h3>Мир и Ксюша</h3><p>Постановочная съёмка</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-01.webp" data-title="Лес" data-cap="Пейзаж"
         aria-label="Лес — Пейзаж. Фотограф Мария Курочкина" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDmsn0qUOzLtC5q89oYzggVNDtgAJQVj7VWHYyJFYHlSKK0rpftEm4cCimqiFY//9k=);background-size:cover">
-    <img src="assets/img/grid/nature-01.webp" alt="Лес — Пейзаж. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="1230" height="820">
+    <img src="assets/img/grid/nature-01.webp"
+         srcset="assets/img/grid-sm/nature-01.webp 690w, assets/img/grid/nature-01.webp 1230w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Лес — Пейзаж. Фотограф Мария Курочкина" width="1230" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Лес</h3><p>Пейзаж</p></div><span class="zoom">↗</span>
+    <div><h3>Лес</h3><p>Пейзаж</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-02.webp" data-title="Тихая охота" data-cap="Макро"
         aria-label="Тихая охота — Макро. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDAUAmldV9adbuB8pUHPc0yR9zH5cVnZhYaWx2oZ8gDFFFUB//Z);background-size:cover">
-    <img src="assets/img/grid/nature-02.webp" alt="Тихая охота — Макро. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/nature-02.webp"
+         srcset="assets/img/grid-sm/nature-02.webp 307w, assets/img/grid/nature-02.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Тихая охота — Макро. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Тихая охота</h3><p>Макро</p></div><span class="zoom">↗</span>
+    <div><h3>Тихая охота</h3><p>Макро</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-03.webp" data-title="Кислица" data-cap="Макро"
         aria-label="Кислица — Макро. Фотограф Мария Курочкина" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGNMxg461BcRyQ8qTg1J9oKpyMGq7XjSAqPWudXM0VpZGK4JqBZGXJBoorRIpH/9k=);background-size:cover">
-    <img src="assets/img/grid/nature-03.webp" alt="Кислица — Макро. Фотограф Мария Курочкина" loading="lazy" decoding="async"
-         width="547" height="820">
+    <img src="assets/img/grid/nature-03.webp"
+         srcset="assets/img/grid-sm/nature-03.webp 307w, assets/img/grid/nature-03.webp 547w"
+         sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 40vw"
+         alt="Кислица — Макро. Фотограф Мария Курочкина" width="547" height="820"
+         loading="lazy" decoding="async" fetchpriority="auto">
   </div>
   <figcaption class="tile-cap">
-    <div><h3>Кислица</h3><p>Макро</p></div><span class="zoom">↗</span>
+    <div><h3>Кислица</h3><p>Макро</p></div><span class="zoom" aria-hidden="true">↗</span>
   </figcaption>
 </figure>
 <!-- WORKS:END -->
       </div>
 
       <div class="grid-more" id="gridMore" hidden>
-        <button class="btn" id="moreBtn">Показать ещё <span>↓</span></button>
+        <button class="btn" id="moreBtn">Показать ещё <em id="moreCount"></em> <span aria-hidden="true">↓</span></button>
       </div>
+      <p class="sr-only" role="status" aria-live="polite" id="gridStatus"></p>
     </div>
   </section>
 
@@ -970,6 +1216,13 @@
             и напоминаний.
           </p>
 
+          <ul class="stats" id="stats">
+            <li><b data-to="4">0</b><span>года<br>в профессии</span></li>
+            <li><b data-to="17">0</b><span>крупных<br>мероприятий</span></li>
+            <li><b data-to="69">0</b><span>кадров<br>в портфолио</span></li>
+            <li><b data-to="1">0</b><span>день<br>до сдачи</span></li>
+          </ul>
+
           <ul class="skills">
             <li><i>01</i><span>Репортажная, креативная и постановочная съёмка событий любого масштаба</span></li>
             <li><i>02</i><span>Создание и обработка фотоконтента для социальных сетей и сайтов</span></li>
@@ -1023,14 +1276,27 @@
       <p id="lbGenre"></p>
     </div>
     <span class="lb-count" id="lbCount"></span>
-    <button class="lb-close" id="lbClose" aria-label="Закрыть (Esc)">✕</button>
+    <div class="lb-tools">
+      <button class="lb-btn" id="lbOut" aria-label="Уменьшить">−</button>
+      <button class="lb-btn lb-zoom-val" id="lbZoomVal" aria-label="Вернуть масштаб">100%</button>
+      <button class="lb-btn" id="lbIn" aria-label="Увеличить">+</button>
+      <button class="lb-btn lb-close" id="lbClose" aria-label="Закрыть (Esc)">✕</button>
+    </div>
   </div>
+
   <div class="lb-stage" id="lbStage">
     <button class="lb-nav lb-prev" id="lbPrev" aria-label="Предыдущее фото">←</button>
-    <img id="lbImg" alt="">
+    <img id="lbImg" alt="" draggable="false">
     <button class="lb-nav lb-next" id="lbNext" aria-label="Следующее фото">→</button>
+    <span class="lb-spin" id="lbSpin" aria-hidden="true"></span>
   </div>
-  <div class="lb-strip" id="lbStrip"></div>
+
+  <p class="lb-hint" id="lbHint">
+    <span class="only-wide">Двойной клик или колесо — приблизить · перетаскивание — двигать · ← → — листать</span>
+    <span class="only-narrow">Двойное касание или щипок — приблизить · свайп — листать</span>
+  </p>
+
+  <div class="lb-strip" id="lbStrip" role="tablist" aria-label="Все кадры"></div>
 </div>
 
 <script src="assets/js/main.js" defer></script>
