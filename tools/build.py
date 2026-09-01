@@ -124,7 +124,7 @@ def main(sel_path, base=""):
         tiles.append(
             '<figure class="tile reveal" tabindex="0" role="button" data-genre="{genre}"\n'
             '        data-full="assets/img/full/{slug}.webp" data-title="{title}" data-cap="{cap}"\n'
-            '        aria-label="{alt}" style="--ar:{ar}">\n'
+            '        aria-label="{alt}" data-ar="{ar}" style="--ar:{ar}">\n'
             '  <div class="tile-media" style="background-image:url({lq});background-size:cover">\n'
             '    <img src="assets/img/grid/{slug}.webp"\n'
             '         srcset="assets/img/grid-sm/{slug}.webp {sw}w, assets/img/grid/{slug}.webp {gw}w"\n'

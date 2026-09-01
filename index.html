@@ -54,6 +54,24 @@
 <body>
 
 <!-- ================= ШАПКА ================= -->
+<div class="boot" id="boot">
+  <div class="boot-mark" aria-hidden="true">
+    <svg viewBox="0 0 40 40">
+      <defs>
+        <linearGradient id="bootG" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ff3b1f"/><stop offset="22%" stop-color="#ff9b21"/>
+          <stop offset="45%" stop-color="#fff4d6"/><stop offset="66%" stop-color="#45d6ff"/>
+          <stop offset="84%" stop-color="#2f5bff"/><stop offset="100%" stop-color="#a03bff"/>
+        </linearGradient>
+      </defs>
+      <circle cx="20" cy="20" r="13" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="2.2"/>
+      <circle class="boot-arc" cx="20" cy="20" r="13" fill="none" stroke="url(#bootG)" stroke-width="2.2"
+              stroke-linecap="round" pathLength="100"/>
+    </svg>
+  </div>
+  <p class="boot-txt">Мария Гедрис</p>
+</div>
+
 <div class="bg" id="bg" aria-hidden="true">
   <span class="bg-orb o1"></span>
   <span class="bg-orb o2"></span>
@@ -113,6 +131,228 @@
       <u class="pointer-light" id="pointerLight"></u>
     </div>
 
+    <div class="stage" id="stage" aria-hidden="true">
+      <span class="cloud"></span>
+      <div class="cam-wrap">
+        <svg class="cam" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="bodyG" x1=".15" y1="0" x2=".85" y2="1">
+            <stop offset="0" stop-color="#43474f"/><stop offset=".22" stop-color="#2a2d34"/>
+            <stop offset=".55" stop-color="#1a1c21"/><stop offset="1" stop-color="#0c0d11"/>
+          </linearGradient>
+          <linearGradient id="topG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#585d68"/><stop offset=".45" stop-color="#2d3038"/><stop offset="1" stop-color="#15171c"/>
+          </linearGradient>
+          <linearGradient id="gripSh" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".28" stop-color="#000" stop-opacity="0"/>
+            <stop offset=".62" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".45"/>
+          </linearGradient>
+          <linearGradient id="metalG" x1=".1" y1="0" x2=".9" y2="1">
+            <stop offset="0" stop-color="#7f8590"/><stop offset=".18" stop-color="#e2e6ec"/>
+            <stop offset=".46" stop-color="#767c86"/><stop offset=".72" stop-color="#c6cbd3"/><stop offset="1" stop-color="#43464d"/>
+          </linearGradient>
+          <linearGradient id="barrelG" x1=".2" y1="0" x2=".8" y2="1">
+            <stop offset="0" stop-color="#3b3f47"/><stop offset=".4" stop-color="#202329"/><stop offset="1" stop-color="#0d0e12"/>
+          </linearGradient>
+          <radialGradient id="glassG" cx=".36" cy=".28" r=".9">
+            <stop offset="0" stop-color="#8fa0ff" stop-opacity=".8"/>
+            <stop offset=".3" stop-color="#2d3d96" stop-opacity=".72"/>
+            <stop offset=".6" stop-color="#101a3a"/><stop offset="1" stop-color="#04060d"/>
+          </radialGradient>
+          <radialGradient id="coatG" cx=".72" cy=".74" r=".55">
+            <stop offset="0" stop-color="#45d6ff" stop-opacity=".5"/>
+            <stop offset=".5" stop-color="#a03bff" stop-opacity=".2"/><stop offset="1" stop-color="#a03bff" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="rimWarm" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffd9a0" stop-opacity="0"/><stop offset=".35" stop-color="#ffe6bd" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="rimCool" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#7ce0ff" stop-opacity="0"/><stop offset=".5" stop-color="#7ce0ff" stop-opacity=".6"/>
+            <stop offset="1" stop-color="#7ce0ff" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+          <filter id="soft2"><feGaussianBlur stdDeviation="3"/></filter>
+        </defs>
+        
+        <ellipse cx="300" cy="356" rx="196" ry="18" fill="#000" opacity=".6" filter="url(#soft)"/>
+        <ellipse cx="288" cy="348" rx="150" ry="26" fill="#45d6ff" opacity=".07" filter="url(#soft)"/>
+        
+        <!-- горб видоискателя и башмак -->
+        <path d="M246 92 h108 a14 14 0 0 1 14 14 v22 h-136 v-22 a14 14 0 0 1 14 -14z" fill="#2b2e36"/>
+        <rect x="272" y="64" width="56" height="30" rx="6" fill="#23262d"/>
+        <rect x="280" y="58" width="40" height="10" rx="3" fill="#3d414a"/>
+        <rect x="285" y="60" width="30" height="4" rx="2" fill="#131519"/>
+        
+        <!-- верхняя площадка -->
+        <path d="M150 108 h284 c22 0 34 10 40 24 v16 h-352 v-26 a14 14 0 0 1 14 -14z" fill="url(#topG)"/>
+        
+        <!-- корпус с интегрированным хватом -->
+        <path d="M104 142 h300 c34 0 58 10 72 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -58 8 h-300
+                 a30 30 0 0 1 -30 -30 v-104 a30 30 0 0 1 30 -30z" fill="url(#bodyG)"/>
+        <path d="M396 142 c38 0 64 10 80 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -66 8z" fill="url(#bodyG)"/>
+        <path d="M396 142 c38 0 64 10 80 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -66 8z" fill="url(#gripSh)"/>
+        <path d="M416 164 c26 8 42 32 42 62 c0 30 -14 52 -36 64" fill="none" stroke="#4a4f59" stroke-width="2.5" opacity=".55"/>
+        <path d="M428 176 c18 8 28 28 28 50 c0 22 -10 40 -24 50" fill="none" stroke="#3b3f48" stroke-width="2" opacity=".45"/>
+        
+        <!-- кромочный свет -->
+        <path d="M118 142 h300" stroke="url(#rimWarm)" stroke-width="2.6" fill="none"/>
+        <path d="M164 110 h258" stroke="url(#rimWarm)" stroke-width="1.8" fill="none" opacity=".7"/>
+        <path d="M104 306 h290" stroke="url(#rimCool)" stroke-width="2" fill="none"/>
+        
+        <!-- органы управления -->
+        <circle cx="424" cy="122" r="16" fill="#33373f"/><circle cx="424" cy="122" r="16" fill="none" stroke="#5c626d" stroke-width="2"/>
+        <circle cx="424" cy="122" r="6" fill="#191b20"/>
+        <circle cx="380" cy="124" r="10" fill="#3f434c"/><circle cx="380" cy="124" r="3.5" fill="#1e2126"/>
+        <rect x="176" y="118" width="30" height="7" rx="3.5" fill="#363a43"/>
+        <rect x="120" y="238" width="46" height="6" rx="3" fill="#24272d"/>
+        <rect x="120" y="252" width="30" height="6" rx="3" fill="#1d2025"/>
+        <circle cx="146" cy="188" r="7" fill="#1a1c21"/><circle cx="146" cy="188" r="2.5" fill="#e2402f" opacity=".8"/>
+        
+        <!-- тень объектива на корпусе -->
+        <ellipse cx="272" cy="246" rx="100" ry="94" fill="#000" opacity=".45" filter="url(#soft)"/>
+        
+        <!-- байонет и объектив -->
+        <circle cx="268" cy="240" r="96" fill="#14161b"/>
+        <circle cx="268" cy="240" r="92" fill="none" stroke="url(#metalG)" stroke-width="6"/>
+        <circle cx="268" cy="240" r="84" fill="url(#barrelG)"/>
+        <circle cx="268" cy="240" r="77" fill="none" stroke="#0a0b0e" stroke-width="11" stroke-dasharray="2.5 6.5" opacity=".7"/>
+        <circle cx="268" cy="240" r="69" fill="none" stroke="url(#metalG)" stroke-width="2.5" opacity=".65"/>
+        <circle cx="268" cy="240" r="64" fill="#0f1116"/>
+        <circle cx="268" cy="148" r="5.5" fill="#e2402f"/>
+        
+        <circle cx="268" cy="240" r="55" fill="url(#glassG)"/>
+        <circle cx="268" cy="240" r="55" fill="url(#coatG)"/>
+        <ellipse cx="245" cy="216" rx="25" ry="16" fill="#dce8ff" opacity=".3" transform="rotate(-30 245 216)" filter="url(#soft2)"/>
+        <ellipse cx="292" cy="268" rx="13" ry="7.5" fill="#45d6ff" opacity=".32" transform="rotate(-30 292 268)" filter="url(#soft2)"/>
+        <circle cx="268" cy="240" r="55" fill="none" stroke="#000" stroke-width="3" opacity=".55"/>
+        <circle cx="268" cy="240" r="52" fill="none" stroke="#6b7482" stroke-width="1" opacity=".45"/>
+        </svg>
+      </div>
+      <svg class="props" viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="pMetal" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8b919c"/><stop offset=".24" stop-color="#dfe3ea"/>
+          <stop offset=".55" stop-color="#767c86"/><stop offset=".82" stop-color="#c2c7cf"/><stop offset="1" stop-color="#484c54"/>
+        </linearGradient>
+        <linearGradient id="pDark" x1=".2" y1="0" x2=".8" y2="1">
+          <stop offset="0" stop-color="#3a3e47"/><stop offset=".5" stop-color="#1f2228"/><stop offset="1" stop-color="#0e0f13"/>
+        </linearGradient>
+        <linearGradient id="pGold" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#c8a253"/><stop offset=".5" stop-color="#f2d896"/><stop offset="1" stop-color="#a8843c"/>
+        </linearGradient>
+        <linearGradient id="pLeather" x1="0" y1="0" x2="1" y2=".6">
+          <stop offset="0" stop-color="#5a4634"/><stop offset=".45" stop-color="#33271d"/><stop offset="1" stop-color="#1c1611"/>
+        </linearGradient>
+        <radialGradient id="pGlass" cx=".36" cy=".3" r=".85">
+          <stop offset="0" stop-color="#9fb0ff" stop-opacity=".75"/><stop offset=".45" stop-color="#26306e"/><stop offset="1" stop-color="#05070f"/>
+        </radialGradient>
+        <linearGradient id="pSilver" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#eceff4"/><stop offset=".5" stop-color="#9aa0aa"/><stop offset="1" stop-color="#5a5f68"/>
+        </linearGradient>
+      </defs>
+
+      <g transform="translate(52 116)"><g class="prop p1">
+        <path d="M8 0 h44 l14 14 v70 a8 8 0 0 1 -8 8 h-50 a8 8 0 0 1 -8 -8 v-76 a8 8 0 0 1 8 -8z" fill="url(#pDark)"/>
+        <path d="M8 0 h44 l14 14" fill="none" stroke="#5b616c" stroke-width="1.4" opacity=".8"/>
+        <g fill="url(#pGold)">
+          <rect x="12" y="24" width="5" height="22" rx="2"/><rect x="21" y="24" width="5" height="22" rx="2"/>
+          <rect x="30" y="24" width="5" height="22" rx="2"/><rect x="39" y="24" width="5" height="22" rx="2"/>
+          <rect x="48" y="24" width="5" height="22" rx="2"/>
+        </g>
+        <rect x="14" y="58" width="38" height="4" rx="2" fill="#3d434d"/>
+        <rect x="14" y="66" width="24" height="4" rx="2" fill="#31363f"/>
+      </g>
+      </g>
+
+      <g transform="translate(14 258) rotate(-13)"><g class="prop p2">
+        <path d="M6 0 h34 l11 11 v56 a7 7 0 0 1 -7 7 h-38 a7 7 0 0 1 -7 -7 v-60 a7 7 0 0 1 7 -7z" fill="url(#pDark)"/>
+        <g fill="url(#pGold)">
+          <rect x="9" y="19" width="4" height="17" rx="2"/><rect x="16" y="19" width="4" height="17" rx="2"/>
+          <rect x="23" y="19" width="4" height="17" rx="2"/><rect x="30" y="19" width="4" height="17" rx="2"/>
+        </g>
+        <rect x="11" y="46" width="28" height="3.4" rx="1.7" fill="#3d434d"/>
+      </g>
+      </g>
+
+      <g transform="translate(8 486)"><g class="prop p3">
+        <rect x="0" y="10" width="112" height="52" rx="12" fill="url(#pMetal)"/>
+        <rect x="4" y="14" width="104" height="44" rx="9" fill="url(#pDark)"/>
+        <rect x="14" y="26" width="52" height="9" rx="3" fill="#07080b"/>
+        <rect x="14" y="42" width="34" height="7" rx="3" fill="#0b0d11"/>
+        <circle cx="88" cy="44" r="4" fill="#45d6ff" opacity=".9"/>
+        <path d="M112 30 h22 a5 5 0 0 1 5 5 v6 a5 5 0 0 1 -5 5 h-22z" fill="url(#pSilver)"/>
+        <path d="M139 33 c26 6 40 22 40 44" fill="none" stroke="#2a2d34" stroke-width="7" stroke-linecap="round"/>
+      </g>
+      </g>
+
+      <g transform="translate(742 128) rotate(8)"><g class="prop p4">
+        <rect x="0" y="14" width="104" height="76" rx="12" fill="url(#pDark)"/>
+        <rect x="18" y="14" width="26" height="76" fill="#0c0d11" opacity=".8"/>
+        <rect x="56" y="14" width="16" height="76" fill="#111318"/>
+        <rect x="0" y="14" width="104" height="8" fill="#fff" opacity=".05"/>
+        <ellipse cx="104" cy="52" rx="13" ry="38" fill="url(#pGlass)"/>
+        <ellipse cx="104" cy="52" rx="13" ry="38" fill="none" stroke="url(#pMetal)" stroke-width="3"/>
+        <ellipse cx="101" cy="40" rx="4" ry="12" fill="#cfe0ff" opacity=".25"/>
+        <rect x="-8" y="22" width="12" height="60" rx="5" fill="url(#pMetal)"/>
+      </g>
+      </g>
+
+      <g transform="translate(768 316) rotate(-7)"><g class="prop p5">
+        <rect x="10" y="0" width="64" height="44" rx="9" fill="url(#pDark)"/>
+        <rect x="16" y="6" width="52" height="30" rx="5" fill="#0a0b0f"/>
+        <rect x="19" y="9" width="46" height="24" rx="3" fill="#e8eef8" opacity=".16"/>
+        <rect x="24" y="44" width="36" height="50" rx="7" fill="url(#pDark)"/>
+        <rect x="30" y="56" width="24" height="12" rx="3" fill="#0c0e12"/>
+        <circle cx="42" cy="80" r="4" fill="#ff9b21" opacity=".85"/>
+        <rect x="32" y="94" width="20" height="9" rx="3" fill="url(#pSilver)"/>
+      </g>
+      </g>
+
+      <g transform="translate(704 474)"><g class="prop p6">
+        <ellipse cx="52" cy="40" rx="52" ry="40" fill="#14161b"/>
+        <ellipse cx="52" cy="40" rx="52" ry="40" fill="none" stroke="url(#pSilver)" stroke-width="4"/>
+        <ellipse cx="52" cy="40" rx="42" ry="31" fill="#e9eef6" opacity=".14"/>
+        <ellipse cx="38" cy="28" rx="16" ry="10" fill="#fff" opacity=".16" transform="rotate(-24 38 28)"/>
+      </g>
+      </g>
+
+      <g transform="translate(232 500)"><g class="prop p7">
+        <path d="M6 20 C 44 -4, 96 -2, 132 22 C 164 44, 200 46, 224 30"
+              fill="none" stroke="url(#pLeather)" stroke-width="19" stroke-linecap="round"/>
+        <path d="M6 20 C 44 -4, 96 -2, 132 22 C 164 44, 200 46, 224 30"
+              fill="none" stroke="#8a6c4d" stroke-width="1.3" stroke-dasharray="6 7" opacity=".45"/>
+        <path d="M6 20 C 44 -4, 96 -2, 132 22 C 164 44, 200 46, 224 30"
+              fill="none" stroke="#fff" stroke-width="1" opacity=".08" transform="translate(0 -5)"/>
+        <rect x="216" y="18" width="26" height="26" rx="7" fill="none" stroke="url(#pMetal)" stroke-width="4"/>
+      </g></g>
+
+      <g transform="translate(486 556) rotate(6)"><g class="prop p8">
+        <rect x="0" y="0" width="66" height="34" rx="6" fill="url(#pDark)"/>
+        <rect x="4" y="4" width="58" height="12" rx="3" fill="#22252c"/>
+        <g fill="url(#pGold)">
+          <rect x="46" y="21" width="5" height="9" rx="1.5"/><rect x="54" y="21" width="5" height="9" rx="1.5"/>
+        </g>
+        <rect x="8" y="22" width="26" height="6" rx="3" fill="#2c3038"/>
+      </g>
+      </g>
+
+      <g transform="translate(104 392)"><g class="prop p9">
+        <circle cx="30" cy="30" r="30" fill="url(#pDark)"/>
+        <circle cx="30" cy="30" r="22" fill="none" stroke="#454a54" stroke-width="2" opacity=".7"/>
+        <rect x="4" y="24" width="12" height="12" rx="3" fill="#3d424b"/>
+        <rect x="44" y="24" width="12" height="12" rx="3" fill="#3d424b"/>
+      </g>
+      </g>
+
+      <g transform="translate(778 44) rotate(-12)"><g class="prop p10">
+        <ellipse cx="34" cy="22" rx="34" ry="22" fill="none" stroke="url(#pMetal)" stroke-width="7"/>
+        <ellipse cx="34" cy="22" rx="28" ry="16" fill="#7ce0ff" opacity=".1"/>
+      </g>
+      </g>
+    </svg>
+    </div>
+
     <div class="wrap">
       <p class="hero-kicker label">Фотограф&nbsp;· Москва</p>
 
@@ -159,11 +399,12 @@
         <!-- FILTERS:END -->
       </div>
 
+      <span class="row-probe" id="rowProbe" aria-hidden="true"></span>
       <div class="grid" id="grid">
         <!-- WORKS:START -->
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-01.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
-        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDigMmtO0ghEJWfhj0NQSRxC0jdVIcnk1dvbZI9OjkH3mp2Gi3p1hBPEyiLeVP3h3orKs9RmtFKxscGiqvboO6P/9k=);background-size:cover">
     <img src="assets/img/grid/concert-01.webp"
          srcset="assets/img/grid-sm/concert-01.webp 741w, assets/img/grid/concert-01.webp 1321w"
@@ -177,7 +418,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-01.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
-        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDfl1OCNiucmoxqAJJKnHY1ziRyBMs+5venNLclQofArRxZOh1Qlj2glwM+9Fce8dyekp/OinZAf//Z);background-size:cover">
     <img src="assets/img/grid/event-01.webp"
          srcset="assets/img/grid-sm/event-01.webp 690w, assets/img/grid/event-01.webp 1230w"
@@ -191,7 +432,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-01.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDachELHoKjEilQw6Gs7UL3dZsFOCak0ifzLVQ45WtOfXQj2fu3HPpauy5bpT7XTvs7sVk4PaiipSRTbtY//9k=);background-size:cover">
     <img src="assets/img/grid/fashion-01.webp"
          srcset="assets/img/grid-sm/fashion-01.webp 322w, assets/img/grid/fashion-01.webp 574w"
@@ -205,7 +446,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-02.webp" data-title="Антон Шастун" data-cap="Improv Russia"
-        aria-label="Антон Шастун — Improv Russia. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Антон Шастун — Improv Russia. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnBJhs1LKiNbrIjZfuKpsflq7aLHJaOOjAVpNkQSIorjau1u1FVrpTDJjPUUVSmS4an//Z);background-size:cover">
     <img src="assets/img/grid/concert-02.webp"
          srcset="assets/img/grid-sm/concert-02.webp 690w, assets/img/grid/concert-02.webp 1230w"
@@ -219,7 +460,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-03.webp" data-title="Дима Билан" data-cap="Концерт · чёрно-белое"
-        aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Гедрис" style="--ar:1.612">
+        aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Гедрис" data-ar="1.612" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjreIzSBcge5q7PawJErB8464rPVipyDirlsytA6SAkdRQBTfG47elFP2Ak0UAf//Z);background-size:cover">
     <img src="assets/img/grid/concert-03.webp"
          srcset="assets/img/grid-sm/concert-03.webp 742w, assets/img/grid/concert-03.webp 1322w"
@@ -233,7 +474,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-01.webp" data-title="Портрет" data-cap="Студия · высокий ключ"
-        aria-label="Портрет — Студия · высокий ключ. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Портрет — Студия · высокий ключ. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDqNSu/s8Dbc7scVnaBrZvWeKbAda1L+28+BwvUiuCkS60m/d9pGe4qbu5VlY9GY4Wuf1xULjcoNFFRV2Lpbn//2Q==);background-size:cover">
     <img src="assets/img/grid/art-01.webp"
          srcset="assets/img/grid-sm/art-01.webp 322w, assets/img/grid/art-01.webp 574w"
@@ -247,7 +488,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-02.webp" data-title="Цветение" data-cap="Креативная съёмка"
-        aria-label="Цветение — Креативная съёмка. Фотограф Мария Гедрис" style="--ar:0.856">
+        aria-label="Цветение — Креативная съёмка. Фотограф Мария Гедрис" data-ar="0.856" style="--ar:0.856">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWABMDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCCOZclQfu81JHL57ELzUA8qNdzcZ60W0oE5MXTFd1p31ephONJw5o6ErQfMflorRjUtGD5iDNFXzrsctp9zFuoyLUnNU7CcrMFPOeKKKVV2kmXSV4tHSJYBkBDkZFFFFcH1ip3OtUYdj//2Q==);background-size:cover">
     <img src="assets/img/grid/art-02.webp"
          srcset="assets/img/grid-sm/art-02.webp 394w, assets/img/grid/art-02.webp 702w"
@@ -261,7 +502,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-02.webp" data-title="Московский выпускной на ВДНХ" data-cap="Главная сцена · 2026"
-        aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDHuysJA25FRxZmiOVxzRfujTDaQQKuWUyC3OCoOelc3Q9/mvN6nPGRm6mlErr0Y0UVvY8bme9z/9k=);background-size:cover">
     <img src="assets/img/grid/event-02.webp"
          srcset="assets/img/grid-sm/event-02.webp 307w, assets/img/grid/event-02.webp 547w"
@@ -275,7 +516,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-04.webp" data-title="Сергей Лазарев" data-cap="Московский выпускной · 2026"
-        aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDLWzIPJqOeVbY7CMk1eTYGzkmqeqBN6+p71jDc9vEpqndHQaQQ9opHeio9KmWKyQN6UV1rY8qpdyP/2Q==);background-size:cover">
     <img src="assets/img/grid/concert-04.webp"
          srcset="assets/img/grid-sm/concert-04.webp 690w, assets/img/grid/concert-04.webp 1230w"
@@ -289,7 +530,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-02.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDSvLhpBNEMFdvGK5uOzkW45BxinSSy7i0bGpILmRQQxyT61k9y7aXIFiKcBqUxsT96iimK5//Z);background-size:cover">
     <img src="assets/img/grid/fashion-02.webp"
          srcset="assets/img/grid-sm/fashion-02.webp 322w, assets/img/grid/fashion-02.webp 574w"
@@ -303,7 +544,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-03.webp" data-title="Выставка в Совете Федерации" data-cap="Официальная съёмка"
-        aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Гедрис" style="--ar:1.612">
+        aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Гедрис" data-ar="1.612" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCydWt2RsuKqRvApEgOAT1NctG5WI9Sc1b+0t5AQ561MldlRk0dW19C6AKwOKK5vSpADISCaKTiWmf/2Q==);background-size:cover">
     <img src="assets/img/grid/event-03.webp"
          srcset="assets/img/grid-sm/event-03.webp 741w, assets/img/grid/event-03.webp 1322w"
@@ -317,7 +558,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-05.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
-        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDbtVKo27qKwry9le6kj35UVJDrzfZGaVfn9qxPMcB7ktneelap+8mK1i55sbfeODRWRJdc9KK9D6zFdSdT/9k=);background-size:cover">
     <img src="assets/img/grid/concert-05.webp"
          srcset="assets/img/grid-sm/concert-05.webp 690w, assets/img/grid/concert-05.webp 1230w"
@@ -331,7 +572,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-03.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
-        aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCbUNbazuxCqZHc1pwXK3MQZetc/rEM0+pAKoAA6mq8F09ldFXk2rjpSIL3idilssiEq2cZFcm8ry/M7E0UUAz/2Q==);background-size:cover">
     <img src="assets/img/grid/art-03.webp"
          srcset="assets/img/grid-sm/art-03.webp 307w, assets/img/grid/art-03.webp 547w"
@@ -345,7 +586,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-04.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
-        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDrqa7ccHmoXuMSAdqbLMoIzmqWpOxbU5UZoqOJgYwaKQz/2Q==);background-size:cover">
     <img src="assets/img/grid/event-04.webp"
          srcset="assets/img/grid-sm/event-04.webp 690w, assets/img/grid/event-04.webp 1230w"
@@ -359,7 +600,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-06.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
-        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjlQuSR0Fa0dvbyWRaNgJAOhqrpsCzK4btUdy3lzEJwBWqVxCxQXETHCEZore05hfwAOMFB1oraFWCVmJwbeh//9k=);background-size:cover">
     <img src="assets/img/grid/concert-06.webp"
          srcset="assets/img/grid-sm/concert-06.webp 741w, assets/img/grid/concert-06.webp 1321w"
@@ -373,7 +614,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-07.webp" data-title="Дима Билан" data-cap="Концерт · сцена"
-        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" style="--ar:1.612">
+        aria-label="Дима Билан — Концерт · сцена. Фотограф Мария Гедрис" data-ar="1.612" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjIozI4Ud61TZQiwYg5kXrUWkRqxkdhnaOKLORpL4xsflc4IoKRmnrRVrUoFt7x406Cigk/9k=);background-size:cover">
     <img src="assets/img/grid/concert-07.webp"
          srcset="assets/img/grid-sm/concert-07.webp 741w, assets/img/grid/concert-07.webp 1321w"
@@ -387,7 +628,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-08.webp" data-title="Дима Билан" data-cap="Концерт · чёрно-белое"
-        aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Дима Билан — Концерт · чёрно-белое. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDmrVPtDKkmdnrTL2z8gl0+aPpmpvtXkWPlBRuJ+9VaS7k8jySflPNAFYEUUlFAH//Z);background-size:cover">
     <img src="assets/img/grid/concert-08.webp"
          srcset="assets/img/grid-sm/concert-08.webp 741w, assets/img/grid/concert-08.webp 1321w"
@@ -401,7 +642,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-09.webp" data-title="Дима Билан" data-cap="Концерт · общий план"
-        aria-label="Дима Билан — Концерт · общий план. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Дима Билан — Концерт · общий план. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjwEA5HNOVtvO2mom5d2amMahUb1rdPsBC/wA/NFSS7S3AxRT5bhZn/9k=);background-size:cover">
     <img src="assets/img/grid/concert-09.webp"
          srcset="assets/img/grid-sm/concert-09.webp 741w, assets/img/grid/concert-09.webp 1321w"
@@ -415,7 +656,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-10.webp" data-title="Сергей Лазарев" data-cap="Московский выпускной · 2026"
-        aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Сергей Лазарев — Московский выпускной · 2026. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDEykLZlOcdqRGEmWRsLnin6pBiIPtOaowHaMVnFXVz06knGrZmtfMfs7ZOcVgvcM3YCiiiGwsc7TVj/9k=);background-size:cover">
     <img src="assets/img/grid/concert-10.webp"
          srcset="assets/img/grid-sm/concert-10.webp 307w, assets/img/grid/concert-10.webp 547w"
@@ -429,7 +670,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-11.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
-        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCxfWUEcTSsvFPj8u0tUcDCt2rLuvEKtG0Tx5BqG51lJUiGw7R2rZzbHyo6lEBQH15ormbrxBMhUQ8LjvRS5hOJ/9k=);background-size:cover">
     <img src="assets/img/grid/concert-11.webp"
          srcset="assets/img/grid-sm/concert-11.webp 690w, assets/img/grid/concert-11.webp 1230w"
@@ -443,7 +684,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-12.webp" data-title="The Hatters" data-cap="Московский выпускной · 2026"
-        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="The Hatters — Московский выпускной · 2026. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDb1SdrW0Z0IyK5y3v3vZCX6D1p3ifUf3vkJnn3qrYFEjHY1rHcxrXUNDLiu/NuDNMu/wBqSa4Z5CUJUegooqTU/9k=);background-size:cover">
     <img src="assets/img/grid/concert-12.webp"
          srcset="assets/img/grid-sm/concert-12.webp 307w, assets/img/grid/concert-12.webp 547w"
@@ -457,7 +698,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-13.webp" data-title="Improv Минск" data-cap="Шоу · чёрно-белое"
-        aria-label="Improv Минск — Шоу · чёрно-белое. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Минск — Шоу · чёрно-белое. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkYLYzAYzknFXI9JczmEg7uxxSaC5/tCNM8E11GpTPazjCqeOuOaAOWk04wuVmYKaKva95bmF0zlhzRQB//9k=);background-size:cover">
     <img src="assets/img/grid/concert-13.webp"
          srcset="assets/img/grid-sm/concert-13.webp 690w, assets/img/grid/concert-13.webp 1230w"
@@ -471,7 +712,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-14.webp" data-title="Improv Минск" data-cap="Шоу · сцена"
-        aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjUTjJHWpVt3dGZUJC9TTFGAOasJcSqjIGwrDBp3FYri2kMYcL8pOKKlMkixKgfgHpRSGf/9k=);background-size:cover">
     <img src="assets/img/grid/concert-14.webp"
          srcset="assets/img/grid-sm/concert-14.webp 690w, assets/img/grid/concert-14.webp 1230w"
@@ -485,7 +726,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-15.webp" data-title="Improv Минск" data-cap="Шоу · сцена"
-        aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Минск — Шоу · сцена. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjok3A8Zp32SU/dUkGmwuUOa3bTU4Lez2vGWfOQcUhnPyI0blWGCKKs6lcLdXTSou0HtRTEf/Z);background-size:cover">
     <img src="assets/img/grid/concert-15.webp"
          srcset="assets/img/grid-sm/concert-15.webp 690w, assets/img/grid/concert-15.webp 1230w"
@@ -499,7 +740,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-16.webp" data-title="Improv Russia" data-cap="StandUp Store Moscow"
-        aria-label="Improv Russia — StandUp Store Moscow. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Russia — StandUp Store Moscow. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCg0EYgSNwPNPU1Ue1KzMucKBWWLyYHO80G8mJOWJzUcprzovCyadN2M84oqpFcz7cK5AooE3c//9k=);background-size:cover">
     <img src="assets/img/grid/concert-16.webp"
          srcset="assets/img/grid-sm/concert-16.webp 690w, assets/img/grid/concert-16.webp 1230w"
@@ -513,7 +754,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-17.webp" data-title="Improv Russia" data-cap="Шоу · Москва"
-        aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDKhlCTYBxnvUU9hJJdGSMgg89aLxArJjrUtjzdgEnkVitrna3rbsQ3WISolj3HHWil1SN/tGwNwKKNB3k9bH//2Q==);background-size:cover">
     <img src="assets/img/grid/concert-17.webp"
          srcset="assets/img/grid-sm/concert-17.webp 690w, assets/img/grid/concert-17.webp 1230w"
@@ -527,7 +768,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-18.webp" data-title="Improv Russia" data-cap="Шоу · чёрно-белое"
-        aria-label="Improv Russia — Шоу · чёрно-белое. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Russia — Шоу · чёрно-белое. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDEWFlGWB5HFKLYyxltuajF8REqkZK1Pb3pit3wPvUAVLixMZGRtzRUlxM84Uk9KKVx2P/Z);background-size:cover">
     <img src="assets/img/grid/concert-18.webp"
          srcset="assets/img/grid-sm/concert-18.webp 690w, assets/img/grid/concert-18.webp 1230w"
@@ -541,7 +782,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-19.webp" data-title="Improv Russia" data-cap="Шоу · Москва"
-        aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Improv Russia — Шоу · Москва. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDK0+0a5y3GBT4NOlZJJcdDxUFhdNBkg8elINTmQygMQhPSqlJ3JUVYqanKWkVW6rxRVa6k82Td60Um7jSsf//Z);background-size:cover">
     <img src="assets/img/grid/concert-19.webp"
          srcset="assets/img/grid-sm/concert-19.webp 690w, assets/img/grid/concert-19.webp 1230w"
@@ -555,7 +796,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-20.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
-        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlI428wKO9WJbbYeW59KjteJsntU1w5aRX7kU+XQ1STZRkBVsGinzHLktRT5TNuzP/2Q==);background-size:cover">
     <img src="assets/img/grid/concert-20.webp"
          srcset="assets/img/grid-sm/concert-20.webp 741w, assets/img/grid/concert-20.webp 1321w"
@@ -569,7 +810,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-21.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
-        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkxEzn5RTpLWUJuPSn2bF3AJrRv8JCmB0GKVkbuV0YZRgOaKV5DnFFOxnof//Z);background-size:cover">
     <img src="assets/img/grid/concert-21.webp"
          srcset="assets/img/grid-sm/concert-21.webp 741w, assets/img/grid/concert-21.webp 1321w"
@@ -583,7 +824,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="concert"
         data-full="assets/img/full/concert-22.webp" data-title="Творческое шоу" data-cap="Сцена · Москва"
-        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" style="--ar:1.612">
+        aria-label="Творческое шоу — Сцена · Москва. Фотограф Мария Гедрис" data-ar="1.612" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDiRzVxbdJLUshG9eoqqozT4mKsSD2pFJEVFKeTRTJP/9k=);background-size:cover">
     <img src="assets/img/grid/concert-22.webp"
          srcset="assets/img/grid-sm/concert-22.webp 742w, assets/img/grid/concert-22.webp 1322w"
@@ -597,7 +838,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-05.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
-        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDoI4ngtlAcE+tQNcIZPmHIHaqjzlolAYgCo5LjA+Uc0Rdtimr7mjFqVryobGPWiuXu58NjaAc9qKLvqTY//9k=);background-size:cover">
     <img src="assets/img/grid/event-05.webp"
          srcset="assets/img/grid-sm/event-05.webp 690w, assets/img/grid/event-05.webp 1230w"
@@ -611,7 +852,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-06.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
-        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC0urPc3DGNeBU0mt+SmFQs46isPw9dA5jKncO5roYLaKadmZRnFFrag2noc1o06JdSKUySOorpLGUPKwAIxRRVN9CUluf/2Q==);background-size:cover">
     <img src="assets/img/grid/event-06.webp"
          srcset="assets/img/grid-sm/event-06.webp 307w, assets/img/grid/event-06.webp 547w"
@@ -625,7 +866,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-07.webp" data-title="Московский выпускной на ВДНХ" data-cap="Событие · 2026"
-        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Событие · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDsBPGwyrA1FHdq0rLnpXD22puEjIdsseauSXk8MRlzzn1ptajtode0qDuKK5VZnuIlfzXBNFUoN6om5//Z);background-size:cover">
     <img src="assets/img/grid/event-07.webp"
          srcset="assets/img/grid-sm/event-07.webp 690w, assets/img/grid/event-07.webp 1230w"
@@ -639,7 +880,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-08.webp" data-title="Московский выпускной на ВДНХ" data-cap="Сцена · 2026"
-        aria-label="Московский выпускной на ВДНХ — Сцена · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Сцена · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC6cxvsBycZqm+oSCXywhzUepyPbxtOjEk1Qhv2eF58cjvVpRW6NFNM0p7t4kVnGM0Vkf2oJFxICxB70U0h8x//2Q==);background-size:cover">
     <img src="assets/img/grid/event-08.webp"
          srcset="assets/img/grid-sm/event-08.webp 690w, assets/img/grid/event-08.webp 1230w"
@@ -653,7 +894,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-09.webp" data-title="Московский выпускной на ВДНХ" data-cap="Главная сцена · 2026"
-        aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Главная сцена · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl7WyR5SsjYA9Ks2ektdztHGRx61QjuHjOQeakh1CaGXfGxDUtTa8LbFy70Sa3k2sKKjl1q6kxufOKKAvDsf/Z);background-size:cover">
     <img src="assets/img/grid/event-09.webp"
          srcset="assets/img/grid-sm/event-09.webp 690w, assets/img/grid/event-09.webp 1230w"
@@ -667,7 +908,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-10.webp" data-title="Московский выпускной на ВДНХ" data-cap="Зрители · 2026"
-        aria-label="Московский выпускной на ВДНХ — Зрители · 2026. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Московский выпускной на ВДНХ — Зрители · 2026. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDflurNIy+8CuO1O8R7pmQ5BNZIvZXTDOSKjknJBrphU5NUNxW5uC+8tQFI6UVhJLnqTRWn1jyDlP/Z);background-size:cover">
     <img src="assets/img/grid/event-10.webp"
          srcset="assets/img/grid-sm/event-10.webp 690w, assets/img/grid/event-10.webp 1230w"
@@ -681,7 +922,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-11.webp" data-title="Выставка в Совете Федерации" data-cap="Официальная съёмка"
-        aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Выставка в Совете Федерации — Официальная съёмка. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDVk121BIBziqY1mAqy78ZOa47ziYjycmouf7xz0ptJqzBXWp1T6rCXIV+KKxLGy8xmBboKKwlRjfc1U5H/2Q==);background-size:cover">
     <img src="assets/img/grid/event-11.webp"
          srcset="assets/img/grid-sm/event-11.webp 741w, assets/img/grid/event-11.webp 1321w"
@@ -695,7 +936,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-12.webp" data-title="Выставка в Совете Федерации" data-cap="Костюмы народов России"
-        aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCVdRZm29aaL4yOw3Y21kpIy3IQ9qhkkYTfKcbmxXNd3Ozlidfpm54yS2aKi0ncikZyMCitIy5lcxnGzsf/2Q==);background-size:cover">
     <img src="assets/img/grid/event-12.webp"
          srcset="assets/img/grid-sm/event-12.webp 741w, assets/img/grid/event-12.webp 1321w"
@@ -709,7 +950,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-13.webp" data-title="Выставка в Совете Федерации" data-cap="Костюмы народов России"
-        aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Гедрис" style="--ar:1.612">
+        aria-label="Выставка в Совете Федерации — Костюмы народов России. Фотограф Мария Гедрис" data-ar="1.612" style="--ar:1.612">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBlzL+8OegFVFuWSTcrEVMcFpiwzzigaaJY9wcisI2V7nZy3V0PTUJezUVkXbm1nKDmipszN6M//9k=);background-size:cover">
     <img src="assets/img/grid/event-13.webp"
          srcset="assets/img/grid-sm/event-13.webp 741w, assets/img/grid/event-13.webp 1322w"
@@ -723,7 +964,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-14.webp" data-title="Селигер" data-cap="Форум · 2025"
-        aria-label="Селигер — Форум · 2025. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Селигер — Форум · 2025. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDES/nCkBqli1e6QYVqux6dbt0zUq6Zboc4Ncv1iI+Uii127xyAaKtfZkx8gAH0oo9vELM//9k=);background-size:cover">
     <img src="assets/img/grid/event-14.webp"
          srcset="assets/img/grid-sm/event-14.webp 690w, assets/img/grid/event-14.webp 1230w"
@@ -737,7 +978,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="event"
         data-full="assets/img/full/event-15.webp" data-title="Селигер" data-cap="Форум · 2025"
-        aria-label="Селигер — Форум · 2025. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Селигер — Форум · 2025. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDAitmdwCMA96sCzjVX3N8w6CmSCRVABqFmdm5NZptmnucnmPlt9pHNFSK2FAfk0VN2jM//2Q==);background-size:cover">
     <img src="assets/img/grid/event-15.webp"
          srcset="assets/img/grid-sm/event-15.webp 690w, assets/img/grid/event-15.webp 1230w"
@@ -751,7 +992,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-03.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCczx7SQc4qWPEiBgetZzSrNbNsARj2qKG6miIQLnAodaV0JUY2LZ0sb8+YaU6aC2fMNFFVZCuf/9k=);background-size:cover">
     <img src="assets/img/grid/fashion-03.webp"
          srcset="assets/img/grid-sm/fashion-03.webp 322w, assets/img/grid/fashion-03.webp 574w"
@@ -765,7 +1006,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-04.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDIt7P93CwHJPNdtbr+4QZ7VxdxeSQ7YsDir1hqktw6hn2hBjAqblqOlyWfSoGfcRzT7LSId5IJFFFaNGSeh//Z);background-size:cover">
     <img src="assets/img/grid/fashion-04.webp"
          srcset="assets/img/grid-sm/fashion-04.webp 322w, assets/img/grid/fashion-04.webp 574w"
@@ -779,7 +1020,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-05.webp" data-title="Московская неделя моды" data-cap="Показ · 2025"
-        aria-label="Московская неделя моды — Показ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCvcw3DN5cbEJ3NLpKS2hlixls55q/FO7AgICCMr7mnWwuJ5/NnhEfGBRPUdN8plrq39nxIix727E9qsWV/Nc32ZGOCvSiilIqPws//2Q==);background-size:cover">
     <img src="assets/img/grid/fashion-05.webp"
          srcset="assets/img/grid-sm/fashion-05.webp 322w, assets/img/grid/fashion-05.webp 574w"
@@ -793,7 +1034,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-06.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDpm1BDFvFQXrJPECcGsWO5EtsF7g05ZJpUIjOdhxWKk72Zrypq6NJNKgiTipI7GKPlRjPWiitrLczu0f/Z);background-size:cover">
     <img src="assets/img/grid/fashion-06.webp"
          srcset="assets/img/grid-sm/fashion-06.webp 322w, assets/img/grid/fashion-06.webp 574w"
@@ -807,7 +1048,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-07.webp" data-title="Московская неделя моды" data-cap="Бэкстейдж · 2025"
-        aria-label="Московская неделя моды — Бэкстейдж · 2025. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Московская неделя моды — Бэкстейдж · 2025. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDTsdSe4jZm6L3qC8vX3LKrhgp5ArKmuTa2jRKOGHUVhz3ckcmEY4A9amxWh2ja9AiKwyCeoorjBO8nJxRTsK6P/9k=);background-size:cover">
     <img src="assets/img/grid/fashion-07.webp"
          srcset="assets/img/grid-sm/fashion-07.webp 741w, assets/img/grid/fashion-07.webp 1321w"
@@ -821,7 +1062,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-08.webp" data-title="Московская неделя моды" data-cap="Показ · ВДНХ · 2025"
-        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" style="--ar:0.7">
+        aria-label="Московская неделя моды — Показ · ВДНХ · 2025. Фотограф Мария Гедрис" data-ar="0.7" style="--ar:0.7">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDq43yoLGnbh2Nc5JrbLbELGd47VNaao8vONpI70k2DRQE4f7yDJpHYq25eDRRXA6kr7lWP/9k=);background-size:cover">
     <img src="assets/img/grid/fashion-08.webp"
          srcset="assets/img/grid-sm/fashion-08.webp 322w, assets/img/grid/fashion-08.webp 574w"
@@ -835,7 +1076,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-09.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
-        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl4YVaJnboK09O01bmFnxwBxmljsEGnmUH73GK2tJ0kCBWMhyPStHdxZSaTTMFrKFTgxOW74orsDo8D/MWbJooTRL3P//Z);background-size:cover">
     <img src="assets/img/grid/fashion-09.webp"
          srcset="assets/img/grid-sm/fashion-09.webp 741w, assets/img/grid/fashion-09.webp 1321w"
@@ -849,7 +1090,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-10.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
-        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl3t2hkx6VYF6ViMaqAcYJpju7q2W6VEoyR710OTi49hJXuhPs4Ybi4GaKjlkKORiircoX2FZn/9k=);background-size:cover">
     <img src="assets/img/grid/fashion-10.webp"
          srcset="assets/img/grid-sm/fashion-10.webp 741w, assets/img/grid/fashion-10.webp 1321w"
@@ -863,7 +1104,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-11.webp" data-title="Shoes Style" data-cap="Международный конкурс дизайнеров"
-        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Shoes Style — Международный конкурс дизайнеров. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlI4ZAwCjOa3rDTJ5F2/dz3rLmjaO7RA3AaumR3ieHaetavYBq6HNjDOOKK25w2FwccUUuYpRuf//Z);background-size:cover">
     <img src="assets/img/grid/fashion-11.webp"
          srcset="assets/img/grid-sm/fashion-11.webp 741w, assets/img/grid/fashion-11.webp 1321w"
@@ -877,7 +1118,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="fashion"
         data-full="assets/img/full/fashion-12.webp" data-title="Shoes Style" data-cap="Аксессуары · деталь"
-        aria-label="Shoes Style — Аксессуары · деталь. Фотограф Мария Гедрис" style="--ar:1.611">
+        aria-label="Shoes Style — Аксессуары · деталь. Фотограф Мария Гедрис" data-ar="1.611" style="--ar:1.611">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAOABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDkhFz8xq3DBB5ZBOXPSq7Ie5pclCrLwa3nT50+XQFJReok0BV8FcGir2x7gBmIzRVRpu2q1FJq+h//2Q==);background-size:cover">
     <img src="assets/img/grid/fashion-12.webp"
          srcset="assets/img/grid-sm/fashion-12.webp 741w, assets/img/grid/fashion-12.webp 1321w"
@@ -891,7 +1132,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-04.webp" data-title="Цветение" data-cap="Креативная съёмка"
-        aria-label="Цветение — Креативная съёмка. Фотограф Мария Гедрис" style="--ar:0.79">
+        aria-label="Цветение — Креативная съёмка. Фотограф Мария Гедрис" data-ar="0.79" style="--ar:0.79">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWABEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCkhVVB61YVQ+McVQ3iNAB0FXEnSUqIuveu5N9TaVr6E32X/bFFGyX0op38xFO8iRDtUVVs9ysxB70UVjQblCLY5pKRb8yT+9RRRXRYZ//Z);background-size:cover">
     <img src="assets/img/grid/art-04.webp"
          srcset="assets/img/grid-sm/art-04.webp 364w, assets/img/grid/art-04.webp 648w"
@@ -905,7 +1146,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-05.webp" data-title="Каллы" data-cap="Концептуальная съёмка"
-        aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Каллы — Концептуальная съёмка. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDUvJXj2iPG4+tOsLhp1YSLhlqut5DcSswIOBxT7WdYnIYgM3NSmTdHLaZIwlBzx1xUOo30z3bEMVxxxRRTRmj/2Q==);background-size:cover">
     <img src="assets/img/grid/art-05.webp"
          srcset="assets/img/grid-sm/art-05.webp 307w, assets/img/grid/art-05.webp 547w"
@@ -919,7 +1160,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-06.webp" data-title="Camera 0.2" data-cap="Концепт · коллаж"
-        aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Гедрис" style="--ar:0.666">
+        aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Гедрис" data-ar="0.666" style="--ar:0.666">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCk5DLw3Io8tuO4qN2WPzNqnI60sMjyAMp+X0osInaLzGHOPWk8tI+AKKKBn//Z);background-size:cover">
     <img src="assets/img/grid/art-06.webp"
          srcset="assets/img/grid-sm/art-06.webp 306w, assets/img/grid/art-06.webp 546w"
@@ -933,7 +1174,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-07.webp" data-title="Camera 0.2" data-cap="Концепт · коллаж"
-        aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Гедрис" style="--ar:0.666">
+        aria-label="Camera 0.2 — Концепт · коллаж. Фотограф Мария Гедрис" data-ar="0.666" style="--ar:0.666">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCgFG7DcildFVM9KTHcdaWUu2N2KSAgaUxHIpVuSxGVoooGf//Z);background-size:cover">
     <img src="assets/img/grid/art-07.webp"
          srcset="assets/img/grid-sm/art-07.webp 306w, assets/img/grid/art-07.webp 546w"
@@ -947,7 +1188,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-08.webp" data-title="Портрет" data-cap="Студия · контровой свет"
-        aria-label="Портрет — Студия · контровой свет. Фотограф Мария Гедрис" style="--ar:0.701">
+        aria-label="Портрет — Студия · контровой свет. Фотограф Мария Гедрис" data-ar="0.701" style="--ar:0.701">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDd8R6jLp9puhHJ71ydp4nvIZS0jbwe1dX4mhWaxIbtXnTjDEelAzrPFmrSLKbVBhe5rkjyaKKQH//Z);background-size:cover">
     <img src="assets/img/grid/art-08.webp"
          srcset="assets/img/grid-sm/art-08.webp 322w, assets/img/grid/art-08.webp 574w"
@@ -961,7 +1202,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-09.webp" data-title="Портрет" data-cap="Съёмка на набережной"
-        aria-label="Портрет — Съёмка на набережной. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Портрет — Съёмка на набережной. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBmkafLd2xkLhVFUpo0gumErHb2NT2eriyiMW3INZt5eC6lJxis7alrYgkkJYClt4fNkPOKKKtkn//Z);background-size:cover">
     <img src="assets/img/grid/art-09.webp"
          srcset="assets/img/grid-sm/art-09.webp 307w, assets/img/grid/art-09.webp 547w"
@@ -975,7 +1216,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="art"
         data-full="assets/img/full/art-10.webp" data-title="Портрет" data-cap="Студия · чёрно-белое"
-        aria-label="Портрет — Студия · чёрно-белое. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Портрет — Студия · чёрно-белое. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDXvZmtosom5j2otXM8IZl2nuKz5tWhu32Q9V5yafY6zbHMTHaw65oA4yOVlwwJBraOnpc2qToSjHrRRQB//9k=);background-size:cover">
     <img src="assets/img/grid/art-10.webp"
          srcset="assets/img/grid-sm/art-10.webp 307w, assets/img/grid/art-10.webp 547w"
@@ -989,7 +1230,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-01.webp" data-title="Лес" data-cap="Пейзаж"
-        aria-label="Лес — Пейзаж. Фотограф Мария Гедрис" style="--ar:1.5">
+        aria-label="Лес — Пейзаж. Фотограф Мария Гедрис" data-ar="1.5" style="--ar:1.5">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAPABYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDmsn0qUOzLtC5q89oYzggVNDtgAJQVj7VWHYyJFYHlSKK0rpftEm4cCimqiFY//9k=);background-size:cover">
     <img src="assets/img/grid/nature-01.webp"
          srcset="assets/img/grid-sm/nature-01.webp 690w, assets/img/grid/nature-01.webp 1230w"
@@ -1003,7 +1244,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-02.webp" data-title="Тихая охота" data-cap="Макро"
-        aria-label="Тихая охота — Макро. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Тихая охота — Макро. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDAUAmldV9adbuB8pUHPc0yR9zH5cVnZhYaWx2oZ8gDFFFUB//Z);background-size:cover">
     <img src="assets/img/grid/nature-02.webp"
          srcset="assets/img/grid-sm/nature-02.webp 307w, assets/img/grid/nature-02.webp 547w"
@@ -1017,7 +1258,7 @@
 </figure>
 <figure class="tile reveal" tabindex="0" role="button" data-genre="nature"
         data-full="assets/img/full/nature-03.webp" data-title="Кислица" data-cap="Макро"
-        aria-label="Кислица — Макро. Фотограф Мария Гедрис" style="--ar:0.667">
+        aria-label="Кислица — Макро. Фотограф Мария Гедрис" data-ar="0.667" style="--ar:0.667">
   <div class="tile-media" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABMNDhEODBMRDxEVFBMXHTAfHRoaHToqLCMwRT1JR0Q9Q0FMVm1dTFFoUkFDX4JgaHF1e3x7SlyGkIV3j214e3b/2wBDARQVFR0ZHTgfHzh2T0NPdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnb/wAARCAAWAA8DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGNMxg461BcRyQ8qTg1J9oKpyMGq7XjSAqPWudXM0VpZGK4JqBZGXJBoorRIpH/9k=);background-size:cover">
     <img src="assets/img/grid/nature-03.webp"
          srcset="assets/img/grid-sm/nature-03.webp 307w, assets/img/grid/nature-03.webp 547w"
@@ -1197,7 +1438,7 @@
   </div>
 
   <p class="lb-hint" id="lbHint">
-    <span class="only-wide">Двойной клик или колесо — приблизить · перетаскивание — двигать · ← → — листать</span>
+    <span class="only-wide">Двойной клик или «+» — приблизить · перетаскивание — двигать · ← → — листать</span>
     <span class="only-narrow">Двойное касание или щипок — приблизить · свайп — листать</span>
   </p>
 

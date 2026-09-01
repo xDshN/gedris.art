@@ -106,7 +106,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .display {
   font-family: var(--display);
   font-weight: 500;
-  line-height: .88;
+  line-height: 1;
   letter-spacing: -.015em;
   text-transform: uppercase;
   margin: 0;
@@ -175,6 +175,8 @@ section[id] { scroll-margin-top: 84px; }
 .section-head h2 {
   font-size: clamp(38px, 7vw, 92px);
   max-width: 16ch;
+  /* место под ножки Д, Ц, Щ — иначе упираются в линейку */
+  padding-bottom: .13em;
   background-image: linear-gradient(100deg,
       #f2f2f4 0%,  #f2f2f4 36%,
       #ffd7a0 42%, #ffffff 47%,
@@ -598,10 +600,11 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
 /* Имя выключено по ширине блока: обе строки заканчиваются на одной вертикали.
    Точный кегль каждой строки подбирает скрипт, здесь только базовый. */
 .hero-name {
+  width: 100%;
   font-family: var(--display);
   font-weight: 500;
   text-transform: uppercase;
-  line-height: .82;
+  line-height: 1;
   letter-spacing: -.02em;
   margin: 0;
   font-size: clamp(52px, 13.5vw, 220px);
@@ -609,7 +612,7 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
 }
 .hero-name .ln {
   display: block;
-  line-height: .82;
+  line-height: 1;
 }
 .hero-name .ln i {
   display: inline-block;
@@ -637,13 +640,20 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
 }
 
 /* появление строк при загрузке */
-.hero-name .ln { overflow: hidden; }
-.hero-name .ln i {
-  transform: translateY(102%);
-  animation: name-sweep 11s var(--ease-io) infinite,
-             name-rise 1.15s var(--ease) .15s forwards;
+.hero-name .ln {
+  overflow: hidden;
+  padding-bottom: .16em;
+  margin-bottom: -.16em;
 }
-.hero-name .ln:nth-child(2) i { animation-delay: .45s, .3s; }
+.hero-name .ln i { transform: translateY(118%); }
+body.is-ready .hero-name .ln i {
+  animation: name-sweep 11s var(--ease-io) 2.6s infinite,
+             name-rise 1.25s var(--ease) .45s forwards;
+}
+body.is-ready .hero-name .ln:nth-child(2) i { animation-delay: 2.85s, .62s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-name .ln i { transform: none; }
+}
 @keyframes name-rise { to { transform: translateY(0); } }
 
 @media (prefers-reduced-motion: reduce) {
@@ -663,6 +673,9 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
   max-width: 46ch;
   font-weight: 300;
 }
+
+@media (min-width: 1001px) { .hero-name { width: 64%; } }
+@media (min-width: 1500px) { .hero-name { width: 60%; } }
 
 .hero-meta {
   margin-top: clamp(28px, 4.5vw, 58px);
@@ -715,6 +728,181 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
 @keyframes nudge {
   0%, 100% { transform: translateY(0); opacity: .4; }
   50%      { transform: translateY(4px); opacity: 1; }
+}
+
+
+/* =========================================================================
+   Загрузчик и вступительный стингер
+   ========================================================================= */
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 22px;
+  background: var(--bg);
+  transition: opacity .7s var(--ease), visibility .7s;
+}
+body.is-ready .boot { opacity: 0; visibility: hidden; }
+.boot-mark svg { width: 54px; height: 54px; display: block; }
+.boot-arc {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: boot-draw 1.15s var(--ease-io) infinite;
+}
+@keyframes boot-draw {
+  0%   { stroke-dashoffset: 100; transform: rotate(0deg); }
+  55%  { stroke-dashoffset: 22; }
+  100% { stroke-dashoffset: 100; transform: rotate(360deg); }
+}
+.boot-mark svg { overflow: visible; }
+.boot-arc { transform-origin: 20px 20px; }
+.boot-txt {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  animation: boot-pulse 1.9s var(--ease-io) infinite;
+}
+@keyframes boot-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+/* --- сцена с камерой --- */
+.stage {
+  position: absolute;
+  z-index: 1;
+  right: 1.5vw;
+  top: 6%;
+  width: min(47vw, 660px);
+  aspect-ratio: 900 / 620;
+  perspective: 1200px;
+  pointer-events: none;
+}
+.stage .props { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage .cam { width: 100%; height: 100%; display: block; }
+
+.cam-wrap {
+  position: absolute;
+  left: 19%; top: 17%;
+  width: 62%;
+  aspect-ratio: 600 / 400;
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: translate3d(-52%, 8%, 0) rotateY(-46deg) scale(.9);
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .55));
+}
+body.is-ready .cam-wrap { animation: cam-in 1.2s var(--ease) .12s forwards; }
+@keyframes cam-in {
+  from { opacity: 0; transform: translate3d(-52%, 8%, 0) rotateY(-46deg) scale(.9); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) rotateY(-9deg) scale(1); }
+}
+body.is-ready .cam { animation: cam-idle 13s ease-in-out 1.5s infinite; }
+@keyframes cam-idle {
+  0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
+  30%      { transform: rotateY(7deg) rotateX(-2.5deg) translateY(-7px); }
+  65%      { transform: rotateY(-5deg) rotateX(2deg) translateY(5px); }
+}
+
+/* --- облако под камерой --- */
+.cloud {
+  position: absolute;
+  left: -14%; top: 14%;
+  width: 128%; height: 104%;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.72);
+  filter: blur(38px);
+  background:
+    radial-gradient(38% 44% at 30% 44%, rgba(255, 155, 33, .34), transparent 70%),
+    radial-gradient(42% 46% at 62% 58%, rgba(69, 214, 255, .32), transparent 72%),
+    radial-gradient(34% 40% at 78% 34%, rgba(160, 59, 255, .3), transparent 70%),
+    radial-gradient(30% 34% at 46% 74%, rgba(255, 59, 31, .22), transparent 70%);
+}
+body.is-ready .cloud { animation: cloud-in 1.5s var(--ease) 1.25s forwards, cloud-drift 22s ease-in-out 2.7s infinite; }
+@keyframes cloud-in { to { opacity: .9; transform: scale(1); } }
+@keyframes cloud-drift {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
+  50%      { transform: scale(1.09) translate3d(2.5%, -2%, 0); }
+}
+
+/* --- атрибуты фотографа --- */
+.props .prop {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateY(26px) scale(.86);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .5));
+}
+body.is-ready .props .prop { animation: prop-in .95s var(--ease) forwards; }
+@keyframes prop-in { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+body.is-ready .props .p1 { animation-delay: 1.95s; }
+body.is-ready .props .p2 { animation-delay: 2.05s; }
+body.is-ready .props .p3 { animation-delay: 2.14s; }
+body.is-ready .props .p4 { animation-delay: 2.02s; }
+body.is-ready .props .p5 { animation-delay: 2.22s; }
+body.is-ready .props .p6 { animation-delay: 2.3s; }
+body.is-ready .props .p7 { animation-delay: 2.38s; }
+body.is-ready .props .p8 { animation-delay: 2.46s; }
+body.is-ready .props .p9 { animation-delay: 2.54s; }
+body.is-ready .props .p10 { animation-delay: 2.62s; }
+
+/* лёгкое покачивание — у каждого свой ритм */
+body.is-ready .props .p1 { animation: prop-in .95s var(--ease) 1.95s forwards, drift-1 9s ease-in-out 3.1s infinite; }
+body.is-ready .props .p2 { animation: prop-in .95s var(--ease) 2.05s forwards, drift-2 11s ease-in-out 3.3s infinite; }
+body.is-ready .props .p3 { animation: prop-in .95s var(--ease) 2.14s forwards, drift-3 13s ease-in-out 3.5s infinite; }
+body.is-ready .props .p4 { animation: prop-in .95s var(--ease) 2.02s forwards, drift-2 10s ease-in-out 3.2s infinite; }
+body.is-ready .props .p5 { animation: prop-in .95s var(--ease) 2.22s forwards, drift-1 12s ease-in-out 3.6s infinite; }
+body.is-ready .props .p6 { animation: prop-in .95s var(--ease) 2.30s forwards, drift-3 14s ease-in-out 3.4s infinite; }
+body.is-ready .props .p7 { animation: prop-in .95s var(--ease) 2.38s forwards, drift-2 15s ease-in-out 3.8s infinite; }
+body.is-ready .props .p8 { animation: prop-in .95s var(--ease) 2.46s forwards, drift-1 11s ease-in-out 3.7s infinite; }
+body.is-ready .props .p9 { animation: prop-in .95s var(--ease) 2.54s forwards, drift-3 12s ease-in-out 3.9s infinite; }
+body.is-ready .props .p10 { animation: prop-in .95s var(--ease) 2.62s forwards, drift-2 13s ease-in-out 4.1s infinite; }
+
+@keyframes drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(4px, -9px, 0) rotate(2deg); }
+}
+@keyframes drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(-6px, 7px, 0) rotate(-2.5deg); }
+}
+@keyframes drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(5px, 8px, 0) rotate(1.6deg); }
+}
+
+/* --- вход остального содержимого первого экрана --- */
+.hero-kicker, .hero-sub, .hero-meta {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .95s var(--ease), transform .95s var(--ease);
+}
+body.is-ready .hero-kicker { opacity: 1; transform: none; transition-delay: .9s; }
+body.is-ready .hero-sub    { opacity: 1; transform: none; transition-delay: 1.05s; }
+body.is-ready .hero-meta   { opacity: 1; transform: none; transition-delay: 1.2s; }
+
+@media (max-width: 1000px) {
+  .stage { right: -10vw; top: 3%; width: min(72vw, 480px); opacity: .5; }
+  .stage .props { display: none; }
+}
+@media (max-width: 620px) {
+  .stage { right: -18vw; top: 2%; width: 92vw; opacity: .34; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot { display: none; }
+  .cam-wrap { opacity: 1; transform: none; animation: none; }
+  .cloud { opacity: .8; transform: none; animation: none; }
+  .props .prop { opacity: 1; transform: none; animation: none; }
+  .hero-kicker, .hero-sub, .hero-meta { opacity: 1; transform: none; }
+  .cam { animation: none; }
 }
 
 /* =========================================================================
@@ -776,24 +964,32 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
    --ar задаётся инлайном для каждой плитки.
    ========================================================================= */
 
+/* Целевую высоту строки скрипт снимает с этого измерителя:
+   значение кастомного свойства из getComputedStyle приходит нерассчитанным. */
+.row-probe {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  width: 0;
+  height: clamp(240px, 27vw, 400px);
+}
+@media (max-width: 1000px) { .row-probe { height: clamp(200px, 30vw, 280px); } }
+
+/* Ряды выкладывает скрипт: он подбирает высоту строки так, чтобы
+   она заполнила ширину целиком при точных пропорциях кадров.
+   Поэтому пустых хвостов не остаётся, а фотографии не кропаются. */
 .grid {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(8px, .9vw, 14px);
   --row-h: clamp(240px, 27vw, 400px);
 }
-.grid::after {
-  content: "";
-  flex-grow: 99999;
-  min-width: 0;
-}
 
 .tile {
   position: relative;
+  flex: 0 0 auto;
   height: var(--row-h);
-  flex-grow: var(--ar);
-  flex-shrink: 1;
-  flex-basis: calc(var(--ar) * var(--row-h));
+  width: calc(var(--ar) * var(--row-h));
   min-width: 0;
   overflow: hidden;
   background: var(--surface);
@@ -931,10 +1127,9 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
 @media (max-width: 1000px) { .grid { --row-h: clamp(200px, 30vw, 280px); } }
 
 @media (max-width: 620px) {
-  .grid { --row-h: auto; }
   .tile {
-    height: auto;
-    flex: 1 1 100%;
+    height: auto !important;
+    width: 100% !important;
     max-width: 100%;
   }
   .tile-media { aspect-ratio: var(--ar); height: auto; }
@@ -986,7 +1181,7 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
   animation: ticker 64s linear infinite;
   will-change: transform;
 }
-.ticker:hover .ticker-track { animation-play-state: paused; }
+
 .ticker-seq { display: flex; align-items: center; flex-shrink: 0; }
 .ticker-seq span {
   font-family: var(--display);
@@ -1195,7 +1390,7 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
   font-size: clamp(26px, 3.6vw, 46px);
   font-weight: 500;
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.06;
   margin: 0 0 18px;
 }
 .press-shots { grid-column: span 7; display: grid; grid-template-columns: 1fr 1.35fr; gap: clamp(10px, 1.4vw, 20px); }
@@ -1332,9 +1527,10 @@ body > header, body > main, body > footer { position: relative; z-index: 1; }
   font-family: var(--display);
   font-weight: 500;
   text-transform: uppercase;
-  line-height: .86;
-  letter-spacing: -.02em;
-  margin: 0 0 clamp(28px, 4vw, 48px);
+  line-height: 1.22;
+  letter-spacing: -.012em;
+  margin: 0 0 clamp(24px, 3.4vw, 40px);
+  padding-bottom: .06em;
   font-size: clamp(40px, 9.5vw, 150px);
 }
 
