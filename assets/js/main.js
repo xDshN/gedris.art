@@ -22,6 +22,36 @@
     };
   }
 
+  /* ================================================== загрузчик */
+  // Показываем страницу, когда шрифты и первый экран готовы, но не раньше
+  // чем через 1.1 с — иначе вступление мелькает и читается как глюк.
+  var MIN_BOOT = 1100, MAX_BOOT = 3200;
+  var bootStart = performance.now();
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    var left = Math.max(0, MIN_BOOT - (performance.now() - bootStart));
+    setTimeout(function () {
+      fitName();
+      document.body.classList.add('is-ready');
+      setTimeout(function () {
+        var el = $('#boot');
+        if (el) el.remove();
+      }, 900);
+    }, left);
+  }
+
+  var ready = [];
+  if (document.fonts && document.fonts.ready) ready.push(document.fonts.ready);
+  ready.push(new Promise(function (res) {
+    if (document.readyState === 'complete') res();
+    else window.addEventListener('load', res, { once: true });
+  }));
+  Promise.all(ready).then(boot).catch(boot);
+  setTimeout(boot, MAX_BOOT);
+
   /* ================================================== шапка и прогресс */
   var hdr = $('#hdr');
   var progressBar = $('#progress i');
@@ -330,10 +360,74 @@
       moreNum.textContent = '';
     }
 
+    layoutGrid();
+
     if (announce && status) {
       status.textContent = 'Показано ' + Math.min(shown, visible.length) +
                            ' из ' + visible.length + ' кадров';
     }
+  }
+
+  /* --- выкладка рядов: подбираем высоту строки под точные пропорции --- */
+  var MOBILE = window.matchMedia('(max-width: 620px)');
+
+  function layoutGrid() {
+    var items = visible.slice(0, shown);
+    if (!items.length) return;
+
+    if (MOBILE.matches) {
+      items.forEach(function (t) { t.style.width = ''; t.style.height = ''; });
+      return;
+    }
+
+    // полпикселя запаса: без него сумма ряда изредка перекрывает ширину
+    // на доли пикселя и последний кадр переносится на новую строку
+    var W = grid.getBoundingClientRect().width - 0.5;
+    var gap = parseFloat(getComputedStyle(grid).columnGap) || 12;
+    var probe = $('#rowProbe');
+    var target = (probe && probe.getBoundingClientRect().height) || 320;
+    if (!(W > 0)) return;
+
+    var ar = function (t) { return parseFloat(t.dataset.ar) || 1.5; };
+    var availOf = function (n) { return W - gap * (n - 1); };
+
+    // жадно набираем строку, пока её высота не опустится до целевой
+    var rows = [], row = [], sum = 0;
+    items.forEach(function (t) {
+      row.push(t);
+      sum += ar(t);
+      if (availOf(row.length) / sum <= target) { rows.push(row); row = []; sum = 0; }
+    });
+    if (row.length) rows.push(row);
+
+    var heightOf = function (r) {
+      var s2 = 0;
+      r.forEach(function (t) { s2 += ar(t); });
+      return availOf(r.length) / s2;
+    };
+
+    // последняя строка тоже заполняет ширину; если для этого пришлось бы
+    // раздуть её выше меры — забираем кадры из предыдущей строки
+    if (rows.length > 1) {
+      var last = rows[rows.length - 1], prev = rows[rows.length - 2];
+      var guard = 0;
+      while (heightOf(last) > target * 1.75 && prev.length > 1 && guard++ < 12) {
+        last.unshift(prev.pop());
+      }
+    }
+
+    rows.forEach(function (r) {
+      var h = heightOf(r);
+      var avail = availOf(r.length);
+      var used = 0;
+      r.forEach(function (t, i) {
+        // остаток отдаём последнему, чтобы не копилась ошибка округления
+        var w = (i === r.length - 1) ? (avail - used) : Math.round(ar(t) * h * 100) / 100;
+        used += w;
+        t.style.width = w.toFixed(2) + 'px';
+        t.style.height = h.toFixed(2) + 'px';
+      });
+    });
   }
 
   filters.forEach(function (btn) {
@@ -564,13 +658,8 @@
     zoomAt(scale > 1.001 ? MIN : 2.6, e.clientX, e.clientY);
   });
 
-  /* колесо — плавный зум к курсору */
-  lbStage.addEventListener('wheel', function (e) {
-    if (lb.hidden) return;
-    e.preventDefault();
-    instant(true);
-    zoomAt(scale * (e.deltaY < 0 ? 1.14 : 1 / 1.14), e.clientX, e.clientY);
-  }, { passive: false });
+  /* Колесо намеренно не масштабирует: на тачпадах и мышах с инерцией
+     это работает рывками. Масштаб — кнопками, двойным кликом и щипком. */
 
   /* --- указатели: панорама, свайп, щипок --- */
   var pts = new Map();
@@ -674,7 +763,11 @@
     }
   });
 
-  window.addEventListener('resize', debounce(function () { if (!lb.hidden) apply(); }, 120));
+  window.addEventListener('resize', debounce(function () {
+    layoutGrid();
+    if (!lb.hidden) apply();
+  }, 120));
+  if (MOBILE.addEventListener) MOBILE.addEventListener('change', layoutGrid);
 
   /* --- год в подвале --- */
   var yr = $('#yr');
