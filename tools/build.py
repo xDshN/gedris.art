@@ -119,7 +119,7 @@ def main(sel_path, base=""):
         f.thumbnail((FULL_MAX, FULL_MAX), Image.LANCZOS)
         f.save(os.path.join(FULL, slug + ".webp"), "WEBP", quality=FULL_Q, method=6)
 
-        alt = "%s — %s. Фотограф Мария Курочкина" % (it["title"], it["cap"])
+        alt = "%s — %s. Фотограф Мария Гедрис" % (it["title"], it["cap"])
         eager = n <= 4          # первый экран сетки грузим сразу
         tiles.append(
             '<figure class="tile reveal" tabindex="0" role="button" data-genre="{genre}"\n'

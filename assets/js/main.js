@@ -38,14 +38,66 @@
         var max = document.documentElement.scrollHeight - window.innerHeight;
         progressBar.style.transform = 'scaleX(' + (max > 0 ? clamp(y / max, 0, 1) : 0) + ')';
       }
-      // лёгкая параллакс-подвижка блика
-      var hf = $('.hero-flare');
-      if (hf && !reduced && y < window.innerHeight * 1.3) {
-        hf.style.transform = 'translate3d(0,' + (y * 0.16) + 'px,0)';
-      }
+      moveBackground(y);
       ticking = false;
     });
   }
+  /* --- общий фон: пятна плывут с разной скоростью --- */
+  var orbs = $$('.bg-orb');
+  var arc  = $('.bg-arc');
+  var streaks = $$('.bg-streak');
+  var bgGrid = $('.bg-grid');
+  var bgEl = $('#bg');
+  var worksEl = $('#works');
+  // скорость и стартовая высота каждого пятна (в долях экрана)
+  var ORB = [
+    { k: 0.18, y: -0.30 }, { k: 0.34, y: 0.10 }, { k: 0.11, y: -0.20 },
+    { k: 0.26, y: 0.90 },  { k: 0.42, y: 1.50 }, { k: 0.15, y: 2.00 }
+  ];
+  var WRAP = 2.8, LOW = -0.9;   // окно, по которому пятна ходят по кругу
+
+  var lastBgY = null;
+
+  function moveBackground(y) {
+    var vh = window.innerHeight;
+    if (reduced) { if (bgEl) bgEl.style.setProperty('--oi', '0.4'); return; }
+    // пересчитываем только при заметном сдвиге — иначе лишние перерисовки
+    if (lastBgY !== null && Math.abs(y - lastBgY) < 6) return;
+    lastBgY = y;
+    var range = WRAP * vh, low = LOW * vh;
+    for (var i = 0; i < orbs.length; i++) {
+      var o = ORB[i % ORB.length];
+      // зацикливаем: иначе на длинной странице пятна уезжают вверх
+      // и низ остаётся без цвета
+      var pos = o.y * vh - y * o.k;
+      pos = ((pos - low) % range + range) % range + low;
+      var drift = Math.sin((y * 0.0011) + i * 1.7) * 34;
+      orbs[i].style.transform = 'translate3d(' + drift.toFixed(1) + 'px,' + pos.toFixed(1) + 'px,0)';
+    }
+    // полосы идут через страницу медленнее пятен и слегка качаются
+    for (var j = 0; j < streaks.length; j++) {
+      var sp = 0.22 + j * 0.07;
+      var sy = (0.34 + j * 0.05) * vh - y * sp;
+      sy = ((sy - low) % range + range) % range + low;
+      var tilt = -21 + Math.sin(y * 0.0006 + j) * 2.4;
+      streaks[j].style.transform = 'translate3d(0,' + sy.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg)';
+    }
+
+    if (arc)   arc.style.translate = '0 ' + (-y * 0.07).toFixed(1) + 'px';
+    if (bgGrid) bgGrid.style.transform = 'translate3d(0,' + (-y * 0.05).toFixed(1) + 'px,0)';
+
+    // Фон приглушается ровно настолько, насколько экран занят галереей:
+    // привязка к самой секции надёжнее доли прокрутки, которая плывёт
+    // из-за ленивой подгрузки кадров.
+    var oi = 0.6;
+    if (worksEl) {
+      var r = worksEl.getBoundingClientRect();
+      var seen = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / vh;
+      oi = 0.6 - 0.34 * Math.min(1, seen * 1.2);
+    }
+    bgEl.style.setProperty('--oi', oi.toFixed(3));
+  }
+
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -252,9 +304,17 @@
     visible = tiles.filter(matches);
 
     tiles.forEach(function (t) { t.classList.add('is-hidden'); });
+    // Восемь вариантов появления раздаются не по кругу, а по таблице,
+    // чтобы соседние карточки не повторяли друг друга.
+    var ANIM = [1, 5, 3, 7, 2, 6, 4, 8, 3, 1, 8, 5, 6, 2, 7, 4];
+
     visible.forEach(function (t, i) {
       t.dataset.idx = String(i);
       if (i < shown) {
+        if (!t.dataset.anim) {
+          t.dataset.anim = String(ANIM[i % ANIM.length]);
+          t.style.setProperty('--d', ((i % 3) * 90) + 'ms');
+        }
         t.classList.remove('is-hidden');
         if (reduced || !io) t.classList.add('is-in');
         else if (!t.classList.contains('is-in')) io.observe(t);
@@ -355,7 +415,9 @@
     lbImg.classList.toggle('is-panning', on);
     if (on) {
       clearTimeout(instantT);
-      instantT = setTimeout(function () { lbImg.classList.remove('is-panning'); }, 140);
+      instantT = setTimeout(function () {
+        if (!panFrom && !pts.size) lbImg.classList.remove('is-panning');
+      }, 150);
     }
   }
 
@@ -496,11 +558,6 @@
   btnOut.addEventListener('click', function () { zoomAt(scale / 1.6, null); });
   zoomVal.addEventListener('click', resetZoom);
 
-  /* клик мимо кадра закрывает, но только если не приближено */
-  lbStage.addEventListener('click', function (e) {
-    if (e.target === lbStage && scale <= 1.001) close();
-  });
-
   /* двойной клик — приблизить/вернуть */
   lbImg.addEventListener('dblclick', function (e) {
     e.preventDefault();
@@ -519,11 +576,13 @@
   var pts = new Map();
   var startDist = 0, startScale = 1, startMid = null;
   var panFrom = null, swipeFrom = null;
+  var downTarget = null, moved = 0;
 
   lbStage.addEventListener('pointerdown', function (e) {
     if (lb.hidden) return;
     if (e.target.closest('.lb-nav')) return;
     pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 1) { downTarget = e.target; moved = 0; }
     try { lbStage.setPointerCapture(e.pointerId); } catch (err) {}
 
     if (pts.size === 2) {
@@ -544,6 +603,8 @@
 
   lbStage.addEventListener('pointermove', function (e) {
     if (!pts.has(e.pointerId)) return;
+    var prev = pts.get(e.pointerId);
+    moved += Math.abs(e.clientX - prev.x) + Math.abs(e.clientY - prev.y);
     pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
     if (pts.size === 2 && startDist) {
@@ -576,9 +637,16 @@
       var dt = Date.now() - swipeFrom.t;
       swipeFrom = null;
       if (scale <= 1.001 && dt < 800) {
-        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) paint(idx + (dx < 0 ? 1 : -1));
-        else if (dy > 110 && Math.abs(dy) > Math.abs(dx)) close();
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) { paint(idx + (dx < 0 ? 1 : -1)); moved = 999; }
+        else if (dy > 110 && Math.abs(dy) > Math.abs(dx)) { close(); moved = 999; }
       }
+    }
+
+    // Закрытие по фону считаем здесь, а не по click: setPointerCapture
+    // переадресует click на сцену, и клик по самому кадру тоже закрывал окно.
+    if (pts.size === 0) {
+      if (downTarget === lbStage && moved < 6 && scale <= 1.001) close();
+      downTarget = null;
     }
   }
   lbStage.addEventListener('pointerup', endPointer);
