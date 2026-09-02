@@ -31,8 +31,9 @@
 
   // Сценарий вступления. Всё в одном месте, чтобы тайминги было легко крутить.
   var STINGER = {
-    hold:   2000,   // пауза после загрузчика, пустой экран
+    hold:   900,    // пауза после загрузчика, пустой экран
     bgFade: 1000,   // проявление фона
+    zoom:   1.5,    // насколько камера крупнее на подлёте
     flight: 2600,   // пролёт камеры
     trail:  0.30,   // где на корпусе считаем «переднюю кромку»: 0 — левый край, 1 — правый
     curve:  'cubic-bezier(.32,.28,.55,1)'  // почти равномерный проход, мягкая посадка
@@ -49,14 +50,19 @@
     // Само движение отдаём браузеру: своя кривая на CSS идёт ровнее, чем
     // пересчёт в скрипте. Маска же каждый кадр читает фактическое положение
     // корпуса, поэтому кромка не разъезжается с ним ни на пиксель.
-    wrap.style.transition = 'none';
-    wrap.style.transform = 'translate3d(' + fromX + 'px,0,0) rotateY(-34deg) scale(.94)';
+    // Явная анимация вместо CSS-перехода: переход мог не запуститься,
+    // если браузер склеивал установку стартового положения с включением
+    // transition — тогда камера просто оказывалась в конце без движения.
     wrap.style.opacity = '1';
+    var anim = wrap.animate(
+      [
+        { transform: 'translate3d(' + fromX + 'px,0,0) rotateY(-34deg) scale(' + STINGER.zoom + ')' },
+        { transform: 'translate3d(0,0,0) rotateY(-9deg) scale(1)' }
+      ],
+      { duration: STINGER.flight, easing: STINGER.curve, fill: 'forwards' }
+    );
 
-    requestAnimationFrame(function () {
-      wrap.style.transition = 'transform ' + STINGER.flight + 'ms ' + STINGER.curve;
-      wrap.style.transform = 'translate3d(0,0,0) rotateY(-9deg) scale(1)';
-
+    (function () {
       var t0 = performance.now();
       (function track(t) {
         var r = wrap.getBoundingClientRect();
@@ -74,7 +80,13 @@
           document.body.classList.add('is-flown');
         }
       })(t0);
-    });
+    })();
+
+    if (anim && anim.finished) {
+      anim.finished.catch(function () {}).then(function () {
+        wrap.style.transform = 'translate3d(0,0,0) rotateY(-9deg) scale(1)';
+      });
+    }
   }
 
   function playStinger() {
@@ -155,6 +167,7 @@
     lastBgY = y;
     var range = WRAP * vh, low = LOW * vh;
     for (var i = 0; i < orbs.length; i++) {
+      if (orbs[i].offsetParent === null) continue;
       var o = ORB[i % ORB.length];
       // зацикливаем: иначе на длинной странице пятна уезжают вверх
       // и низ остаётся без цвета
@@ -165,8 +178,8 @@
     }
     // полосы идут через страницу медленнее пятен и слегка качаются
     for (var j = 0; j < streaks.length; j++) {
-      var sp = 0.22 + j * 0.07;
-      var sy = (0.34 + j * 0.05) * vh - y * sp;
+      var sp = 0.24;
+      var sy = 0.36 * vh - y * sp;
       sy = ((sy - low) % range + range) % range + low;
       var tilt = -21 + Math.sin(y * 0.0006 + j) * 2.4;
       streaks[j].style.transform = 'translate3d(0,' + sy.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg)';
@@ -178,11 +191,11 @@
     // Фон приглушается ровно настолько, насколько экран занят галереей:
     // привязка к самой секции надёжнее доли прокрутки, которая плывёт
     // из-за ленивой подгрузки кадров.
-    var oi = 0.6;
+    var oi = 0.42;
     if (worksEl) {
       var r = worksEl.getBoundingClientRect();
       var seen = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / vh;
-      oi = 0.6 - 0.34 * Math.min(1, seen * 1.2);
+      oi = 0.42 - 0.24 * Math.min(1, seen * 1.2);
     }
     bgEl.style.setProperty('--oi', oi.toFixed(3));
   }

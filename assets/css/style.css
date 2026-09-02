@@ -245,9 +245,9 @@ body.is-lit .bg-orb { opacity: var(--oi, .5); }
   background: radial-gradient(circle at 50% 50%, rgba(160,59,255,.7) 0%, rgba(160,59,255,0) 64%); }
 .bg .o4 { width: 54vw; height: 54vw; left: -10vw; top: 0;
   background: radial-gradient(circle at 50% 50%, rgba(255,59,31,.6) 0%, rgba(255,59,31,0) 64%); }
-.bg .o5 { width: 46vw; height: 46vw; right: -6vw; top: 0;
+.bg .o5 { display: none; width: 46vw; height: 46vw; right: -6vw; top: 0;
   background: radial-gradient(circle at 50% 50%, rgba(255,155,33,.55) 0%, rgba(255,155,33,0) 64%); }
-.bg .o6 { width: 40vw; height: 40vw; left: 30vw; top: 0;
+.bg .o6 { display: none; width: 40vw; height: 40vw; left: 30vw; top: 0;
   background: radial-gradient(circle at 50% 50%, rgba(255,244,214,.4) 0%, rgba(255,244,214,0) 60%); }
 
 /* Призматическая полоса — дисперсия на объективе.
@@ -256,34 +256,32 @@ body.is-lit .bg-orb { opacity: var(--oi, .5); }
 .bg-streak {
   position: absolute;
   left: 50%; top: 0;
-  width: 220vw; height: 30vh;
-  margin-left: -110vw;
-  filter: blur(46px);
-  opacity: calc(var(--oi, .5) * 1.15);
+  width: 128vw; height: 26vh;
+  margin-left: -64vw;
+  opacity: calc(var(--oi, .5) * .62);
   will-change: transform;
   transition: opacity .5s linear;
-  background: linear-gradient(90deg,
-      rgba(255, 59, 31, 0)   4%,  rgba(255, 59, 31, .85)  16%,
-      rgba(255, 155, 33, .8) 28%, rgba(255, 244, 214, .9) 42%,
-      rgba(69, 214, 255, .85) 57%, rgba(47, 91, 255, .8)  72%,
-      rgba(160, 59, 255, .7) 86%, rgba(160, 59, 255, 0)   97%);
-}
-/* яркое ядро полосы */
-.bg-streak.s2 {
-  height: 6vh;
-  filter: blur(20px);
-  opacity: calc(var(--oi, .5) * .62);
-  background: linear-gradient(90deg,
-      transparent 12%, rgba(255, 244, 214, .8) 40%, #fff 50%,
-      rgba(160, 200, 255, .75) 62%, transparent 88%);
+  /* спектр и яркое ядро — двумя слоями фона на одном элементе:
+     каждый лишний большой слой заметно дороже в отрисовке */
+  background:
+    linear-gradient(90deg,
+      transparent 16%, rgba(255, 244, 214, .5) 40%, rgba(255, 255, 255, .85) 50%,
+      rgba(160, 200, 255, .5) 62%, transparent 86%) center / 100% 16% no-repeat,
+    linear-gradient(90deg,
+      rgba(255, 59, 31, 0)   6%,  rgba(255, 59, 31, .8)  18%,
+      rgba(255, 155, 33, .75) 30%, rgba(255, 244, 214, .85) 43%,
+      rgba(69, 214, 255, .8) 58%, rgba(47, 91, 255, .75)  72%,
+      rgba(160, 59, 255, .65) 86%, rgba(160, 59, 255, 0)  96%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 44%, #000 56%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 44%, #000 56%, transparent);
 }
 
 /* призматическое кольцо — медленно вращается, задаёт «оптику» */
 .bg-arc {
   position: absolute;
   left: 50%; top: 42%;
-  width: 110vmax; height: 110vmax;
-  margin: -55vmax 0 0 -55vmax;
+  width: 86vmax; height: 86vmax;
+  margin: -43vmax 0 0 -43vmax;
   border-radius: 50%;
   opacity: .08;
   will-change: transform;
@@ -293,9 +291,7 @@ body.is-lit .bg-orb { opacity: var(--oi, .5); }
       rgba(160,59,255,0) 280deg, rgba(255,59,31,0) 360deg);
   -webkit-mask-image: radial-gradient(circle, transparent 46%, #000 48%, #000 50%, transparent 52%);
   mask-image: radial-gradient(circle, transparent 46%, #000 48%, #000 50%, transparent 52%);
-  animation: arc-spin 150s linear infinite;
 }
-@keyframes arc-spin { to { transform: rotate(360deg); } }
 
 /* тонкая сетка — добавляет глубины, гаснет к краям */
 .bg-grid {
@@ -305,8 +301,8 @@ body.is-lit .bg-orb { opacity: var(--oi, .5); }
   background-image:
     repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 96px),
     repeating-linear-gradient(0deg,  rgba(255,255,255,.028) 0 1px, transparent 1px 96px);
-  -webkit-mask-image: radial-gradient(115% 90% at 50% 35%, #000 20%, transparent 78%);
-  mask-image: radial-gradient(115% 90% at 50% 35%, #000 20%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 10%, transparent 82%);
+  mask-image: linear-gradient(to bottom, #000 10%, transparent 82%);
   will-change: transform;
 }
 
@@ -799,7 +795,7 @@ body.is-ready .boot { opacity: 0; visibility: hidden; }
   pointer-events: none;
 }
 .stage .props { position: absolute; inset: 0; width: 100%; height: 100%; }
-.stage .cam { width: 100%; height: 100%; display: block; }
+.stage .cam { width: 100%; height: auto; display: block; }
 
 .cam-wrap {
   position: absolute;
@@ -809,7 +805,8 @@ body.is-ready .boot { opacity: 0; visibility: hidden; }
   transform-style: preserve-3d;
   opacity: 0;
   transform: translate3d(-52%, 8%, 0) rotateY(-46deg) scale(.9);
-  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .55));
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 /* положение и разворот на пролёте задаёт скрипт */
 body.is-flown .cam { animation: cam-idle 13s ease-in-out .6s infinite; }

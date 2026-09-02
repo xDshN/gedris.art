@@ -80,7 +80,6 @@
   <span class="bg-orb o5"></span>
   <span class="bg-orb o6"></span>
   <span class="bg-streak"></span>
-  <span class="bg-streak s2"></span>
   <span class="bg-arc"></span>
   <span class="bg-grid"></span>
   <span class="bg-noise"></span>
@@ -134,100 +133,8 @@
     <div class="stage" id="stage" aria-hidden="true">
       <span class="cloud"></span>
       <div class="cam-wrap">
-        <svg class="cam" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="bodyG" x1=".15" y1="0" x2=".85" y2="1">
-            <stop offset="0" stop-color="#43474f"/><stop offset=".22" stop-color="#2a2d34"/>
-            <stop offset=".55" stop-color="#1a1c21"/><stop offset="1" stop-color="#0c0d11"/>
-          </linearGradient>
-          <linearGradient id="topG" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#585d68"/><stop offset=".45" stop-color="#2d3038"/><stop offset="1" stop-color="#15171c"/>
-          </linearGradient>
-          <linearGradient id="gripSh" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".28" stop-color="#000" stop-opacity="0"/>
-            <stop offset=".62" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".45"/>
-          </linearGradient>
-          <linearGradient id="metalG" x1=".1" y1="0" x2=".9" y2="1">
-            <stop offset="0" stop-color="#7f8590"/><stop offset=".18" stop-color="#e2e6ec"/>
-            <stop offset=".46" stop-color="#767c86"/><stop offset=".72" stop-color="#c6cbd3"/><stop offset="1" stop-color="#43464d"/>
-          </linearGradient>
-          <linearGradient id="barrelG" x1=".2" y1="0" x2=".8" y2="1">
-            <stop offset="0" stop-color="#3b3f47"/><stop offset=".4" stop-color="#202329"/><stop offset="1" stop-color="#0d0e12"/>
-          </linearGradient>
-          <radialGradient id="glassG" cx=".36" cy=".28" r=".9">
-            <stop offset="0" stop-color="#8fa0ff" stop-opacity=".8"/>
-            <stop offset=".3" stop-color="#2d3d96" stop-opacity=".72"/>
-            <stop offset=".6" stop-color="#101a3a"/><stop offset="1" stop-color="#04060d"/>
-          </radialGradient>
-          <radialGradient id="coatG" cx=".72" cy=".74" r=".55">
-            <stop offset="0" stop-color="#45d6ff" stop-opacity=".5"/>
-            <stop offset=".5" stop-color="#a03bff" stop-opacity=".2"/><stop offset="1" stop-color="#a03bff" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="rimWarm" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ffd9a0" stop-opacity="0"/><stop offset=".35" stop-color="#ffe6bd" stop-opacity=".95"/>
-            <stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="rimCool" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#7ce0ff" stop-opacity="0"/><stop offset=".5" stop-color="#7ce0ff" stop-opacity=".6"/>
-            <stop offset="1" stop-color="#7ce0ff" stop-opacity="0"/>
-          </linearGradient>
-          <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
-          <filter id="soft2"><feGaussianBlur stdDeviation="3"/></filter>
-        </defs>
-        
-        <ellipse cx="300" cy="356" rx="196" ry="18" fill="#000" opacity=".6" filter="url(#soft)"/>
-        <ellipse cx="288" cy="348" rx="150" ry="26" fill="#45d6ff" opacity=".07" filter="url(#soft)"/>
-        
-        <!-- горб видоискателя и башмак -->
-        <path d="M246 92 h108 a14 14 0 0 1 14 14 v22 h-136 v-22 a14 14 0 0 1 14 -14z" fill="#2b2e36"/>
-        <rect x="272" y="64" width="56" height="30" rx="6" fill="#23262d"/>
-        <rect x="280" y="58" width="40" height="10" rx="3" fill="#3d414a"/>
-        <rect x="285" y="60" width="30" height="4" rx="2" fill="#131519"/>
-        
-        <!-- верхняя площадка -->
-        <path d="M150 108 h284 c22 0 34 10 40 24 v16 h-352 v-26 a14 14 0 0 1 14 -14z" fill="url(#topG)"/>
-        
-        <!-- корпус с интегрированным хватом -->
-        <path d="M104 142 h300 c34 0 58 10 72 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -58 8 h-300
-                 a30 30 0 0 1 -30 -30 v-104 a30 30 0 0 1 30 -30z" fill="url(#bodyG)"/>
-        <path d="M396 142 c38 0 64 10 80 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -66 8z" fill="url(#bodyG)"/>
-        <path d="M396 142 c38 0 64 10 80 30 c14 20 20 44 20 64 c0 30 -12 52 -34 62 c-14 6 -32 8 -66 8z" fill="url(#gripSh)"/>
-        <path d="M416 164 c26 8 42 32 42 62 c0 30 -14 52 -36 64" fill="none" stroke="#4a4f59" stroke-width="2.5" opacity=".55"/>
-        <path d="M428 176 c18 8 28 28 28 50 c0 22 -10 40 -24 50" fill="none" stroke="#3b3f48" stroke-width="2" opacity=".45"/>
-        
-        <!-- кромочный свет -->
-        <path d="M118 142 h300" stroke="url(#rimWarm)" stroke-width="2.6" fill="none"/>
-        <path d="M164 110 h258" stroke="url(#rimWarm)" stroke-width="1.8" fill="none" opacity=".7"/>
-        <path d="M104 306 h290" stroke="url(#rimCool)" stroke-width="2" fill="none"/>
-        
-        <!-- органы управления -->
-        <circle cx="424" cy="122" r="16" fill="#33373f"/><circle cx="424" cy="122" r="16" fill="none" stroke="#5c626d" stroke-width="2"/>
-        <circle cx="424" cy="122" r="6" fill="#191b20"/>
-        <circle cx="380" cy="124" r="10" fill="#3f434c"/><circle cx="380" cy="124" r="3.5" fill="#1e2126"/>
-        <rect x="176" y="118" width="30" height="7" rx="3.5" fill="#363a43"/>
-        <rect x="120" y="238" width="46" height="6" rx="3" fill="#24272d"/>
-        <rect x="120" y="252" width="30" height="6" rx="3" fill="#1d2025"/>
-        <circle cx="146" cy="188" r="7" fill="#1a1c21"/><circle cx="146" cy="188" r="2.5" fill="#e2402f" opacity=".8"/>
-        
-        <!-- тень объектива на корпусе -->
-        <ellipse cx="272" cy="246" rx="100" ry="94" fill="#000" opacity=".45" filter="url(#soft)"/>
-        
-        <!-- байонет и объектив -->
-        <circle cx="268" cy="240" r="96" fill="#14161b"/>
-        <circle cx="268" cy="240" r="92" fill="none" stroke="url(#metalG)" stroke-width="6"/>
-        <circle cx="268" cy="240" r="84" fill="url(#barrelG)"/>
-        <circle cx="268" cy="240" r="77" fill="none" stroke="#0a0b0e" stroke-width="11" stroke-dasharray="2.5 6.5" opacity=".7"/>
-        <circle cx="268" cy="240" r="69" fill="none" stroke="url(#metalG)" stroke-width="2.5" opacity=".65"/>
-        <circle cx="268" cy="240" r="64" fill="#0f1116"/>
-        <circle cx="268" cy="148" r="5.5" fill="#e2402f"/>
-        
-        <circle cx="268" cy="240" r="55" fill="url(#glassG)"/>
-        <circle cx="268" cy="240" r="55" fill="url(#coatG)"/>
-        <ellipse cx="245" cy="216" rx="25" ry="16" fill="#dce8ff" opacity=".3" transform="rotate(-30 245 216)" filter="url(#soft2)"/>
-        <ellipse cx="292" cy="268" rx="13" ry="7.5" fill="#45d6ff" opacity=".32" transform="rotate(-30 292 268)" filter="url(#soft2)"/>
-        <circle cx="268" cy="240" r="55" fill="none" stroke="#000" stroke-width="3" opacity=".55"/>
-        <circle cx="268" cy="240" r="52" fill="none" stroke="#6b7482" stroke-width="1" opacity=".45"/>
-        </svg>
+        <img class="cam" src="assets/img/gear/camera.png" alt=""
+             width="1112" height="827" decoding="async" fetchpriority="high">
       </div>
       <svg class="props" viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
