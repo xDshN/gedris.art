@@ -39,34 +39,85 @@
     curve:  'cubic-bezier(.32,.28,.55,1)'  // почти равномерный проход, мягкая посадка
   };
 
+  // Разбор cubic-bezier из CSS: нужен, чтобы маска шла по той же кривой,
+  // что и сама анимация. Ньютон по x, затем значение y — как в браузере.
+  function bezier(css) {
+    var m = /cubic-bezier\(([^)]+)\)/.exec(css);
+    if (!m) return function (t) { return t; };
+    var n = m[1].split(',').map(parseFloat);
+    var x1 = n[0], y1 = n[1], x2 = n[2], y2 = n[3];
+    function cx(t) { return ((1 - 3 * x2 + 3 * x1) * t + (3 * x2 - 6 * x1)) * t * t + 3 * x1 * t; }
+    function cy(t) { return ((1 - 3 * y2 + 3 * y1) * t + (3 * y2 - 6 * y1)) * t * t + 3 * y1 * t; }
+    function dx(t) { return 3 * (1 - 3 * x2 + 3 * x1) * t * t + 2 * (3 * x2 - 6 * x1) * t + 3 * x1; }
+    return function (x) {
+      var t = x;
+      for (var i = 0; i < 6; i++) {
+        var d = dx(t);
+        if (Math.abs(d) < 1e-6) break;
+        var e = cx(t) - x;
+        if (Math.abs(e) < 1e-6) break;
+        t -= e / d;
+      }
+      return cy(t < 0 ? 0 : t > 1 ? 1 : t);
+    };
+  }
+
   function runFlight() {
     var wrap = $('.cam-wrap'), name = $('#heroName'), edge = $('#nameEdge');
     if (!wrap || !name) { document.body.classList.add('is-flown'); return; }
 
     var nameRect = name.getBoundingClientRect();
-    var wrapRect = wrap.getBoundingClientRect();
-    var fromX = -(wrapRect.right + 40);          // целиком за левым краем экрана
 
-    // Само движение отдаём браузеру: своя кривая на CSS идёт ровнее, чем
-    // пересчёт в скрипте. Маска же каждый кадр читает фактическое положение
-    // корпуса, поэтому кромка не разъезжается с ним ни на пиксель.
+    // Габарит считаем в стартовой позе: поворот и увеличение меняют ширину
+    // бокса, а замер по позе покоя давал сдвиг, при котором корпус
+    // «проявлялся» уже на трети экрана вместо влёта из-за кадра.
+    // translate идёт в системе родителя, поэтому сдвиг переносит
+    // повёрнутый бокс ровно на столько же пикселей.
+    // До пролёта на боксе висит стартовая поза из CSS, поэтому обе точки
+    // замеряем явно: покой — это ровно то, чем анимация заканчивается.
+    var poseWas = wrap.style.transform;
+    wrap.style.transform = 'none';
+    var restRect = wrap.getBoundingClientRect();
+    wrap.style.transform = 'scale(' + STINGER.zoom + ')';
+    var poseRect = wrap.getBoundingClientRect();
+    wrap.style.transform = poseWas;
+    var fromX = -(poseRect.right + 60);          // целиком за левым краем экрана
+
+    // Пролёт плоский. Разворот по Y на снимке даёт трапецию: далеко от
+    // центра перспективы фотографию заметно ведёт, и корпус читается как
+    // криво наклеенная картинка. Поворот остался только в покое, где
+    // камера стоит у оси перспективы и трапеции не видно.
     // Явная анимация вместо CSS-перехода: переход мог не запуститься,
     // если браузер склеивал установку стартового положения с включением
     // transition — тогда камера просто оказывалась в конце без движения.
     wrap.style.opacity = '1';
     var anim = wrap.animate(
       [
-        { transform: 'translate3d(' + fromX + 'px,0,0) rotateY(-34deg) scale(' + STINGER.zoom + ')' },
-        { transform: 'translate3d(0,0,0) rotateY(-9deg) scale(1)' }
+        { transform: 'translate3d(' + fromX + 'px,0,0) scale(' + STINGER.zoom + ')' },
+        { transform: 'translate3d(0,0,0) scale(1)' }
       ],
       { duration: STINGER.flight, easing: STINGER.curve, fill: 'forwards' }
     );
 
+    // Кромку маски считаем по прогрессу самой анимации, а не замером бокса.
+    // Замер каждый кадр стаскивал трансформацию с композитора на главный
+    // поток: кадр вырастал с 16 до 33мс. Между двумя кадрами браузер
+    // линейно смешивает матрицы, а у нас только сдвиг и равномерный
+    // масштаб — значит те же числа получаются арифметикой, кромка сходится
+    // с корпусом ровно так же, но уже даром.
+    var ease = bezier(STINGER.curve);
+    var fromL = poseRect.left + fromX, fromW = poseRect.width;
+    var toL   = restRect.left,         toW   = restRect.width;
+
     (function () {
       var t0 = performance.now();
       (function track(t) {
-        var r = wrap.getBoundingClientRect();
-        var lead = r.left + r.width * STINGER.trail;
+        // Часы берём у самой анимации: она стартует со следующего кадра,
+        // и отсчёт от performance.now() уводил кромку на несколько кадров
+        // вперёд корпуса.
+        var ct = anim && anim.currentTime;
+        var u = ease(clamp((ct == null ? t - t0 : ct) / STINGER.flight, 0, 1));
+        var lead = (fromL + (toL - fromL) * u) + (fromW + (toW - fromW) * u) * STINGER.trail;
         var pct = clamp((lead - nameRect.left) / nameRect.width, 0, 1);
         name.style.clipPath = 'inset(0 ' + ((1 - pct) * 100).toFixed(2) + '% 0 -2%)';
         if (edge) {
@@ -84,7 +135,7 @@
 
     if (anim && anim.finished) {
       anim.finished.catch(function () {}).then(function () {
-        wrap.style.transform = 'translate3d(0,0,0) rotateY(-9deg) scale(1)';
+        wrap.style.transform = 'translate3d(0,0,0) scale(1)';
       });
     }
   }
@@ -244,19 +295,44 @@
     var lines = $$('.ln', heroName);
     if (!box || !lines.length) return;
 
-    // сброс к базовому состоянию
-    heroName.style.fontSize = '';
-    lines.forEach(function (l) {
-      l.style.letterSpacing = '';
-      if (l.firstElementChild) l.firstElementChild.style.marginRight = '';
-    });
+    // Пока по кеглю или трекингу идёт переход, getComputedStyle отдаёт
+    // промежуточное значение, а не то, к которому мы только что перешли.
+    // Мерить по нему нельзя: подгонка начнёт считать от собственного
+    // прошлого результата. Поэтому любой начатый переход досматриваем
+    // до конца — значение сразу становится итоговым.
+    function settle(el) {
+      if (!el.getAnimations) return;
+      el.getAnimations().forEach(function (a) {
+        if (a.transitionProperty !== undefined) { try { a.finish(); } catch (e) {} }
+      });
+    }
+
+    function clear() {
+      heroName.style.fontSize = '';
+      lines.forEach(function (l) {
+        l.style.letterSpacing = '';
+        if (l.firstElementChild) l.firstElementChild.style.marginRight = '';
+      });
+      settle(heroName);
+      lines.forEach(function (l) {
+        settle(l);
+        if (l.firstElementChild) settle(l.firstElementChild);
+      });
+    }
+
+    // Ширину букв меряем при нулевом трекинге: тогда она зависит только
+    // от кегля, и дальше всё считается формулой, без подгонки в цикле.
+    clear();
+    lines.forEach(function (l) { l.style.letterSpacing = '0px'; settle(l); });
 
     var base = parseFloat(getComputedStyle(heroName).fontSize);
     var nat = lines.map(function (l) {
       return l.firstElementChild ? l.firstElementChild.getBoundingClientRect().width : 0;
     });
     var widest = Math.max.apply(null, nat);
-    if (!widest) return;
+    // Пока шрифт не встал или блок скрыт, мерить нечего: возвращаем
+    // разметку к тому, что задаёт CSS, и ждём следующего вызова.
+    if (!(widest > 0) || !(base > 0)) { clear(); return; }
 
     // Потолок считаем от реального остатка места на первом экране,
     // а не от доли высоты окна: имя занимает всё, что не заняли
@@ -276,30 +352,49 @@
 
     // Самая длинная строка заполняет блок целиком, если хватает высоты.
     var size = Math.min(base * (box / widest), capSize);
+    if (!isFinite(size) || size <= 0) { clear(); return; }
     heroName.style.fontSize = size + 'px';
+    settle(heroName);
 
-    // Куда тянемся: полная ширина блока либо столько, сколько даёт потолок.
-    var targetW = Math.min(box, widest * (size / base));
+    // После смены кегля перемеряем: округление глифов не строго линейно,
+    // и один корректирующий проход возвращает строку точно в ширину блока.
+    function remeasure() {
+      nat = lines.map(function (l) {
+        return l.firstElementChild ? l.firstElementChild.getBoundingClientRect().width : 0;
+      });
+      widest = Math.max.apply(null, nat);
+    }
+    remeasure();
+    if (!(widest > 0)) { clear(); return; }
+    if (Math.abs(widest - box) > 0.5 && size < capSize - 0.5) {
+      size = Math.min(size * (box / widest), capSize);
+      heroName.style.fontSize = size + 'px';
+      settle(heroName);
+      remeasure();
+      if (!(widest > 0)) { clear(); return; }
+    }
+
+    // Куда тянемся: полная ширина блока либо столько, сколько даёт кегль.
+    var targetW = Math.min(box, widest);
 
     // Короткие строки догоняем трекингом — кегль у всех остаётся общим.
-    lines.forEach(function (l) {
+    // Ширина строки линейна по трекингу: ink = nat + ls * (букв - 1),
+    // потому что хвост после последней буквы снимаем отрицательным
+    // полем. Значит нужное значение берётся сразу, одной формулой.
+    // Прошлый вариант подбирал его итерациями от замера бокса — и когда
+    // бокс схлопывался в ноль, подбор расходился: трекинг улетал в минус
+    // на тысячи пикселей, имя складывалось в одну букву, а следующие
+    // вызовы уже видели нулевую ширину и выходили, не починив.
+    lines.forEach(function (l, k) {
       var inner = l.firstElementChild;
       if (!inner) return;
       var chars = inner.textContent.trim().length;
       if (chars < 2) return;
-      // стартуем с унаследованного трекинга, иначе первая итерация врёт
-      var ls = parseFloat(getComputedStyle(l).letterSpacing) || 0;
+      var ls = (targetW - nat[k]) / (chars - 1);
+      // разумные пределы: имя не растягиваем в разрядку и не слипаем
+      ls = clamp(ls, -0.12 * size, 0.6 * size);
+      l.style.letterSpacing = ls + 'px';
       inner.style.marginRight = (-ls) + 'px';
-      for (var i = 0; i < 6; i++) {
-        // letter-spacing добавляется и после последней буквы,
-        // поэтому из ширины бокса вычитаем хвост — считаем по чернилам
-        var ink = inner.getBoundingClientRect().width - ls;
-        var diff = targetW - ink;
-        if (Math.abs(diff) < 0.3) break;
-        ls += diff / (chars - 1);
-        l.style.letterSpacing = ls + 'px';
-        inner.style.marginRight = (-ls) + 'px';
-      }
     });
   }
 

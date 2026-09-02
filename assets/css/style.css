@@ -57,7 +57,14 @@ html {
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    /* Гасим переходы свойством, а не длительностью. Одна длительность на
+       звёздочку включала переход на КАЖДОЕ свойство: transition-property
+       по умолчанию all, и элементы, которым переходы вообще не назначали,
+       начинали их получать. Из-за этого getComputedStyle сразу после смены
+       кегля возвращал не новое значение, а стартовое — подгонка имени
+       мерила саму себя и разъезжалась. Слушателей transitionend в скрипте
+       нет, терять нечего. */
+    transition-property: none !important;
   }
 }
 
@@ -787,33 +794,35 @@ body.is-ready .boot { opacity: 0; visibility: hidden; }
   position: absolute;
   /* выше текста: на пролёте корпус идёт поверх имени, как в референсе */
   z-index: 3;
-  right: 1.5vw;
-  top: 6%;
-  width: min(47vw, 660px);
-  aspect-ratio: 900 / 620;
-  perspective: 1200px;
+  right: 2vw;
+  top: 9%;
+  /* сцена ровно по кадру камеры — рисованного реквизита рядом больше нет */
+  width: min(43vw, 560px);
+  aspect-ratio: 1257 / 883;
+  perspective: 1400px;
   pointer-events: none;
 }
-.stage .props { position: absolute; inset: 0; width: 100%; height: 100%; }
 .stage .cam { width: 100%; height: auto; display: block; }
 
 .cam-wrap {
   position: absolute;
-  left: 19%; top: 17%;
-  width: 62%;
-  aspect-ratio: 600 / 400;
+  left: 0; top: 0;
+  width: 100%;
+  aspect-ratio: 1257 / 883;
   transform-style: preserve-3d;
   opacity: 0;
-  transform: translate3d(-52%, 8%, 0) rotateY(-46deg) scale(.9);
+  transform: translate3d(-52%, 0, 0) scale(1.5);
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
 /* положение и разворот на пролёте задаёт скрипт */
 body.is-flown .cam { animation: cam-idle 13s ease-in-out .6s infinite; }
+/* фотографию нельзя крутить как плоский вектор — перспектива сразу выдаёт
+   подмену, поэтому в покое остаётся почти чистое парение */
 @keyframes cam-idle {
   0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
-  30%      { transform: rotateY(7deg) rotateX(-2.5deg) translateY(-7px); }
-  65%      { transform: rotateY(-5deg) rotateX(2deg) translateY(5px); }
+  30%      { transform: rotateY(3deg) rotateX(-1deg) translateY(-7px); }
+  65%      { transform: rotateY(-2deg) rotateX(.8deg) translateY(5px); }
 }
 
 /* --- облако под камерой --- */
@@ -838,42 +847,6 @@ body.is-flown .cloud { animation: cloud-in 1.4s var(--ease) .35s forwards, cloud
   50%      { transform: scale(1.09) translate3d(2.5%, -2%, 0); }
 }
 
-/* --- атрибуты фотографа --- */
-.props .prop {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: translateY(26px) scale(.86);
-  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .5));
-}
-body.is-flown .props .prop { animation: prop-in .95s var(--ease) forwards; }
-@keyframes prop-in { to { opacity: 1; transform: translateY(0) scale(1); } }
-
-
-/* лёгкое покачивание — у каждого свой ритм */
-body.is-flown .props .p1 { animation: prop-in .95s var(--ease) 0.20s forwards, drift-1 9s ease-in-out 1.35s infinite; }
-body.is-flown .props .p2 { animation: prop-in .95s var(--ease) 0.30s forwards, drift-2 11s ease-in-out 1.55s infinite; }
-body.is-flown .props .p3 { animation: prop-in .95s var(--ease) 0.39s forwards, drift-3 13s ease-in-out 1.75s infinite; }
-body.is-flown .props .p4 { animation: prop-in .95s var(--ease) 0.27s forwards, drift-2 10s ease-in-out 1.45s infinite; }
-body.is-flown .props .p5 { animation: prop-in .95s var(--ease) 0.47s forwards, drift-1 12s ease-in-out 1.85s infinite; }
-body.is-flown .props .p6 { animation: prop-in .95s var(--ease) 0.55s forwards, drift-3 14s ease-in-out 1.65s infinite; }
-body.is-flown .props .p7 { animation: prop-in .95s var(--ease) 0.63s forwards, drift-2 15s ease-in-out 2.05s infinite; }
-body.is-flown .props .p8 { animation: prop-in .95s var(--ease) 0.71s forwards, drift-1 11s ease-in-out 1.95s infinite; }
-body.is-flown .props .p9 { animation: prop-in .95s var(--ease) 0.79s forwards, drift-3 12s ease-in-out 2.15s infinite; }
-body.is-flown .props .p10 { animation: prop-in .95s var(--ease) 0.87s forwards, drift-2 13s ease-in-out 2.35s infinite; }
-
-@keyframes drift-1 {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50%      { transform: translate3d(4px, -9px, 0) rotate(2deg); }
-}
-@keyframes drift-2 {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50%      { transform: translate3d(-6px, 7px, 0) rotate(-2.5deg); }
-}
-@keyframes drift-3 {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50%      { transform: translate3d(5px, 8px, 0) rotate(1.6deg); }
-}
 
 /* --- вход остального содержимого первого экрана --- */
 .hero-kicker, .hero-sub, .hero-meta {
@@ -885,12 +858,14 @@ body.is-lit .hero-kicker { opacity: 1; transform: none; transition-delay: .15s; 
 body.is-flown .hero-sub  { opacity: 1; transform: none; transition-delay: .1s; }
 body.is-flown .hero-meta { opacity: 1; transform: none; transition-delay: .25s; }
 
+/* На узких экранах камера — фоновый слой за именем. Снимок нельзя резать
+   краем окна, как раньше резался рисунок: обрубленный по живому корпус
+   читается как ошибка вёрстки, поэтому кадр целиком в поле зрения. */
 @media (max-width: 1000px) {
-  .stage { right: -10vw; top: 3%; width: min(72vw, 480px); opacity: .5; }
-  .stage .props { display: none; }
+  .stage { right: 2vw; top: 4%; width: min(58vw, 430px); opacity: .5; }
 }
 @media (max-width: 620px) {
-  .stage { right: -18vw; top: 2%; width: 92vw; opacity: .34; }
+  .stage { right: 3vw; top: 3%; width: 74vw; opacity: .38; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -898,7 +873,6 @@ body.is-flown .hero-meta { opacity: 1; transform: none; transition-delay: .25s; 
   .bg > *, .bg::after, .bg-orb { opacity: 1 !important; }
   .cam-wrap { opacity: 1 !important; transform: none !important; animation: none; }
   .cloud { opacity: .8; transform: none; animation: none; }
-  .props .prop { opacity: 1; transform: none; animation: none; }
   .hero-kicker, .hero-sub, .hero-meta { opacity: 1; transform: none; }
   .cam { animation: none; }
 }
