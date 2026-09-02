@@ -29,6 +29,64 @@
   var bootStart = performance.now();
   var booted = false;
 
+  // Сценарий вступления. Всё в одном месте, чтобы тайминги было легко крутить.
+  var STINGER = {
+    hold:   2000,   // пауза после загрузчика, пустой экран
+    bgFade: 1000,   // проявление фона
+    flight: 2600,   // пролёт камеры
+    trail:  0.30,   // где на корпусе считаем «переднюю кромку»: 0 — левый край, 1 — правый
+    curve:  'cubic-bezier(.32,.28,.55,1)'  // почти равномерный проход, мягкая посадка
+  };
+
+  function runFlight() {
+    var wrap = $('.cam-wrap'), name = $('#heroName'), edge = $('#nameEdge');
+    if (!wrap || !name) { document.body.classList.add('is-flown'); return; }
+
+    var nameRect = name.getBoundingClientRect();
+    var wrapRect = wrap.getBoundingClientRect();
+    var fromX = -(wrapRect.right + 40);          // целиком за левым краем экрана
+
+    // Само движение отдаём браузеру: своя кривая на CSS идёт ровнее, чем
+    // пересчёт в скрипте. Маска же каждый кадр читает фактическое положение
+    // корпуса, поэтому кромка не разъезжается с ним ни на пиксель.
+    wrap.style.transition = 'none';
+    wrap.style.transform = 'translate3d(' + fromX + 'px,0,0) rotateY(-34deg) scale(.94)';
+    wrap.style.opacity = '1';
+
+    requestAnimationFrame(function () {
+      wrap.style.transition = 'transform ' + STINGER.flight + 'ms ' + STINGER.curve;
+      wrap.style.transform = 'translate3d(0,0,0) rotateY(-9deg) scale(1)';
+
+      var t0 = performance.now();
+      (function track(t) {
+        var r = wrap.getBoundingClientRect();
+        var lead = r.left + r.width * STINGER.trail;
+        var pct = clamp((lead - nameRect.left) / nameRect.width, 0, 1);
+        name.style.clipPath = 'inset(0 ' + ((1 - pct) * 100).toFixed(2) + '% 0 -2%)';
+        if (edge) {
+          edge.style.transform = 'translate3d(' + (pct * nameRect.width).toFixed(1) + 'px,0,0)';
+          edge.style.opacity = (pct > 0.004 && pct < 0.996) ? '1' : '0';
+        }
+        if (t - t0 < STINGER.flight + 90) requestAnimationFrame(track);
+        else {
+          name.style.clipPath = 'inset(0 -2% 0 -2%)';
+          if (edge) edge.style.opacity = '0';
+          document.body.classList.add('is-flown');
+        }
+      })(t0);
+    });
+  }
+
+  function playStinger() {
+    if (reduced) {
+      document.body.classList.add('is-lit', 'is-flown');
+      var w = $('.cam-wrap'); if (w) { w.style.opacity = '1'; w.style.transform = 'none'; }
+      return;
+    }
+    setTimeout(function () { document.body.classList.add('is-lit'); }, STINGER.hold);
+    setTimeout(runFlight, STINGER.hold + STINGER.bgFade);
+  }
+
   function boot() {
     if (booted) return;
     booted = true;
@@ -36,6 +94,7 @@
     setTimeout(function () {
       fitName();
       document.body.classList.add('is-ready');
+      playStinger();
       setTimeout(function () {
         var el = $('#boot');
         if (el) el.remove();
