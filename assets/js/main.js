@@ -31,123 +31,161 @@
 
   // Сценарий вступления. Всё в одном месте, чтобы тайминги было легко крутить.
   var STINGER = {
-    hold:   900,    // пауза после загрузчика, пустой экран
-    bgFade: 1000,   // проявление фона
-    zoom:   1.5,    // насколько камера крупнее на подлёте
-    flight: 2600,   // пролёт камеры
-    trail:  0.30,   // где на корпусе считаем «переднюю кромку»: 0 — левый край, 1 — правый
-    curve:  'cubic-bezier(.32,.28,.55,1)'  // почти равномерный проход, мягкая посадка
+    hold:   450,    // пауза после загрузчика, пустой кадр
+    frame:  520,    // рисуется видоискатель
+    zoom:   2.6,    // насколько объектив крупнее в начале отъезда
+    curve:  'cubic-bezier(.215,.61,.355,1)',   // мягкая посадка, как у механики
+    rack:   1550,   // отъезд трансфокатором
+    lock:   320,    // автофокус поймал, до затвора
+    shut:   75      // сам затвор
   };
 
-  // Разбор cubic-bezier из CSS: нужен, чтобы маска шла по той же кривой,
-  // что и сама анимация. Ньютон по x, затем значение y — как в браузере.
-  function bezier(css) {
-    var m = /cubic-bezier\(([^)]+)\)/.exec(css);
-    if (!m) return function (t) { return t; };
-    var n = m[1].split(',').map(parseFloat);
-    var x1 = n[0], y1 = n[1], x2 = n[2], y2 = n[3];
-    function cx(t) { return ((1 - 3 * x2 + 3 * x1) * t + (3 * x2 - 6 * x1)) * t * t + 3 * x1 * t; }
-    function cy(t) { return ((1 - 3 * y2 + 3 * y1) * t + (3 * y2 - 6 * y1)) * t * t + 3 * y1 * t; }
-    function dx(t) { return 3 * (1 - 3 * x2 + 3 * x1) * t * t + 2 * (3 * x2 - 6 * x1) * t + 3 * x1; }
-    return function (x) {
-      var t = x;
-      for (var i = 0; i < 6; i++) {
-        var d = dx(t);
-        if (Math.abs(d) < 1e-6) break;
-        var e = cx(t) - x;
-        if (Math.abs(e) < 1e-6) break;
-        t -= e / d;
-      }
-      return cy(t < 0 ? 0 : t > 1 ? 1 : t);
-    };
+  // Отъезд считаем сами: масштаб и расфокус связаны одной кривой, поэтому
+  // растянутый кадр не успевает показать свои пиксели — резкость приходит
+  // ровно тогда, когда масштаб доходит до единицы.
+  function easeOut(u) { return 1 - Math.pow(1 - u, 3); }
+
+  // Реквизит грузим после отъезда: декодирование тринадцати картинок
+  // шло параллельно с расфокусом и съедало кадры на самом дорогом участке.
+  function loadProps() {
+    $$('.prop').forEach(function (el) {
+      if (el.dataset.src) { el.src = el.dataset.src; delete el.dataset.src; }
+    });
   }
 
-  function runFlight() {
-    var wrap = $('.cam-wrap'), name = $('#heroName'), edge = $('#nameEdge');
-    if (!wrap || !name) { document.body.classList.add('is-flown'); return; }
+  function scatterProps() {
+    var frame = $('.frame'), cam = $('.cam-wrap');
+    if (!frame || !cam) return;
+    var cr = cam.getBoundingClientRect();
+    // предметы вылетают из-за корпуса: сдвиг до его центра считаем по факту,
+    // чтобы точка вылета совпадала при любой ширине окна
+    var cx = cr.left + cr.width * 0.42, cy = cr.top + cr.height * 0.55;
+    $$('.prop', frame).forEach(function (el, i) {
+      var r = el.getBoundingClientRect();
+      var dx = cx - (r.left + r.width / 2);
+      var dy = cy - (r.top + r.height / 2);
+      var rot = ((i % 2) ? 1 : -1) * (3 + (i * 37) % 8);   // поворот раздувает габарит — держим умеренным
+      var delay = 40 + i * 72;   // разводим по времени: меньше слоёв едет одновременно
+      el.style.transition = 'none';
+      el.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) scale(.16) rotate(' + (rot * 2.4) + 'deg)';
+      el.style.opacity = '0';
+      void el.offsetWidth;
+      el.style.transition = 'transform 1150ms cubic-bezier(.18,.72,.3,1) ' + delay + 'ms, opacity 420ms linear ' + delay + 'ms';
+      el.style.transform = 'translate(0,0) scale(1) rotate(' + rot + 'deg)';
+      el.style.opacity = '1';
+      setTimeout(function () { el.classList.add('is-landed'); }, delay + 1200);
+    });
+  }
 
-    var nameRect = name.getBoundingClientRect();
+  function runIntro() {
+    var cam = $('.cam-wrap'), sharp = $('.cam'), name = $('#heroName');
+    var focal = $('#vfFocal'), shut = $('#shutter');
+    var body = document.body;
+    if (!cam || !name) { body.classList.add('is-lit', 'is-flown'); return; }
 
-    // Габарит считаем в стартовой позе: поворот и увеличение меняют ширину
-    // бокса, а замер по позе покоя давал сдвиг, при котором корпус
-    // «проявлялся» уже на трети экрана вместо влёта из-за кадра.
-    // translate идёт в системе родителя, поэтому сдвиг переносит
-    // повёрнутый бокс ровно на столько же пикселей.
-    // До пролёта на боксе висит стартовая поза из CSS, поэтому обе точки
-    // замеряем явно: покой — это ровно то, чем анимация заканчивается.
-    var poseWas = wrap.style.transform;
-    wrap.style.transform = 'none';
-    var restRect = wrap.getBoundingClientRect();
-    wrap.style.transform = 'scale(' + STINGER.zoom + ')';
-    var poseRect = wrap.getBoundingClientRect();
-    wrap.style.transform = poseWas;
-    var fromX = -(poseRect.right + 60);          // целиком за левым краем экрана
+    // Имя — самый дорогой слой на странице: крупный текст с градиентом
+    // по маске. Размытие пересобирает его целиком, поэтому на отъезде
+    // имя просто спрятано, а расфокус живёт только те 900мс, пока
+    // наводится резкость. С постоянным размытием кадр стоил 50мс вместо 17.
+    var blurPx = Math.round(window.innerWidth * 0.011) + 'px';
+    name.style.opacity = '0';
 
-    // Пролёт плоский. Разворот по Y на снимке даёт трапецию: далеко от
-    // центра перспективы фотографию заметно ведёт, и корпус читается как
-    // криво наклеенная картинка. Поворот остался только в покое, где
-    // камера стоит у оси перспективы и трапеции не видно.
-    // Явная анимация вместо CSS-перехода: переход мог не запуститься,
-    // если браузер склеивал установку стартового положения с включением
-    // transition — тогда камера просто оказывалась в конце без движения.
-    wrap.style.opacity = '1';
-    var anim = wrap.animate(
-      [
-        { transform: 'translate3d(' + fromX + 'px,0,0) scale(' + STINGER.zoom + ')' },
-        { transform: 'translate3d(0,0,0) scale(1)' }
-      ],
-      { duration: STINGER.flight, easing: STINGER.curve, fill: 'forwards' }
-    );
+    body.classList.add('is-framing');
 
-    // Кромку маски считаем по прогрессу самой анимации, а не замером бокса.
-    // Замер каждый кадр стаскивал трансформацию с композитора на главный
-    // поток: кадр вырастал с 16 до 33мс. Между двумя кадрами браузер
-    // линейно смешивает матрицы, а у нас только сдвиг и равномерный
-    // масштаб — значит те же числа получаются арифметикой, кромка сходится
-    // с корпусом ровно так же, но уже даром.
-    var ease = bezier(STINGER.curve);
-    var fromL = poseRect.left + fromX, fromW = poseRect.width;
-    var toL   = restRect.left,         toW   = restRect.width;
+    setTimeout(function () {
+      cam.style.transform = 'scale(' + STINGER.zoom + ')';
+      cam.style.transition = 'opacity 520ms linear';
+      cam.style.opacity = '1';
 
-    (function () {
-      var t0 = performance.now();
-      (function track(t) {
-        // Часы берём у самой анимации: она стартует со следующего кадра,
-        // и отсчёт от performance.now() уводил кромку на несколько кадров
-        // вперёд корпуса.
-        var ct = anim && anim.currentTime;
-        var u = ease(clamp((ct == null ? t - t0 : ct) / STINGER.flight, 0, 1));
-        var lead = (fromL + (toL - fromL) * u) + (fromW + (toW - fromW) * u) * STINGER.trail;
-        var pct = clamp((lead - nameRect.left) / nameRect.width, 0, 1);
-        name.style.clipPath = 'inset(0 ' + ((1 - pct) * 100).toFixed(2) + '% 0 -2%)';
-        if (edge) {
-          edge.style.transform = 'translate3d(' + (pct * nameRect.width).toFixed(1) + 'px,0,0)';
-          edge.style.opacity = (pct > 0.004 && pct < 0.996) ? '1' : '0';
+      setTimeout(function () {
+        // Отъезд и наводку отдаём Web Animations: обе идут на композиторе.
+        // Прошлый вариант писал transform из rAF каждый кадр — это главная
+        // причина, по которой кадр вырос с 17 до 50мс против пролёта.
+        var opts = { duration: STINGER.rack, easing: STINGER.curve, fill: 'forwards' };
+        var move = cam.animate(
+          [{ transform: 'scale(' + STINGER.zoom + ')' }, { transform: 'scale(1)' }], opts);
+        if (sharp) {
+          sharp.animate([
+            { opacity: 0, offset: 0 },
+            { opacity: .22, offset: .55 },
+            { opacity: 1, offset: 1 }
+          ], { duration: STINGER.rack, easing: 'linear', fill: 'forwards' });
         }
-        if (t - t0 < STINGER.flight + 90) requestAnimationFrame(track);
-        else {
-          name.style.clipPath = 'inset(0 -2% 0 -2%)';
-          if (edge) edge.style.opacity = '0';
-          document.body.classList.add('is-flown');
-        }
-      })(t0);
-    })();
 
-    if (anim && anim.finished) {
-      anim.finished.catch(function () {}).then(function () {
-        wrap.style.transform = 'translate3d(0,0,0) scale(1)';
-      });
+        // Счётчик миллиметров обновляем редко: шестьдесят перерисовок
+        // текста в секунду никто не читает, а кадры они забирают.
+        var t0 = performance.now(), last = -1;
+        (function tick(t) {
+          var u = clamp((t - t0) / STINGER.rack, 0, 1);
+          if (focal && t - last > 90) {
+            focal.textContent = Math.round(70 + (24 - 70) * easeOut(u));
+            last = t;
+          }
+          if (u < 1) requestAnimationFrame(tick);
+          else if (focal) focal.textContent = '24';
+        })(t0);
+
+        if (move && move.finished) {
+          move.finished.catch(function () {}).then(function () {
+            cam.style.transform = 'scale(1)';
+            if (sharp) sharp.style.opacity = '1';
+            afterRack();
+          });
+        } else {
+          setTimeout(afterRack, STINGER.rack);
+        }
+      }, 300);
+    }, STINGER.frame);
+
+    function afterRack() {
+      body.classList.add('is-locked');
+      loadProps();
+      setTimeout(function () {
+        if (shut) { shut.style.transition = 'opacity 55ms linear'; shut.style.opacity = '1'; }
+        setTimeout(function () {
+          body.classList.add('is-lit');
+          body.classList.remove('is-framing', 'is-locked');
+          if (shut) { shut.style.transition = 'opacity 210ms linear'; shut.style.opacity = '0'; }
+          // имя проявляется резкостью — тем же движением, что и камера
+          name.style.willChange = 'filter, opacity';
+          name.style.transition = 'none';
+          name.style.filter = 'blur(' + blurPx + ')';
+          name.style.opacity = '.12';
+          void name.offsetWidth;
+          name.style.transition = 'filter 900ms cubic-bezier(.4,0,.2,1), opacity 820ms linear';
+          name.style.filter = 'blur(0px)';
+          name.style.opacity = '1';
+          // снимаем подготовку слоя, чтобы имя не держало отдельный буфер
+          setTimeout(function () { name.style.willChange = ''; name.style.filter = ''; }, 1000);
+
+          setTimeout(function () { body.classList.add('is-flown'); }, 260);
+          setTimeout(function () { body.classList.add('is-clouded'); }, 460);
+          // разлёт после того, как имя навелось: два дорогих участка
+          // не должны накладываться друг на друга
+          setTimeout(scatterProps, 1000);
+        }, STINGER.shut);
+      }, STINGER.lock);
     }
+  }
+
+  // Без анимации всё сразу на местах: интро — украшение, а не условие показа.
+  function settleAtOnce() {
+    var body = document.body;
+    loadProps();
+    body.classList.add('is-lit', 'is-flown', 'is-clouded');
+    var cam = $('.cam-wrap');
+    if (cam) { cam.style.opacity = '1'; cam.style.transform = 'none'; }
+    var sh = $('.cam'); if (sh) sh.style.opacity = '1';
+    var name = $('#heroName');
+    if (name) { name.style.filter = 'none'; name.style.opacity = '1'; }
+    $$('.prop').forEach(function (el) {
+      el.style.opacity = '1'; el.style.transform = 'none'; el.classList.add('is-landed');
+    });
   }
 
   function playStinger() {
-    if (reduced) {
-      document.body.classList.add('is-lit', 'is-flown');
-      var w = $('.cam-wrap'); if (w) { w.style.opacity = '1'; w.style.transform = 'none'; }
-      return;
-    }
-    setTimeout(function () { document.body.classList.add('is-lit'); }, STINGER.hold);
-    setTimeout(runFlight, STINGER.hold + STINGER.bgFade);
+    if (reduced) { settleAtOnce(); return; }
+    setTimeout(runIntro, STINGER.hold);
   }
 
   function boot() {
