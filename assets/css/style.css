@@ -935,11 +935,18 @@ body.is-flown .hero-meta { opacity: 1; transform: none; transition-delay: .25s; 
   cursor: pointer;
   border-radius: 2px;
   opacity: 0;
-  transition: opacity .85s var(--ease);
-  transition-delay: var(--d, 0ms);
 }
 .tile.is-in { opacity: 1; }
 .tile.is-hidden { display: none; }
+
+/* Карточка сетки — заодно и .reveal, а тот блок идёт ниже по файлу и
+   перебивал здешний переход вместе с задержкой: порция вспыхивала разом
+   за .9s, каскад доставался только внутреннему слою. Двойной класс
+   возвращает карточке её собственное время и её шаг. */
+.tile.reveal {
+  transition: opacity 1.25s var(--ease), transform 1.25s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
 
 /* Появление: у каждой карточки свой характер — восемь вариантов
    раздаются по таблице, поэтому соседние ведут себя по-разному.
@@ -970,7 +977,7 @@ body.is-flown .hero-meta { opacity: 1; transform: none; transition-delay: .25s; 
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transition: transform 1.05s var(--ease), filter .9s var(--ease), clip-path 1.05s var(--ease);
+  transition: transform 1.25s var(--ease), filter 1.25s var(--ease), clip-path 1.25s var(--ease);
   transition-delay: var(--d, 0ms);
 }
 .tile-media img {
