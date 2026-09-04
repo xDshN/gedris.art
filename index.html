@@ -72,6 +72,8 @@
   <p class="boot-txt">Мария Гедрис</p>
 </div>
 
+<u class="pointer-light" id="pointerLight" aria-hidden="true"></u>
+
 <div class="bg" id="bg" aria-hidden="true">
   <span class="bg-orb o1"></span>
   <span class="bg-orb o2"></span>
@@ -126,64 +128,11 @@
 
   <!-- ================= ПЕРВЫЙ ЭКРАН ================= -->
   <section class="hero">
-    <div class="flare-field hero-flare" aria-hidden="true">
-      <u class="pointer-light" id="pointerLight"></u>
-    </div>
+    <div class="flare-field hero-flare" aria-hidden="true"></div>
 
+    <!-- размытое пятно на месте, где раньше стояла камера -->
     <div class="stage" id="stage" aria-hidden="true">
-
-      <!-- кадр 16:9 по центру экрана: в нём та же раскладка, что в утверждённом рендере -->
-      <div class="frame">
-        <span class="cloud"></span>
-        <div class="props">
-          <img class="prop p-flash" data-src="assets/img/gear/flash.webp" width="420" height="263" alt="" decoding="async" fetchpriority="low"
-               style="left:43.5cqw;top:2.5cqw;width:13.0cqw">
-          <img class="prop p-eneloop" data-src="assets/img/gear/eneloop.webp" width="420" height="294" alt="" decoding="async" fetchpriority="low"
-               style="left:66.0cqw;top:3.0cqw;width:10.0cqw">
-          <img class="prop p-reflector" data-src="assets/img/gear/reflector.webp" width="389" height="420" alt="" decoding="async" fetchpriority="low"
-               style="left:86.0cqw;top:3.5cqw;width:12.0cqw">
-          <img class="prop p-reader" data-src="assets/img/gear/reader.webp" width="420" height="252" alt="" decoding="async" fetchpriority="low"
-               style="left:12.0cqw;top:4.5cqw;width:8.0cqw">
-          <img class="prop p-charger" data-src="assets/img/gear/charger.webp" width="420" height="266" alt="" decoding="async" fetchpriority="low"
-               style="left:23.0cqw;top:3.0cqw;width:9.5cqw">
-          <img class="prop p-godox" data-src="assets/img/gear/godox.webp" width="420" height="379" alt="" decoding="async" fetchpriority="low"
-               style="left:83.0cqw;top:38.5cqw;width:13.5cqw">
-          <img class="prop p-filters" data-src="assets/img/gear/filters.webp" width="420" height="331" alt="" decoding="async" fetchpriority="low"
-               style="left:69.0cqw;top:45.0cqw;width:10.0cqw">
-          <img class="prop p-tele" data-src="assets/img/gear/tele.webp" width="420" height="245" alt="" decoding="async" fetchpriority="low"
-               style="left:46.0cqw;top:42.0cqw;width:18.0cqw">
-          <img class="prop p-pen" data-src="assets/img/gear/pen.webp" width="420" height="233" alt="" decoding="async" fetchpriority="low"
-               style="left:60.0cqw;top:47.5cqw;width:9.0cqw">
-          <img class="prop p-sd_sandisk" data-src="assets/img/gear/sd_sandisk.webp" width="416" height="420" alt="" decoding="async" fetchpriority="low"
-               style="left:57.0cqw;top:7.5cqw;width:5.0cqw">
-          <img class="prop p-sd_kingston" data-src="assets/img/gear/sd_kingston.webp" width="319" height="420" alt="" decoding="async" fetchpriority="low"
-               style="left:79.0cqw;top:5.5cqw;width:4.6cqw">
-          <img class="prop p-cf_lexar" data-src="assets/img/gear/cf_lexar.webp" width="420" height="305" alt="" decoding="async" fetchpriority="low"
-               style="left:40.0cqw;top:15.0cqw;width:5.6cqw">
-          <img class="prop p-battery" data-src="assets/img/gear/battery.webp" width="420" height="396" alt="" decoding="async" fetchpriority="low"
-               style="left:34.0cqw;top:6.0cqw;width:7.0cqw">
-        </div>
-        <div class="cam-wrap">
-          <!-- мягкая копия лежит снизу: резкость наводится проявлением
-               верхнего снимка, а не пересчётом размытия каждый кадр -->
-          <img class="cam-soft" src="assets/img/gear/camera-soft.webp" alt=""
-               width="1257" height="883" decoding="async" fetchpriority="high">
-          <img class="cam" src="assets/img/gear/camera.webp" alt=""
-               width="1257" height="883" decoding="async" fetchpriority="high">
-        </div>
-      </div>
-
-      <!-- видоискатель: рамка кадра, автофокус и показания -->
-      <div class="vf" id="vf">
-        <i class="vf-c c1"></i><i class="vf-c c2"></i><i class="vf-c c3"></i><i class="vf-c c4"></i>
-        <i class="vf-t t1"></i><i class="vf-t t2"></i>
-        <div class="vf-grid"><i></i><i></i><i></i><i></i></div>
-        <i class="vf-af"></i>
-        <div class="vf-read"><span>ISO&nbsp;400</span><span><u>f/2.8</u></span><span>1/250</span><span>RAW</span></div>
-        <div class="vf-focal">ZOOM&nbsp;&nbsp;<b id="vfFocal">70</b>&nbsp;MM</div>
-      </div>
-
-      <span class="shutter" id="shutter"></span>
+      <span class="cloud"></span>
     </div>
 
     <div class="wrap">
