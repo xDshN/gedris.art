@@ -1365,32 +1365,18 @@ body.is-flown .hero-meta { opacity: 1; transform: none; transition-delay: .25s; 
   display: grid;
   place-items: center;
 }
-.portrait-slot img { width: 100%; height: 100%; object-fit: cover; }
-.portrait-slot .slot-note {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: 20px;
+/* Портрет вырезан по контуру и лежит поверх блика: костюм чёрный, и
+   именно цветное свечение из-под него отделяет силуэт от тёмного фона. */
+.portrait-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
 }
-.portrait-slot .slot-note b {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(40px, 5vw, 66px);
-  font-weight: 300;
-  letter-spacing: .1em;
-  line-height: 1;
-  color: rgba(255, 255, 255, .9);
-}
-.portrait-slot .slot-note i {
-  display: block;
-  margin-top: 12px;
-  font-style: normal;
-  font-size: 10px;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-.portrait-flare { opacity: .55; }
+.portrait-flare { opacity: .72; }
 .portrait-flare b:nth-child(1) {
   width: 90%; height: 60%; left: -20%; bottom: -10%;
   background: radial-gradient(circle at 50% 50%, var(--f-violet) 0%, rgba(160, 59, 255, 0) 66%);
