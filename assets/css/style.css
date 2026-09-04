@@ -647,29 +647,14 @@ body.is-lit .bg-orb { opacity: var(--oi, .5); }
   62%, 100% { background-position: -55% 0; }
 }
 
-/* Имя открывается маской в следе летящей камеры: ширину маски
-   задаёт скрипт, поэтому кромка идёт ровно за передним краем корпуса. */
+/* Имя проявляется резкостью после затвора: расфокус снимает скрипт,
+   поэтому маска по ширине больше не нужна. */
 .name-box { position: relative; }
-.hero-name { clip-path: inset(0 100% 0 -2%); }
+.hero-name { opacity: 0; }
 body.is-lit .hero-name { animation: name-sweep 11s var(--ease-io) 1.2s infinite; }
 
-.name-edge {
-  position: absolute;
-  top: -2%;
-  left: 0;
-  width: 3px;
-  height: 104%;
-  border-radius: 2px;
-  background: var(--flare);
-  box-shadow: 0 0 26px 6px rgba(255, 255, 255, .35);
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-name { clip-path: none !important; }
-  .name-edge { display: none; }
+  .hero-name { opacity: 1 !important; filter: none !important; }
 }
 @keyframes name-rise { to { transform: translateY(0); } }
 
@@ -789,64 +774,162 @@ body.is-ready .boot { opacity: 0; visibility: hidden; }
 }
 @keyframes boot-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
 
-/* --- сцена с камерой --- */
+/* --- сцена: слой на весь первый экран --- */
 .stage {
   position: absolute;
-  /* выше текста: на пролёте корпус идёт поверх имени, как в референсе */
+  inset: 0;
+  /* выше текста: на отъезде корпус идёт поверх имени */
   z-index: 3;
-  right: 2vw;
-  top: 9%;
-  /* сцена ровно по кадру камеры — рисованного реквизита рядом больше нет */
-  width: min(43vw, 560px);
-  aspect-ratio: 1257 / 883;
-  perspective: 1400px;
+  container-type: inline-size;
   pointer-events: none;
 }
-.stage .cam { width: 100%; height: auto; display: block; }
+/* Кадр 16:9 по центру экрана. Раскладка внутри задана в cqw ровно так же,
+   как в утверждённом рендере, поэтому композиция переносится один в один
+   и не разъезжается при смене высоты окна. */
+/* Кадр — сам себе контейнер: тогда камера и реквизит масштабируются
+   вместе и на широких экранах не разрастаются вслед за окном. */
+.stage .frame {
+  position: absolute;
+  left: 50%; top: 50svh;
+  transform: translate(-50%, -50%);
+  /* Меряем по окну, а не по секции: содержимое первого экрана бывает
+     выше 100svh, и кадр, отцентрованный по секции, уводил нижний ряд
+     предметов под линию сгиба. Множитель 96 — запас на поворот,
+     который раздувает габарит предмета. */
+  width: min(100cqw, 1600px, calc(96svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+}
 
 .cam-wrap {
   position: absolute;
-  left: 0; top: 0;
-  width: 100%;
+  /* правее и мельче, чем было: имя на сайте крупнее, чем в рендере,
+     и при 44cqw корпус накрывал хвост «GEDRIS» */
+  right: 1.5cqw; top: 12cqw;
+  width: 38cqw;
   aspect-ratio: 1257 / 883;
-  transform-style: preserve-3d;
+  transform-origin: 24% 58%;
   opacity: 0;
-  transform: translate3d(-52%, 0, 0) scale(1.5);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  z-index: 3;
 }
-/* положение и разворот на пролёте задаёт скрипт */
-body.is-flown .cam { animation: cam-idle 13s ease-in-out .6s infinite; }
-/* фотографию нельзя крутить как плоский вектор — перспектива сразу выдаёт
-   подмену, поэтому в покое остаётся почти чистое парение */
+.stage .cam,
+.stage .cam-soft { width: 100%; height: auto; display: block; }
+.stage .cam-soft {
+  position: absolute;
+  inset: 0;
+  /* постоянный радиус: он не пересчитывается на каждом кадре, в отличие
+     от анимированного фильтра, и снимает основную нагрузку с отъезда */
+  filter: blur(4px);
+}
+.stage .cam { position: relative; opacity: 0; }
+/* покачивание в покое: фотографию нельзя гнуть, поэтому только парение
+   и едва заметный наклон */
+body.is-flown .cam { animation: cam-idle 11s ease-in-out .4s infinite; }
 @keyframes cam-idle {
-  0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
-  30%      { transform: rotateY(3deg) rotateX(-1deg) translateY(-7px); }
-  65%      { transform: rotateY(-2deg) rotateX(.8deg) translateY(5px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  28%      { transform: translateY(-1.1cqw) rotate(.7deg); }
+  62%      { transform: translateY(.8cqw) rotate(-.5deg); }
+}
+
+/* --- реквизит: за камерой, но над именем --- */
+.props { position: absolute; inset: 0; z-index: 2; }
+.prop {
+  position: absolute;
+  height: auto;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+/* Тень появляется, когда предмет уже сел. На лету drop-shadow заставлял
+   пересобирать каждый из тринадцати слоёв на каждом кадре — кадр стоил
+   50мс вместо 33. В покое она ничего не стоит. */
+.prop.is-landed {
+  will-change: auto;
+  filter: drop-shadow(0 .8cqw 1.4cqw rgba(0, 0, 0, .55));
 }
 
 /* --- облако под камерой --- */
+/* Без filter: blur. Размытие на пятне 60x46cqw заставляло пересобирать
+   слой на каждом кадре, пока облако масштабируется, — а мягкость
+   и так даёт сам градиент, если довести его до нуля внутри бокса. */
 .cloud {
   position: absolute;
-  left: -14%; top: 14%;
-  width: 128%; height: 104%;
-  border-radius: 50%;
+  left: 44cqw; top: 2cqw;
+  width: 60cqw; height: 46cqw;
   opacity: 0;
-  transform: scale(.72);
-  filter: blur(38px);
+  transform: scale(.78);
+  z-index: 1;
   background:
-    radial-gradient(38% 44% at 30% 44%, rgba(255, 155, 33, .34), transparent 70%),
-    radial-gradient(42% 46% at 62% 58%, rgba(69, 214, 255, .32), transparent 72%),
-    radial-gradient(34% 40% at 78% 34%, rgba(160, 59, 255, .3), transparent 70%),
-    radial-gradient(30% 34% at 46% 74%, rgba(255, 59, 31, .22), transparent 70%);
+    radial-gradient(34% 38% at 30% 44%, rgba(255, 155, 33, .30) 0%, rgba(255, 155, 33, 0) 62%),
+    radial-gradient(38% 40% at 62% 58%, rgba(69, 214, 255, .28) 0%, rgba(69, 214, 255, 0) 64%),
+    radial-gradient(40% 34% at 48% 30%, rgba(160, 59, 255, .24) 0%, rgba(160, 59, 255, 0) 66%),
+    radial-gradient(28% 30% at 46% 74%, rgba(255, 59, 31, .18) 0%, rgba(255, 59, 31, 0) 62%);
+  transition: opacity 1.1s var(--ease), transform 1.3s var(--ease);
 }
-body.is-flown .cloud { animation: cloud-in 1.4s var(--ease) .35s forwards, cloud-drift 22s ease-in-out 1.9s infinite; }
-@keyframes cloud-in { to { opacity: .9; transform: scale(1); } }
+body.is-clouded .cloud { opacity: .95; transform: scale(1); }
+body.is-flown .cloud { animation: cloud-drift 22s ease-in-out 2.4s infinite; }
 @keyframes cloud-drift {
   0%, 100% { transform: scale(1) translate3d(0, 0, 0); }
-  50%      { transform: scale(1.09) translate3d(2.5%, -2%, 0); }
+  50%      { transform: scale(1.08) translate3d(2.5%, -2%, 0); }
 }
 
+/* --- видоискатель --- */
+.vf {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity .5s linear;
+}
+body.is-framing .vf { opacity: 1; }
+.vf-c { position: absolute; width: 4.6cqw; height: 4.6cqw; border: 1.5px solid rgba(236, 236, 239, .72); }
+.vf .c1 { left: 2.4cqw; top: 2.4cqw; border-right: 0; border-bottom: 0; }
+.vf .c2 { right: 2.4cqw; top: 2.4cqw; border-left: 0; border-bottom: 0; }
+.vf .c3 { left: 2.4cqw; bottom: 2.4cqw; border-right: 0; border-top: 0; }
+.vf .c4 { right: 2.4cqw; bottom: 2.4cqw; border-left: 0; border-top: 0; }
+.vf-t { position: absolute; top: 50%; width: 1.5cqw; height: 1.5px; background: rgba(236, 236, 239, .6); }
+.vf .t1 { left: 2.4cqw; }
+.vf .t2 { right: 2.4cqw; }
+.vf-grid { position: absolute; inset: 2.4cqw; opacity: .16; }
+.vf-grid i { position: absolute; background: rgba(236, 236, 239, .9); }
+.vf-grid i:nth-child(1) { left: 33.33%; top: 0; bottom: 0; width: 1px; }
+.vf-grid i:nth-child(2) { left: 66.66%; top: 0; bottom: 0; width: 1px; }
+.vf-grid i:nth-child(3) { top: 33.33%; left: 0; right: 0; height: 1px; }
+.vf-grid i:nth-child(4) { top: 66.66%; left: 0; right: 0; height: 1px; }
+.vf-af {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 68cqw; height: 29cqw;
+  transform: translate(-50%, -50%);
+  border: 1.5px solid rgba(255, 244, 214, .85);
+  transition: border-color .2s linear, box-shadow .2s linear;
+}
+body.is-locked .vf-af {
+  border-color: var(--f-cyan);
+  box-shadow: 0 0 0 1px rgba(69, 214, 255, .3), 0 0 2.4cqw rgba(69, 214, 255, .28);
+}
+.vf-read, .vf-focal {
+  position: absolute;
+  bottom: 5.4cqw;
+  font-family: var(--mono);
+  font-size: max(10px, 1.55cqw);
+  letter-spacing: .24em;
+  color: rgba(236, 236, 239, .66);
+}
+.vf-read { left: 2.6cqw; display: flex; gap: 2cqw; }
+.vf-read u { text-decoration: none; color: var(--f-amber); }
+.vf-focal { right: 2.6cqw; }
+.vf-focal b { font-weight: 400; color: var(--f-amber); font-variant-numeric: tabular-nums; }
+
+/* --- затвор --- */
+.shutter {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* --- вход остального содержимого первого экрана --- */
 .hero-kicker, .hero-sub, .hero-meta {
