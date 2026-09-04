@@ -72,8 +72,6 @@
   <p class="boot-txt">Мария Гедрис</p>
 </div>
 
-<u class="pointer-light" id="pointerLight" aria-hidden="true"></u>
-
 <div class="bg" id="bg" aria-hidden="true">
   <span class="bg-orb o1"></span>
   <span class="bg-orb o2"></span>
@@ -86,6 +84,10 @@
   <span class="bg-grid"></span>
   <span class="bg-noise"></span>
 </div>
+
+<!-- строго после фона: с тем же z-index, но раньше по разметке
+     непрозрачная заливка .bg накрывала фонарик целиком -->
+<u class="pointer-light" id="pointerLight" aria-hidden="true"></u>
 
 <div class="progress" id="progress" aria-hidden="true"><i></i></div>
 <header class="hdr" id="hdr">
