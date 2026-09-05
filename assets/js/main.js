@@ -415,6 +415,10 @@
   var moreNum  = $('#moreCount');
   var status   = $('#gridStatus');
   var PAGE     = 18;
+  // Шаг каскада: карточки порции въезжают одна за другой, а не разом.
+  // Порция, появляющаяся целиком, не укладывалась в кадр — браузер ронял
+  // каждый второй и держал 30 к/с. С шагом одновременно едут три-четыре.
+  var STEP     = 250;
 
   var current = 'all';
   var shown   = PAGE;
@@ -430,16 +434,15 @@
     // чтобы соседние карточки не повторяли друг друга.
     var ANIM = [1, 5, 3, 7, 2, 6, 4, 8, 3, 1, 8, 5, 6, 2, 7, 4];
 
+    var fresh = [];
+
     visible.forEach(function (t, i) {
       t.dataset.idx = String(i);
       if (i < shown) {
-        if (!t.dataset.anim) {
-          t.dataset.anim = String(ANIM[i % ANIM.length]);
-          t.style.setProperty('--d', ((i % 3) * 90) + 'ms');
-        }
+        if (!t.dataset.anim) t.dataset.anim = String(ANIM[i % ANIM.length]);
         t.classList.remove('is-hidden');
         if (reduced || !io) t.classList.add('is-in');
-        else if (!t.classList.contains('is-in')) io.observe(t);
+        else if (!t.classList.contains('is-in')) fresh.push(t);
       }
     });
 
@@ -453,6 +456,21 @@
     }
 
     layoutGrid();
+
+    // Каскад раздаём после выкладки: до неё положение карточек ещё не
+    // посчитано. Задержку получают только те, что уже в кадре, — именно
+    // они по нажатию появляются разом. Те, что ниже сгиба, дождутся
+    // прокрутки и выедут поодиночке, ждать им нечего.
+    if (fresh.length) {
+      var vh = window.innerHeight || 0;
+      var wave = 0;
+      fresh.forEach(function (t) {
+        var r = t.getBoundingClientRect();
+        var seen = r.top < vh && r.bottom > 0;
+        t.style.setProperty('--d', (seen ? wave++ * STEP : 0) + 'ms');
+        io.observe(t);
+      });
+    }
 
     if (announce && status) {
       status.textContent = 'Показано ' + Math.min(shown, visible.length) +
