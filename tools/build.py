@@ -91,7 +91,10 @@ def esc(s):
 def main(sel_path, base=""):
     sel = json.load(open(sel_path, encoding="utf-8"))
     for it in sel:
-        it["src"] = os.path.join(base, it["src"]) if base else it["src"]
+        if it.get("repo_src"):
+            it["src"] = os.path.join(ROOT, it["repo_src"])
+        else:
+            it["src"] = os.path.join(base, it["src"]) if base else it["src"]
     for d in (GRID, SMALL, FULL):
         os.makedirs(d, exist_ok=True)
 
@@ -101,12 +104,12 @@ def main(sel_path, base=""):
         src = it["src"]
         im = Image.open(src)
         im = ImageOps.exif_transpose(im).convert("RGB")
-        im, was = strip_watermark(im)
+        im, was = (im, False) if it.get("preserve_frame") else strip_watermark(im)
         cropped += was
 
         W, H = im.size
         ar = round(W / H, 3)
-        slug = "%s-%02d" % (it["genre"], counts.get(it["genre"], 0) + 1)
+        slug = it.get("slug") or "%s-%02d" % (it["genre"], counts.get(it["genre"], 0) + 1)
         counts[it["genre"]] = counts.get(it["genre"], 0) + 1
 
         g = im.copy()
