@@ -3,432 +3,680 @@
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-291.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · сцена"
+    "cap": "Концерт · сцена",
+    "slug": "concert-01"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-195.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Событие · 2026"
+    "cap": "Событие · 2026",
+    "slug": "event-01"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-118.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-01"
+  },
+  {
+    "src": "правки/IMG_9372.PNG",
+    "slug": "reportage-9372",
+    "genre": "concert",
+    "title": "Оркестр",
+    "cap": "Концерт · общий план",
+    "preserve_frame": true
+  },
+  {
+    "src": "правки/IMG_9375.PNG",
+    "slug": "reportage-9375",
+    "genre": "event",
+    "title": "Выступление на сцене",
+    "cap": "Репортаж · спикер",
+    "preserve_frame": true
+  },
+  {
+    "src": "правки/IMG_9386.PNG",
+    "slug": "reportage-9386",
+    "genre": "event",
+    "title": "Форум российской идентичности",
+    "cap": "Пленарное заседание",
+    "preserve_frame": true
+  },
+  {
+    "src": "правки/IMG_9388.PNG",
+    "slug": "reportage-9388",
+    "genre": "event",
+    "title": "Форум российской идентичности",
+    "cap": "Выступление спикера",
+    "preserve_frame": true
+  },
+  {
+    "src": "правки/IMG_9390.PNG",
+    "slug": "reportage-9390",
+    "genre": "event",
+    "title": "Участники мероприятия",
+    "cap": "Репортаж · зрительный зал",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/Шастун/IR-1379.jpg",
     "genre": "concert",
     "title": "Антон Шастун",
-    "cap": "Improv Russia"
+    "cap": "Improv Russia",
+    "slug": "concert-02"
+  },
+  {
+    "src": "правки/IMG_9381.PNG",
+    "slug": "reportage-9381",
+    "genre": "event",
+    "title": "Бал внуков победителей",
+    "cap": "Танцевальный зал",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-252.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · чёрно-белое"
+    "cap": "Концерт · чёрно-белое",
+    "slug": "concert-03"
   },
   {
     "src": "ДОП 2026/неделя моды 2026/sysoev-02.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "SYSOEV · показ · 2026"
+    "cap": "SYSOEV · показ · 2026",
+    "slug": "fashion-02"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/RGUK_MEDIA-1 (1).jpg",
     "genre": "art",
     "title": "Портрет",
-    "cap": "Студия · высокий ключ"
+    "cap": "Студия · высокий ключ",
+    "slug": "art-01"
+  },
+  {
+    "src": "правки/IMG_9373.PNG",
+    "slug": "reportage-9373",
+    "genre": "event",
+    "title": "Торжественное мероприятие",
+    "cap": "Вручение награды",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/RGUK_MEDIA-1.jpg",
     "genre": "art",
     "title": "Цветение",
-    "cap": "Креативная съёмка"
+    "cap": "Креативная съёмка",
+    "slug": "art-02"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-604.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Главная сцена · 2026"
+    "cap": "Главная сцена · 2026",
+    "slug": "event-02"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/сергей лазарев/ВЫПУСКНОЙ_2026-511.jpg",
     "genre": "concert",
     "title": "Сергей Лазарев",
-    "cap": "Московский выпускной · 2026"
+    "cap": "Московский выпускной · 2026",
+    "slug": "concert-04"
+  },
+  {
+    "src": "правки/IMG_9382.PNG",
+    "slug": "reportage-9382",
+    "genre": "concert",
+    "title": "Балет",
+    "cap": "Выступление на сцене",
+    "preserve_frame": true
   },
   {
     "src": "ДОП 2026/Креативное поколение/kp-01.jpg",
     "genre": "event",
     "title": "Креативное поколение",
-    "cap": "Церемония награждения финалистов"
+    "cap": "Церемония награждения финалистов",
+    "slug": "event-03"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-134.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-03"
   },
   {
     "src": "репортажная съёмка/Выставка в совете федерации/RGUK_MEDIA-21.1.jpg",
     "genre": "event",
     "title": "Выставка в Совете Федерации",
-    "cap": "Официальная съёмка"
+    "cap": "Официальная съёмка",
+    "slug": "event-04"
+  },
+  {
+    "src": "правки/IMG_9378.PNG",
+    "slug": "reportage-9378",
+    "genre": "event",
+    "title": "Косыгинский форум",
+    "cap": "Круглый стол",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/the hatters/ВЫПУСКНОЙ_2026-682.jpg",
     "genre": "concert",
     "title": "The Hatters",
-    "cap": "Московский выпускной · 2026"
+    "cap": "Московский выпускной · 2026",
+    "slug": "concert-05"
   },
   {
     "src": "ДОП 2026/IV Российский форум индустрии дизайна/forum-01.jpg",
     "genre": "event",
     "title": "Форум индустрии дизайна",
-    "cap": "IV Российский форум · пленарная сессия"
+    "cap": "IV Российский форум · пленарная сессия",
+    "slug": "event-05"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/Копия img-2.jpg",
     "genre": "art",
     "title": "Каллы",
-    "cap": "Концептуальная съёмка"
+    "cap": "Концептуальная съёмка",
+    "slug": "art-03"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-276.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Событие · 2026"
+    "cap": "Событие · 2026",
+    "slug": "event-06"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-237.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · сцена"
+    "cap": "Концерт · сцена",
+    "slug": "concert-06"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-259.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · сцена"
+    "cap": "Концерт · сцена",
+    "slug": "concert-07"
+  },
+  {
+    "src": "правки/IMG_9369.PNG",
+    "slug": "reportage-9369",
+    "genre": "event",
+    "title": "Участница мероприятия",
+    "cap": "Репортаж · портрет",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-272.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · чёрно-белое"
+    "cap": "Концерт · чёрно-белое",
+    "slug": "concert-08"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/билан/RGUK_MEDIA-211.jpg",
     "genre": "concert",
     "title": "Дима Билан",
-    "cap": "Концерт · общий план"
+    "cap": "Концерт · общий план",
+    "slug": "concert-09"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/сергей лазарев/ВЫПУСКНОЙ_2026-512.jpg",
     "genre": "concert",
     "title": "Сергей Лазарев",
-    "cap": "Московский выпускной · 2026"
+    "cap": "Московский выпускной · 2026",
+    "slug": "concert-10"
+  },
+  {
+    "src": "правки/IMG_9371.PNG",
+    "slug": "reportage-9371",
+    "genre": "event",
+    "title": "105 лет университету Косыгина",
+    "cap": "Юбилейный вечер · сцена",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/the hatters/ВЫПУСКНОЙ_2026-679.jpg",
     "genre": "concert",
     "title": "The Hatters",
-    "cap": "Московский выпускной · 2026"
+    "cap": "Московский выпускной · 2026",
+    "slug": "concert-11"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/the hatters/ВЫПУСКНОЙ_2026-683.jpg",
     "genre": "concert",
     "title": "The Hatters",
-    "cap": "Московский выпускной · 2026"
+    "cap": "Московский выпускной · 2026",
+    "slug": "concert-12"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv minsk/Копия img-187.jpg",
     "genre": "concert",
     "title": "Improv Минск",
-    "cap": "Шоу · чёрно-белое"
+    "cap": "Шоу · чёрно-белое",
+    "slug": "concert-13"
+  },
+  {
+    "src": "правки/IMG_9387.PNG",
+    "slug": "reportage-9387",
+    "genre": "event",
+    "title": "Форум российской идентичности",
+    "cap": "Выступление спикера",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv minsk/Копия img-33.jpg",
     "genre": "concert",
     "title": "Improv Минск",
-    "cap": "Шоу · сцена"
+    "cap": "Шоу · сцена",
+    "slug": "concert-14"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv minsk/Копия img-77.jpg",
     "genre": "concert",
     "title": "Improv Минск",
-    "cap": "Шоу · сцена"
+    "cap": "Шоу · сцена",
+    "slug": "concert-15"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv russia/img-79.jpg",
     "genre": "concert",
     "title": "Improv Russia",
-    "cap": "StandUp Store Moscow"
+    "cap": "StandUp Store Moscow",
+    "slug": "concert-16"
+  },
+  {
+    "src": "правки/IMG_9370.PNG",
+    "slug": "reportage-9370",
+    "genre": "event",
+    "title": "Торжественное мероприятие",
+    "cap": "Репортаж · гости",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv russia/img-48.jpg",
     "genre": "concert",
     "title": "Improv Russia",
-    "cap": "Шоу · Москва"
+    "cap": "Шоу · Москва",
+    "slug": "concert-17"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/improv russia/img-51.jpg",
     "genre": "concert",
     "title": "Improv Russia",
-    "cap": "Шоу · чёрно-белое"
+    "cap": "Шоу · чёрно-белое",
+    "slug": "concert-18"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/Шастун/IR-1239.jpg",
     "genre": "concert",
     "title": "Improv Russia",
-    "cap": "Шоу · Москва"
+    "cap": "Шоу · Москва",
+    "slug": "concert-19"
+  },
+  {
+    "src": "правки/IMG_9385.PNG",
+    "slug": "reportage-9385",
+    "genre": "event",
+    "title": "Круглый стол",
+    "cap": "Репортаж · обсуждение",
+    "preserve_frame": true
   },
   {
     "src": "репортажная съёмка/Шоу/RGUK_MEDIA-138.jpg",
     "genre": "concert",
     "title": "Творческое шоу",
-    "cap": "Сцена · Москва"
+    "cap": "Сцена · Москва",
+    "slug": "concert-20"
   },
   {
     "src": "репортажная съёмка/Шоу/RGUK_MEDIA-141.jpg",
     "genre": "concert",
     "title": "Творческое шоу",
-    "cap": "Сцена · Москва"
+    "cap": "Сцена · Москва",
+    "slug": "concert-21"
   },
   {
     "src": "репортажная съёмка/Шоу/RGUK_MEDIA-4.jpg",
     "genre": "concert",
     "title": "Творческое шоу",
-    "cap": "Сцена · Москва"
+    "cap": "Сцена · Москва",
+    "slug": "concert-22"
+  },
+  {
+    "src": "правки/IMG_9376.PNG",
+    "slug": "reportage-9376",
+    "genre": "concert",
+    "title": "Выступление с оркестром",
+    "cap": "Концерт · сцена",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-104.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Событие · 2026"
+    "cap": "Событие · 2026",
+    "slug": "event-07"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-220.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Событие · 2026"
+    "cap": "Событие · 2026",
+    "slug": "event-08"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-228.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Событие · 2026"
+    "cap": "Событие · 2026",
+    "slug": "event-09"
+  },
+  {
+    "src": "правки/IMG_9391.PNG",
+    "slug": "reportage-9391",
+    "genre": "event",
+    "title": "Форум российской идентичности",
+    "cap": "Стратегическая сессия",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-268.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Сцена · 2026"
+    "cap": "Сцена · 2026",
+    "slug": "event-10"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-608.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Главная сцена · 2026"
+    "cap": "Главная сцена · 2026",
+    "slug": "event-11"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/МОСКОВСКИЕ ВЫПУСКНЫЕ 2026/ВЫПУСКНОЙ_2026-600.jpg",
     "genre": "event",
     "title": "Московский выпускной на ВДНХ",
-    "cap": "Зрители · 2026"
+    "cap": "Зрители · 2026",
+    "slug": "event-12"
+  },
+  {
+    "src": "правки/IMG_9374.PNG",
+    "slug": "reportage-9374",
+    "genre": "event",
+    "title": "Торжественное мероприятие",
+    "cap": "Памятный подарок",
+    "preserve_frame": true
   },
   {
     "src": "репортажная съёмка/Выставка в совете федерации/RGUK_MEDIA-1.jpg",
     "genre": "event",
     "title": "Выставка в Совете Федерации",
-    "cap": "Официальная съёмка"
+    "cap": "Официальная съёмка",
+    "slug": "event-13"
   },
   {
     "src": "репортажная съёмка/Выставка в совете федерации/RGUK_MEDIA-6.jpg",
     "genre": "event",
     "title": "Выставка в Совете Федерации",
-    "cap": "Костюмы народов России"
+    "cap": "Костюмы народов России",
+    "slug": "event-14"
   },
   {
     "src": "репортажная съёмка/Выставка в совете федерации/RGUK_MEDIA-60.jpg",
     "genre": "event",
     "title": "Выставка в Совете Федерации",
-    "cap": "Костюмы народов России"
+    "cap": "Костюмы народов России",
+    "slug": "event-15"
+  },
+  {
+    "src": "правки/IMG_9383.PNG",
+    "slug": "reportage-9383",
+    "genre": "concert",
+    "title": "Балет",
+    "cap": "Сольное выступление",
+    "preserve_frame": true
   },
   {
     "src": "САЙТ ПОРТФОЛИО/природа/RGUK_MEDIA-333.jpg",
     "genre": "event",
     "title": "Селигер",
-    "cap": "Форум · 2025"
+    "cap": "Форум · 2025",
+    "slug": "event-16"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/природа/RGUK_MEDIA-134.jpg",
     "genre": "event",
     "title": "Селигер",
-    "cap": "Форум · 2025"
+    "cap": "Форум · 2025",
+    "slug": "event-17"
   },
   {
     "src": "ДОП 2026/IV Российский форум индустрии дизайна/forum-02.jpg",
     "genre": "event",
     "title": "Форум индустрии дизайна",
-    "cap": "IV Российский форум · деловая программа"
+    "cap": "IV Российский форум · деловая программа",
+    "slug": "event-18"
+  },
+  {
+    "src": "правки/IMG_9379.PNG",
+    "slug": "reportage-9379",
+    "genre": "event",
+    "title": "Участник дискуссии",
+    "cap": "Репортаж · портрет",
+    "preserve_frame": true
   },
   {
     "src": "ДОП 2026/IV Российский форум индустрии дизайна/forum-03.jpg",
     "genre": "event",
     "title": "Форум индустрии дизайна",
-    "cap": "IV Российский форум · спикер"
+    "cap": "IV Российский форум · спикер",
+    "slug": "event-19"
   },
   {
     "src": "ДОП 2026/Креативное поколение/kp-02.jpg",
     "genre": "event",
     "title": "Креативное поколение",
-    "cap": "Церемония награждения · сцена"
+    "cap": "Церемония награждения · сцена",
+    "slug": "event-20"
   },
   {
     "src": "ДОП 2026/Креативное поколение/kp-03.jpg",
     "genre": "event",
     "title": "Креативное поколение",
-    "cap": "Церемония награждения · дискуссия"
+    "cap": "Церемония награждения · дискуссия",
+    "slug": "event-21"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-125.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-04"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-131.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-05"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-161.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · 2025"
+    "cap": "Показ · 2025",
+    "slug": "fashion-06"
+  },
+  {
+    "src": "правки/IMG_9377.PNG",
+    "slug": "reportage-9377",
+    "genre": "fashion",
+    "title": "Модный показ",
+    "cap": "Подиум · общий план",
+    "preserve_frame": true
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-175.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-07"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-5.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Бэкстейдж · 2025"
+    "cap": "Бэкстейдж · 2025",
+    "slug": "fashion-08"
   },
   {
     "src": "репортажная съёмка/Moscow fashion week 2025/RGUK_MEDIA-84.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "Показ · ВДНХ · 2025"
+    "cap": "Показ · ВДНХ · 2025",
+    "slug": "fashion-09"
+  },
+  {
+    "src": "правки/IMG_9389.PNG",
+    "slug": "reportage-9389",
+    "genre": "event",
+    "title": "Детали мероприятия",
+    "cap": "Репортаж · печатные материалы",
+    "preserve_frame": true
   },
   {
     "src": "репортажная съёмка/Международный конкурс дизайнеров \"Shoes Style\"/RGUK_MEDIA-4.jpg",
     "genre": "fashion",
     "title": "Shoes Style",
-    "cap": "Международный конкурс дизайнеров"
+    "cap": "Международный конкурс дизайнеров",
+    "slug": "fashion-10"
   },
   {
     "src": "репортажная съёмка/Международный конкурс дизайнеров \"Shoes Style\"/RGUK_MEDIA-29.jpg",
     "genre": "fashion",
     "title": "Shoes Style",
-    "cap": "Международный конкурс дизайнеров"
+    "cap": "Международный конкурс дизайнеров",
+    "slug": "fashion-11"
   },
   {
     "src": "репортажная съёмка/Международный конкурс дизайнеров \"Shoes Style\"/RGUK_MEDIA-1.jpg",
     "genre": "fashion",
     "title": "Shoes Style",
-    "cap": "Международный конкурс дизайнеров"
+    "cap": "Международный конкурс дизайнеров",
+    "slug": "fashion-12"
   },
   {
     "src": "репортажная съёмка/Международный конкурс дизайнеров \"Shoes Style\"/RGUK_MEDIA-44.jpg",
     "genre": "fashion",
     "title": "Shoes Style",
-    "cap": "Аксессуары · деталь"
+    "cap": "Аксессуары · деталь",
+    "slug": "fashion-13"
   },
   {
     "src": "ДОП 2026/неделя моды 2026/sysoev-04.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "SYSOEV · показ · 2026"
+    "cap": "SYSOEV · показ · 2026",
+    "slug": "fashion-14"
   },
   {
     "src": "ДОП 2026/неделя моды 2026/sysoev-03.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "SYSOEV · финал показа · 2026"
+    "cap": "SYSOEV · финал показа · 2026",
+    "slug": "fashion-15"
+  },
+  {
+    "src": "правки/IMG_9380.PNG",
+    "slug": "reportage-9380",
+    "genre": "event",
+    "title": "Выступление на конференции",
+    "cap": "Репортаж · общий план",
+    "preserve_frame": true
   },
   {
     "src": "ДОП 2026/неделя моды 2026/sysoev-01.jpg",
     "genre": "fashion",
     "title": "Московская неделя моды",
-    "cap": "SYSOEV · деталь образа · 2026"
+    "cap": "SYSOEV · деталь образа · 2026",
+    "slug": "fashion-16"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/RGUK_MEDIA-4.jpg",
     "genre": "art",
     "title": "Цветение",
-    "cap": "Креативная съёмка"
+    "cap": "Креативная съёмка",
+    "slug": "art-04"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/Копия img-1.jpg",
     "genre": "art",
     "title": "Каллы",
-    "cap": "Концептуальная съёмка"
+    "cap": "Концептуальная съёмка",
+    "slug": "art-05"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/IMG_8189.jpg",
     "genre": "art",
     "title": "Camera 0.2",
-    "cap": "Концепт · коллаж"
+    "cap": "Концепт · коллаж",
+    "slug": "art-06"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/IMG_8192.jpg",
     "genre": "art",
     "title": "Camera 0.2",
-    "cap": "Концепт · коллаж"
+    "cap": "Концепт · коллаж",
+    "slug": "art-07"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/ТВОРЧЕСКИЕ СЬЕМКИ/RGUK_MEDIA-3.jpg",
     "genre": "art",
     "title": "Портрет",
-    "cap": "Студия · контровой свет"
+    "cap": "Студия · контровой свет",
+    "slug": "art-08"
   },
   {
     "src": "креативная съёмка/Дарья/2P1A2018-4.jpg",
     "genre": "art",
     "title": "Портрет",
-    "cap": "Съёмка на набережной"
+    "cap": "Съёмка на набережной",
+    "slug": "art-09"
   },
   {
     "src": "креативная съёмка/съёмка чб/img-13.jpg",
     "genre": "art",
     "title": "Портрет",
-    "cap": "Студия · чёрно-белое"
+    "cap": "Студия · чёрно-белое",
+    "slug": "art-10"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/природа/RGUK_MEDIA-89.jpg",
     "genre": "nature",
     "title": "Лес",
-    "cap": "Пейзаж"
+    "cap": "Пейзаж",
+    "slug": "nature-01"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/природа/RGUK_MEDIA-63.jpg",
     "genre": "nature",
     "title": "Тихая охота",
-    "cap": "Макро"
+    "cap": "Макро",
+    "slug": "nature-02"
   },
   {
     "src": "САЙТ ПОРТФОЛИО/природа/RGUK_MEDIA-116.jpg",
     "genre": "nature",
     "title": "Кислица",
-    "cap": "Макро"
+    "cap": "Макро",
+    "slug": "nature-03"
   }
 ]
